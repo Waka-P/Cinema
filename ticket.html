@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | 電子チケット</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" style="padding-top: 52px;">
+      <div style="margin-bottom:20px">
+        <a href="history.html" style="font-size:12px;letter-spacing:0.06em;color:var(--ink-500);text-decoration:none">← 予約履歴に戻る</a>
+      </div>
+      <div style="text-align:center;margin-bottom:32px">
+        <div class="section__hint">E-Ticket</div>
+        <h1 style="font-size:28px;letter-spacing:0.12em;margin:6px 0 0;color:var(--ink-900)">電子チケット</h1>
+      </div>
+
+      <div class="ticket-card" id="ticket-card">
+        <div class="ticket-card__header">
+          <div class="ticket-card__eyebrow">HAL CINEMA — E-TICKET</div>
+          <div class="ticket-card__movie" id="t-movie">—</div>
+          <div class="ticket-card__theater" id="t-theater">— / —</div>
+        </div>
+
+        <div class="ticket-perforation">
+          <div class="ticket-perforation__notch-l"></div>
+          <div class="ticket-perforation__notch-r"></div>
+        </div>
+
+        <div class="ticket-card__details">
+          <div>
+            <div class="ticket-detail__label">日付</div>
+            <div class="ticket-detail__value" id="t-date">—</div>
+          </div>
+          <div>
+            <div class="ticket-detail__label">時間</div>
+            <div class="ticket-detail__value" id="t-time">—</div>
+          </div>
+          <div>
+            <div class="ticket-detail__label">座席</div>
+            <div class="ticket-detail__value" id="t-seats">—</div>
+          </div>
+          <div>
+            <div class="ticket-detail__label">スクリーン</div>
+            <div class="ticket-detail__value" id="t-screen">—</div>
+          </div>
+        </div>
+
+        <div class="ticket-card__qr-area">
+          <div class="ticket-card__qr-label">入場用 QRコード</div>
+          <div id="qr-code-container"></div>
+          <div class="ticket-card__ref" id="t-ref">—</div>
+        </div>
+      </div>
+
+      <div style="max-width:400px;margin:24px auto 0;display:flex;flex-direction:column;gap:10px">
+        <button class="btn btn--solid btn--wide" onclick="window.print()">チケットを保存・印刷</button>
+        <a href="history.html" class="btn btn--wide" style="text-align:center">予約履歴を見る</a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    var booking = JSON.parse(localStorage.getItem('hal_booking') || '{}');
+
+    document.getElementById('t-movie').textContent = booking.movieTitle || '—';
+    document.getElementById('t-theater').textContent = (booking.theater || '—') + ' — ' + (booking.screen || '—');
+    document.getElementById('t-date').textContent = booking.dateLabel || '—';
+    document.getElementById('t-time').textContent = booking.time || '—';
+    document.getElementById('t-seats').textContent = (booking.seats || []).join(' ') || '—';
+    document.getElementById('t-screen').textContent = booking.screen || '—';
+    document.getElementById('t-ref').textContent = booking.bookingRef || 'HAL-DEMO-0000';
+
+    // Generate QR code SVG
+    var qrData = [
+      [1,1,1,1,1,1,1,0,0,0,0,1,0,0,1,1,1,1,1,1,1],
+      [1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,0,0,0,0,1],
+      [1,0,1,1,1,0,1,0,0,1,0,1,0,0,1,0,1,1,1,0,1],
+      [1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,0,1],
+      [1,0,1,1,1,0,1,0,0,1,0,0,0,0,1,0,1,1,1,0,1],
+      [1,0,0,0,0,0,1,0,1,0,1,1,0,0,1,0,0,0,0,0,1],
+      [1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1],
+      [0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0],
+      [0,1,1,0,1,0,1,1,0,0,1,0,0,1,0,1,0,1,1,0,1],
+      [1,0,1,0,0,1,0,0,1,1,0,0,1,0,0,0,1,0,0,1,0],
+      [0,1,0,0,1,0,1,0,0,0,1,1,0,1,0,1,0,1,0,0,1],
+      [1,0,0,1,0,1,0,0,1,0,0,1,1,0,1,0,0,0,1,1,0],
+      [0,1,1,0,1,0,1,0,0,1,0,0,0,1,0,1,1,0,0,1,1],
+      [0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,1,0,1,0,0],
+      [1,1,1,1,1,1,1,0,1,0,0,0,1,0,0,1,0,1,1,0,1],
+      [1,0,0,0,0,0,1,0,0,1,1,0,0,1,0,0,1,0,0,1,0],
+      [1,0,1,1,1,0,1,0,1,0,0,1,0,0,1,0,0,1,0,0,1],
+      [1,0,1,1,1,0,1,0,0,1,1,0,1,0,0,1,0,0,1,1,0],
+      [1,0,1,1,1,0,1,0,1,0,0,1,0,1,0,0,1,1,0,0,1],
+      [1,0,0,0,0,0,1,0,0,1,0,0,1,0,1,1,0,0,1,0,0],
+      [1,1,1,1,1,1,1,0,1,0,1,0,0,1,0,0,1,1,0,1,0]
+    ];
+
+    var size = qrData.length;
+    var svg = '<svg class="qr-svg" viewBox="-1 -1 ' + (size+2) + ' ' + (size+2) + '" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">';
+    svg += '<rect x="-1" y="-1" width="' + (size+2) + '" height="' + (size+2) + '" fill="white"/>';
+    for (var r = 0; r < size; r++) {
+      for (var c = 0; c < size; c++) {
+        if (qrData[r][c] === 1) {
+          svg += '<rect x="' + c + '" y="' + r + '" width="1" height="1" fill="#0a1633"/>';
+        }
+      }
+    }
+    svg += '</svg>';
+    document.getElementById('qr-code-container').innerHTML = svg;
+  </script>
+</body>
+</html>

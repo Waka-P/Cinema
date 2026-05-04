@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | 購入情報入力</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" style="padding-top: 48px;">
+      <div class="booking-steps">
+        <div class="booking-step done">
+          <div class="booking-step__num">✓</div>
+          <div class="booking-step__label">スケジュール</div>
+        </div>
+        <div class="booking-step done">
+          <div class="booking-step__num">✓</div>
+          <div class="booking-step__label">座席選択</div>
+        </div>
+        <div class="booking-step active">
+          <div class="booking-step__num">3</div>
+          <div class="booking-step__label">支払い情報</div>
+        </div>
+        <div class="booking-step">
+          <div class="booking-step__num">4</div>
+          <div class="booking-step__label">確認</div>
+        </div>
+        <div class="booking-step">
+          <div class="booking-step__num">5</div>
+          <div class="booking-step__label">完了</div>
+        </div>
+      </div>
+
+      <div class="section__head" style="margin-bottom:28px">
+        <div>
+          <div class="section__hint">Payment</div>
+          <h1 class="section__title">支払い方法を入力</h1>
+        </div>
+        <a href="seats.html" class="text-link">← 座席選択に戻る</a>
+      </div>
+
+      <div class="checkout-grid">
+        <div>
+          <div style="margin-bottom:22px">
+            <div class="sub-heading" style="margin-bottom:12px">支払い方法を選択</div>
+            <div class="payment-methods" id="payment-methods">
+              <label class="payment-method active" id="pm-card">
+                <input type="radio" name="payment" value="card" checked />
+                <span class="payment-method__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>
+                <span class="payment-method__name">クレジット/デビット</span>
+              </label>
+              <label class="payment-method" id="pm-qr">
+                <input type="radio" name="payment" value="qr" />
+                <span class="payment-method__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="9" y1="6" x2="15" y2="6"/><circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/></svg></span>
+                <span class="payment-method__name">QRコード決済</span>
+              </label>
+              <label class="payment-method" id="pm-convenience">
+                <input type="radio" name="payment" value="convenience" />
+                <span class="payment-method__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                <span class="payment-method__name">コンビニ決済</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="card-form">
+            <div class="sub-heading" style="margin-bottom:14px">カード情報</div>
+            <div class="form-group">
+              <label class="form-label" for="card-number">カード番号</label>
+              <input class="form-input" id="card-number" type="text" placeholder="0000 0000 0000 0000" maxlength="19" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="card-name">カード名義</label>
+              <input class="form-input" id="card-name" type="text" placeholder="TARO YAMADA" />
+            </div>
+            <div class="form-row">
+              <div class="form-group" style="margin-bottom:0">
+                <label class="form-label" for="card-expiry">有効期限</label>
+                <input class="form-input" id="card-expiry" type="text" placeholder="MM / YY" maxlength="7" />
+              </div>
+              <div class="form-group" style="margin-bottom:0">
+                <label class="form-label" for="card-cvv">セキュリティコード</label>
+                <input class="form-input" id="card-cvv" type="text" placeholder="CVV" maxlength="4" />
+              </div>
+            </div>
+          </div>
+
+          <div id="qr-form" style="display:none">
+            <div class="sub-heading" style="margin-bottom:14px">QRコード決済サービスを選択</div>
+            <div class="payment-methods" style="grid-template-columns: repeat(auto-fit, minmax(120px,1fr))">
+              <label class="payment-method">
+                <input type="radio" name="qr-service" value="paypay" />
+                <span class="payment-method__icon"><svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#e0001a"/></svg></span>
+                <span class="payment-method__name">PayPay</span>
+              </label>
+              <label class="payment-method">
+                <input type="radio" name="qr-service" value="linepay" />
+                <span class="payment-method__icon"><svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#00b900"/></svg></span>
+                <span class="payment-method__name">LINE Pay</span>
+              </label>
+              <label class="payment-method">
+                <input type="radio" name="qr-service" value="merpay" />
+                <span class="payment-method__icon"><svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#0066ff"/></svg></span>
+                <span class="payment-method__name">メルペイ</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="convenience-form" style="display:none">
+            <div class="sub-heading" style="margin-bottom:14px">コンビニを選択</div>
+            <div class="form-group">
+              <label class="form-label" for="conv-select">コンビニエンスストア</label>
+              <select class="form-select" id="conv-select">
+                <option>セブン-イレブン</option>
+                <option>ローソン</option>
+                <option>ファミリーマート</option>
+                <option>ミニストップ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="conv-name">お名前（カナ）</label>
+              <input class="form-input" id="conv-name" type="text" placeholder="ヤマダ タロウ" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="conv-tel">電話番号</label>
+              <input class="form-input" id="conv-tel" type="tel" placeholder="090-0000-0000" />
+            </div>
+          </div>
+
+          <button class="btn btn--solid" style="width:100%;padding:13px;font-size:14px;margin-top:24px" onclick="goToConfirm()">
+            購入内容を確認する
+          </button>
+        </div>
+
+        <div>
+          <div class="booking-summary" id="summary-card">
+            <div class="booking-summary__eyebrow">Order Summary</div>
+            <div class="booking-summary__movie" id="s-movie">—</div>
+            <div class="booking-summary__sub" id="s-meta">—</div>
+            <div class="booking-summary__row">
+              <span>シアター</span><span id="s-theater">—</span>
+            </div>
+            <div class="booking-summary__row">
+              <span>座席</span><span id="s-seats">—</span>
+            </div>
+            <div class="booking-summary__row">
+              <span>枚数</span><span id="s-count">—</span>
+            </div>
+            <div class="booking-summary__total">
+              <span class="booking-summary__total-label">合計金額</span>
+              <span class="booking-summary__total-value" id="s-total">—<em> 円</em></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    var booking = JSON.parse(localStorage.getItem('hal_booking') || '{}');
+
+    document.getElementById('s-movie').textContent = booking.movieTitle || '—';
+    document.getElementById('s-meta').textContent = (booking.dateLabel || '—') + '  ' + (booking.time || '');
+    document.getElementById('s-theater').textContent = (booking.theater || '—') + ' ' + (booking.screen || '');
+    document.getElementById('s-seats').textContent = (booking.seats || []).join(', ') || '—';
+    document.getElementById('s-count').textContent = (booking.seatCount || 0) + '席';
+    document.getElementById('s-total').innerHTML = (booking.totalPrice || 0).toLocaleString() + '<em> 円</em>';
+
+    document.querySelectorAll('.payment-method').forEach(function (label) {
+      label.addEventListener('click', function () {
+        document.querySelectorAll('.payment-method').forEach(function (l) {
+          if (l.closest('#payment-methods')) l.classList.remove('active');
+        });
+        this.classList.add('active');
+        var val = this.querySelector('input[type=radio]').value;
+        document.getElementById('card-form').style.display = val === 'card' ? '' : 'none';
+        document.getElementById('qr-form').style.display = val === 'qr' ? '' : 'none';
+        document.getElementById('convenience-form').style.display = val === 'convenience' ? '' : 'none';
+      });
+    });
+
+    function formatCardNumber(v) {
+      return v.replace(/\D/g,'').replace(/(.{4})/g,'$1 ').trim().slice(0,19);
+    }
+
+    document.getElementById('card-number').addEventListener('input', function () {
+      this.value = formatCardNumber(this.value);
+    });
+
+    function goToConfirm() {
+      var method = document.querySelector('#payment-methods input:checked');
+      booking.paymentMethod = method ? method.value : 'card';
+      if (booking.paymentMethod === 'card') {
+        var num = document.getElementById('card-number').value.replace(/\s/g,'');
+        booking.cardLast4 = num.slice(-4) || '****';
+      }
+      localStorage.setItem('hal_booking', JSON.stringify(booking));
+      window.location.href = 'confirm.html';
+    }
+  </script>
+</body>
+</html>

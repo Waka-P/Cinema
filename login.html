@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | ログイン</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" style="padding-top: 72px;">
+      <div class="login-wrap">
+        <div class="login-card">
+          <div class="section__hint" style="margin-bottom:10px">Member Login</div>
+          <h1 class="login-card__title">ログイン</h1>
+          <p class="login-card__sub">HAL CINEMA 会員アカウントにサインイン</p>
+          <div class="demo-note">デモ用：任意のメール・パスワードでログインできます</div>
+          <form id="login-form">
+            <div class="form-group">
+              <label class="form-label" for="email">メールアドレス</label>
+              <input class="form-input" id="email" type="email" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group" style="margin-bottom:8px">
+              <label class="form-label" for="password">パスワード</label>
+              <input class="form-input" id="password" type="password" placeholder="••••••••" required />
+            </div>
+            <div style="text-align:right;margin-bottom:22px">
+              <a href="#" style="font-size:12px;color:var(--ink-500);letter-spacing:0.05em">パスワードをお忘れの方</a>
+            </div>
+            <button class="btn btn--solid btn--wide" type="submit">ログインする</button>
+          </form>
+          <div class="form-divider">または</div>
+          <div style="text-align:center;font-size:12px;color:var(--ink-500)">
+            会員登録がまだの方は <a href="#" style="color:var(--gold-600)">新規登録はこちら</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = document.getElementById('email').value;
+      localStorage.setItem('hal_cinema_logged_in', 'true');
+      localStorage.setItem('hal_cinema_user', JSON.stringify({
+        name: '山田 太郎',
+        email: email,
+        member_id: 'HAL-2024-001',
+        tier: 'Gold',
+        points: 1250,
+        visits: 24
+      }));
+      window.location.href = 'mypage.html';
+    });
+  </script>
+</body>
+</html>

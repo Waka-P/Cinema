@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | 想像を超えるシネマ体験</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/carousel.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero hero--overlay">
+      <div class="hero__content">
+        <div class="hero__subtitle fade-up">HAL CINEMA</div>
+        <h1 class="hero__title fade-up delay-1">Dive into Cinema</h1>
+      </div>
+      <div class="hero__visual">
+        <div class="hero__halo"></div>
+        <div class="hero__panels">
+          <div class="hero__panel hero__panel--left" role="img" aria-label="Starry Theater"></div>
+          <div class="hero__panel hero__panel--right" role="img" aria-label="Abyss Theater"></div>
+          <div class="hero__divider"></div>
+        </div>
+        <div class="nav__cta hero__visual-cta fade-up delay-3">
+          <a class="btn btn--solid" href="movies.html">上映作品を見る</a>
+          <a class="btn hero__visual-cta-glass" href="theaters.html">シアターを見る</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="now">
+      <div class="section__head">
+        <div>
+          <div class="section__hint">Now Showing</div>
+          <h2 class="section__title">上映中の注目作</h2>
+        </div>
+        <a class="text-link" href="movies.html">すべて見る</a>
+      </div>
+      <div class="carousel-wrapper">
+        <div class="carousel-inner container-row">
+          <div class="carousel-info card" aria-live="polite">
+            <div class="card__tag carousel__badge">Category</div>
+            <h3 class="card__title">Sample Movie Title</h3>
+            <p class="card__short">ダミーテキスト：ここに中央表示されている映画の概要が入ります。短めの説明を適当に置いてあります。</p>
+            <div style="display:flex;gap:10px;margin-top:auto;padding-top:14px">
+              <a class="btn btn--solid carousel-reserve-link" href="schedule.html" style="flex:1;font-size:12px;padding:10px 14px">今すぐ予約</a>
+              <a class="btn carousel-detail-link" href="movie-detail.html" style="flex:1;font-size:12px;padding:10px 14px">詳細を見る</a>
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="carousel">
+              <div class="item a"></div>
+              <div class="item b"></div>
+              <div class="item c"></div>
+              <div class="item d"></div>
+              <div class="item e"></div>
+              <div class="item f"></div>
+              <div class="item g"></div>
+              <div class="item h"></div>
+              <div class="item i"></div>
+              <div class="item j"></div>
+              <div class="item k"></div>
+              <div class="item l"></div>
+              <div class="item m"></div>
+              <div class="item n"></div>
+              <div class="item o"></div>
+              <div class="item p"></div>
+              <div class="item q"></div>
+              <div class="item r"></div>
+            </div>
+          </div>
+        </div>
+        <div class="next">Next</div>
+        <div class="prev">Prev</div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="section__head">
+        <div>
+          <div class="section__hint">Signature Services</div>
+          <h2 class="section__title">静かに支える機能</h2>
+        </div>
+      </div>
+      <div class="feature-tiles">
+        <div class="feature-tile">
+          <div class="feature-tile__badge">Seat Move</div>
+          <h3 class="feature-tile__title">隣席リクエスト</h3>
+          <p class="feature-tile__desc">+100円で並び席へ。承諾者にキャッシュバック。</p>
+        </div>
+        <div class="feature-tile">
+          <div class="feature-tile__badge">Seat View</div>
+          <h3 class="feature-tile__title">視点プレビュー</h3>
+          <p class="feature-tile__desc">座席ごとの見え方を事前に確認。</p>
+        </div>
+        <div class="feature-tile">
+          <div class="feature-tile__badge">Recommend</div>
+          <h3 class="feature-tile__title">推し通知</h3>
+          <p class="feature-tile__desc">監督・俳優の新作を届ける。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="theaters">
+      <div class="section__head">
+        <div>
+          <div class="section__hint">Theater Portfolio</div>
+          <h2 class="section__title">3つの没入空間</h2>
+        </div>
+      </div>
+      <div class="theater-grid">
+        <a class="theater-card theater-card--starry" href="theater-starry.html">
+          <div class="theater-card__label">Starry Theater</div>
+          <div class="theater-card__title">Solaris Dome</div>
+          <div class="theater-card__meta">200 seats × 3</div>
+        </a>
+        <a class="theater-card theater-card--abyss" href="theater-abyss.html">
+          <div class="theater-card__label">Abyss Theater</div>
+          <div class="theater-card__title">Abyss Hall</div>
+          <div class="theater-card__meta">120 seats × 2</div>
+        </a>
+        <a class="theater-card theater-card--standard" href="theater-standard.html">
+          <div class="theater-card__label">Standard Theater</div>
+          <div class="theater-card__title">Classic Studio</div>
+          <div class="theater-card__meta">70 seats × 3</div>
+        </a>
+      </div>
+      <div class="section__footer">
+        <a class="text-link text-link--center" href="theaters.html">シアター詳細を見る</a>
+      </div>
+    </section>
+
+    <section class="section" id="tickets">
+      <div class="section__head">
+        <div>
+          <div class="section__hint">Ticket Pricing</div>
+          <h2 class="section__title">チケット料金</h2>
+        </div>
+      </div>
+      <div class="price-list-panel">
+        <div class="price-list-row">
+          <span class="price-list-row__name">General</span>
+          <div class="price-list-row__right">
+            <span class="price-list-row__amount">1,800</span>
+            <span class="price-list-row__unit">円</span>
+          </div>
+        </div>
+        <div class="price-list-row">
+          <span class="price-list-row__name">Student</span>
+          <div class="price-list-row__right">
+            <span class="price-list-row__amount">1,600</span>
+            <span class="price-list-row__unit">円</span>
+          </div>
+        </div>
+        <div class="price-list-row">
+          <span class="price-list-row__name">Junior</span>
+          <div class="price-list-row__right">
+            <span class="price-list-row__amount">1,400</span>
+            <span class="price-list-row__unit">円</span>
+          </div>
+        </div>
+        <div class="price-list-row">
+          <span class="price-list-row__name">Kids</span>
+          <div class="price-list-row__right">
+            <span class="price-list-row__amount">1,000</span>
+            <span class="price-list-row__unit">円</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div>
+          <strong>HAL CINEMA</strong>
+          <div>想像を超える、立体シネマ体験。</div>
+        </div>
+        <div>
+          <div>〒000-0000 東京都千代田区HAL 8F</div>
+          <div>OPEN 10:00 - 24:00</div>
+        </div>
+        <div>
+          <div>スクリーン: 8 / 座席: 1,050</div>
+          <div>お問い合わせ: info@halcinema.jp</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>

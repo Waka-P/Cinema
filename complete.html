@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | 購入完了</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" style="padding-top: 48px;">
+      <div class="booking-steps" style="margin-bottom:48px">
+        <div class="booking-step done">
+          <div class="booking-step__num">✓</div>
+          <div class="booking-step__label">スケジュール</div>
+        </div>
+        <div class="booking-step done">
+          <div class="booking-step__num">✓</div>
+          <div class="booking-step__label">座席選択</div>
+        </div>
+        <div class="booking-step done">
+          <div class="booking-step__num">✓</div>
+          <div class="booking-step__label">支払い情報</div>
+        </div>
+        <div class="booking-step done">
+          <div class="booking-step__num">✓</div>
+          <div class="booking-step__label">確認</div>
+        </div>
+        <div class="booking-step active">
+          <div class="booking-step__num">5</div>
+          <div class="booking-step__label">完了</div>
+        </div>
+      </div>
+
+      <div class="complete-card">
+        <div class="complete-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="8" y1="4" x2="8" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/><line x1="2" y1="8" x2="8" y2="8"/><line x1="16" y1="8" x2="22" y2="8"/><line x1="2" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="22" y2="16"/></svg></div>
+        <div class="section__hint">Booking Complete</div>
+        <h1 style="font-size:22px;letter-spacing:0.1em;margin:10px 0 6px;color:var(--ink-900)">予約が完了しました</h1>
+        <p style="font-size:13px;color:var(--ink-500);line-height:1.7;margin:0 0 6px">
+          ご予約ありがとうございます。<br>電子チケットを表示してご来場ください。
+        </p>
+        <div class="complete-ref" id="ref-number">—</div>
+        <div class="complete-ref-label">予約番号</div>
+
+        <div style="padding:16px;background:rgba(200,164,91,0.07);border:1px solid rgba(200,164,91,0.2);border-radius:14px;margin-bottom:6px;text-align:left">
+          <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-500);margin-bottom:8px">予約内容</div>
+          <div style="font-size:14px;color:var(--ink-900);letter-spacing:0.05em;margin-bottom:3px" id="comp-movie">—</div>
+          <div style="font-size:12px;color:var(--ink-500)" id="comp-meta">—</div>
+          <div style="font-size:12px;color:var(--ink-500)" id="comp-seats">—</div>
+        </div>
+
+        <div class="complete-actions">
+          <a href="ticket.html" class="btn btn--solid btn--wide">電子チケットを表示</a>
+          <a href="mypage.html" class="btn btn--wide">マイページへ</a>
+          <a href="index.html" class="text-link text-link--center" style="font-size:12px;margin-top:4px">ホームに戻る</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    var booking = JSON.parse(localStorage.getItem('hal_booking') || '{}');
+    document.getElementById('ref-number').textContent = booking.bookingRef || 'HAL-XXXXXXXX-XXXX';
+    document.getElementById('comp-movie').textContent = booking.movieTitle || '—';
+    document.getElementById('comp-meta').textContent = (booking.dateLabel || '') + '  ' + (booking.time || '') + '  ' + (booking.theater || '') + ' ' + (booking.screen || '');
+    document.getElementById('comp-seats').textContent = '座席: ' + (booking.seats || []).join(', ');
+  </script>
+</body>
+</html>

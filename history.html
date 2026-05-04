@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | 予約履歴</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="page-hero">
+      <div class="section__hint">Booking History</div>
+      <h1 class="page-hero__title">予約履歴</h1>
+      <p class="page-hero__lead">ご利用いただいた予約の履歴です。電子チケットの再表示もこちらから。</p>
+    </section>
+
+    <section class="section" style="padding-top: 16px;">
+      <div style="margin-bottom:20px">
+        <a href="mypage.html" style="font-size:12px;letter-spacing:0.06em;color:var(--ink-500);text-decoration:none">← マイページに戻る</a>
+      </div>
+      <div class="news-filter">
+        <button class="filter-btn active" data-filter="all">すべて</button>
+        <button class="filter-btn" data-filter="upcoming">今後の予約</button>
+        <button class="filter-btn" data-filter="used">使用済み</button>
+      </div>
+
+      <div class="history-list" id="history-list"></div>
+
+      <div id="history-empty" style="display:none;text-align:center;padding:48px 20px;color:var(--ink-500)">
+        <div style="margin-bottom:12px"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="8" y1="4" x2="8" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/><line x1="2" y1="8" x2="8" y2="8"/><line x1="16" y1="8" x2="22" y2="8"/><line x1="2" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="22" y2="16"/></svg></div>
+        <div style="font-size:15px;letter-spacing:0.06em;margin-bottom:16px">予約履歴がありません</div>
+        <a href="schedule.html" class="btn btn--solid">上映スケジュールを見る</a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    var posterColors = [
+      'linear-gradient(140deg,#0a2060,#1a4a8a)',
+      'linear-gradient(140deg,#0b2c3a,#0e6b86)',
+      'linear-gradient(140deg,#1a243d,#6b5a2b)',
+      'linear-gradient(140deg,#2b1a3f,#5a2b79)'
+    ];
+
+    var mockHistory = [
+      {
+        movieTitle: '人はなぜラブレターを書くのか',
+        dateLabel: '5月10日（土）',
+        time: '14:20',
+        theater: 'Starry',
+        screen: 'Screen 1',
+        seats: ['C4','C5'],
+        bookingRef: 'HAL-20260510-0042',
+        status: 'upcoming',
+        poster: 'images/thumbnail/thumb2.jpg'
+      },
+      {
+        movieTitle: '[字幕] サンキュー、チャック',
+        dateLabel: '4月22日（火）',
+        time: '19:30',
+        theater: 'Abyss',
+        screen: 'Screen 2',
+        seats: ['F7'],
+        bookingRef: 'HAL-20260422-0817',
+        status: 'used',
+        poster: 'images/thumbnail/thumb1.jpg'
+      },
+      {
+        movieTitle: '夜明けの航海',
+        dateLabel: '4月5日（土）',
+        time: '11:00',
+        theater: 'Standard',
+        screen: 'Screen 3',
+        seats: ['D3','D4'],
+        bookingRef: 'HAL-20260405-0291',
+        status: 'used',
+        poster: 'images/thumbnail/thumb3.jpg'
+      }
+    ];
+
+    var savedHistory = JSON.parse(localStorage.getItem('hal_booking_history') || '[]');
+    var allHistory = savedHistory.concat(mockHistory);
+
+    var listEl = document.getElementById('history-list');
+    var emptyEl = document.getElementById('history-empty');
+
+    function renderHistory(filter) {
+      var items = filter === 'all' ? allHistory : allHistory.filter(function (b) {
+        return filter === 'upcoming' ? b.status === 'upcoming' : b.status !== 'upcoming';
+      });
+
+      listEl.innerHTML = '';
+
+      if (items.length === 0) {
+        emptyEl.style.display = '';
+        return;
+      }
+
+      emptyEl.style.display = 'none';
+
+      items.forEach(function (b, i) {
+        var isUpcoming  = b.status === 'upcoming';
+        var posterStyle = b.poster
+          ? 'background-image:url("' + b.poster + '")'
+          : 'background:' + (posterColors[i % posterColors.length]);
+
+        var el = document.createElement('a');
+        el.className = 'history-item';
+        el.href = 'ticket.html';
+
+        el.innerHTML =
+          '<div class="history-item__poster" style="' + posterStyle + ';background-size:cover;background-position:center"></div>' +
+          '<div>' +
+            '<div class="history-item__movie">' + b.movieTitle + '</div>' +
+            '<div class="history-item__meta">' + (b.dateLabel || '') + '  ' + (b.time || '') + '</div>' +
+            '<div class="history-item__meta">' + (b.theater || '') + ' ' + (b.screen || '') + '</div>' +
+            '<div class="history-item__seats">座席: ' + (b.seats || []).join(', ') + '</div>' +
+          '</div>' +
+          '<div>' +
+            '<span class="history-badge ' + (isUpcoming ? 'history-badge--upcoming' : 'history-badge--used') + '">' +
+              (isUpcoming ? '予約済み' : '使用済み') +
+            '</span>' +
+          '</div>';
+        listEl.appendChild(el);
+      });
+    }
+
+    renderHistory('all');
+
+    document.querySelectorAll('.filter-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        renderHistory(this.dataset.filter);
+      });
+    });
+  </script>
+</body>
+</html>

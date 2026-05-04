@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | お知らせ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="page-hero">
+      <div class="section__hint">News &amp; Campaign</div>
+      <h1 class="page-hero__title">お知らせ</h1>
+      <p class="page-hero__lead">キャンペーン情報、イベント、施設に関するお知らせをお届けします。</p>
+    </section>
+
+    <section class="section" style="padding-top: 16px;">
+      <div class="news-filter" id="news-filter">
+        <button class="filter-btn active" data-cat="all">すべて</button>
+        <button class="filter-btn" data-cat="campaign">キャンペーン</button>
+        <button class="filter-btn" data-cat="event">イベント</button>
+        <button class="filter-btn" data-cat="info">お知らせ</button>
+      </div>
+
+      <!-- Featured -->
+      <a class="news-featured" href="#" data-cat="campaign">
+        <div class="news-featured__image" style="background:linear-gradient(135deg,#0b2249 0%,#1e4a96 50%,#c8a45b 100%)">
+          <div style="padding:32px;color:white">
+            <div class="news-badge news-badge--campaign" style="margin-bottom:14px">キャンペーン</div>
+            <div style="font-size:24px;letter-spacing:0.1em;margin-bottom:6px">夏の感謝祭 2026</div>
+            <div style="font-size:13px;opacity:0.8">ポイント3倍＆限定グッズプレゼント実施中</div>
+          </div>
+        </div>
+        <div class="news-featured__body">
+          <span class="news-badge news-badge--campaign">キャンペーン</span>
+          <div class="news-card__title" style="font-size:17px">【夏の感謝祭 2026】6月1日〜8月31日 ポイント3倍キャンペーン開催</div>
+          <div class="news-card__date" style="margin-top:6px">2026年5月1日</div>
+        </div>
+      </a>
+
+      <!-- News list -->
+      <div class="news-list" id="news-list">
+        <a class="news-card" href="#" data-cat="info">
+          <div class="news-card__image" style="background:linear-gradient(135deg,#0b2249,#1e4a96)"></div>
+          <div>
+            <span class="news-badge news-badge--info">お知らせ</span>
+            <div class="news-card__title">Starry Theater 定期メンテナンスのお知らせ（5月15日）</div>
+            <div class="news-card__date">2026年5月3日</div>
+          </div>
+        </a>
+        <a class="news-card" href="#" data-cat="event">
+          <div class="news-card__image" style="background:linear-gradient(135deg,#2b1a3f,#5a2b79)"></div>
+          <div>
+            <span class="news-badge news-badge--event">イベント</span>
+            <div class="news-card__title">監督トークショー「映像の哲学」5月20日（火）開催決定</div>
+            <div class="news-card__date">2026年4月28日</div>
+          </div>
+        </a>
+        <a class="news-card" href="#" data-cat="campaign">
+          <div class="news-card__image" style="background:linear-gradient(135deg,#1a243d,#6b5a2b)"></div>
+          <div>
+            <span class="news-badge news-badge--campaign">キャンペーン</span>
+            <div class="news-card__title">会員限定モーニング割引：毎週水曜 10時台の上映が500円引き</div>
+            <div class="news-card__date">2026年4月20日</div>
+          </div>
+        </a>
+        <a class="news-card" href="#" data-cat="info">
+          <div class="news-card__image" style="background:linear-gradient(135deg,#0c2740,#0e6b86)"></div>
+          <div>
+            <span class="news-badge news-badge--info">お知らせ</span>
+            <div class="news-card__title">電子チケット機能アップデート：Apple Wallet / Google Pay 対応開始</div>
+            <div class="news-card__date">2026年4月10日</div>
+          </div>
+        </a>
+        <a class="news-card" href="#" data-cat="event">
+          <div class="news-card__image" style="background:linear-gradient(135deg,#0a2060,#1a4a8a)"></div>
+          <div>
+            <span class="news-badge news-badge--event">イベント</span>
+            <div class="news-card__title">【字幕上映】特別先行上映会「夜明けの航海」プレミア 5月8日</div>
+            <div class="news-card__date">2026年4月5日</div>
+          </div>
+        </a>
+        <a class="news-card" href="#" data-cat="campaign">
+          <div class="news-card__image" style="background:linear-gradient(135deg,#1c2b45,#3b6aa0)"></div>
+          <div>
+            <span class="news-badge news-badge--campaign">キャンペーン</span>
+            <div class="news-card__title">ペアチケット割引：2枚同時購入で合計500円OFF（通年）</div>
+            <div class="news-card__date">2026年3月1日</div>
+          </div>
+        </a>
+        <a class="news-card" href="#" data-cat="info">
+          <div class="news-card__image" style="background:linear-gradient(135deg,#0b2238,#264b86)"></div>
+          <div>
+            <span class="news-badge news-badge--info">お知らせ</span>
+            <div class="news-card__title">ドリンクメニュー改定のお知らせ：シネマカフェ新メニュー登場</div>
+            <div class="news-card__date">2026年2月25日</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('#news-filter .filter-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('#news-filter .filter-btn').forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.dataset.cat;
+        document.querySelectorAll('.news-card, .news-featured').forEach(function (card) {
+          card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | 座席選択</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" style="padding-top: 48px; max-width: 900px;">
+      <div style="margin-bottom:20px">
+        <a href="schedule.html" style="font-size:12px;letter-spacing:0.06em;color:var(--ink-500);text-decoration:none">← スケジュールに戻る</a>
+      </div>
+      <div class="booking-steps">
+        <div class="booking-step done">
+          <div class="booking-step__num">✓</div>
+          <div class="booking-step__label">スケジュール</div>
+        </div>
+        <div class="booking-step active">
+          <div class="booking-step__num">2</div>
+          <div class="booking-step__label">座席選択</div>
+        </div>
+        <div class="booking-step">
+          <div class="booking-step__num">3</div>
+          <div class="booking-step__label">支払い情報</div>
+        </div>
+        <div class="booking-step">
+          <div class="booking-step__num">4</div>
+          <div class="booking-step__label">確認</div>
+        </div>
+        <div class="booking-step">
+          <div class="booking-step__num">5</div>
+          <div class="booking-step__label">完了</div>
+        </div>
+      </div>
+
+      <div class="section__head">
+        <div>
+          <div class="section__hint" id="booking-hint">Seat Selection</div>
+          <h1 class="section__title">座席を選択</h1>
+        </div>
+      </div>
+
+      <div id="booking-summary-bar" style="padding:14px 18px;background:linear-gradient(135deg,rgba(11,42,87,0.06),rgba(11,42,87,0.02));border:1px solid rgba(200,164,91,0.2);border-radius:16px;margin-bottom:24px;font-size:13px;color:var(--ink-700);">
+        読み込み中...
+      </div>
+
+      <div class="seat-map-wrapper">
+        <div class="seat-map" id="seat-map"></div>
+      </div>
+
+      <div class="seat-legend">
+        <div class="seat-legend__item">
+          <div class="seat-legend__swatch" style="background:linear-gradient(180deg,#a8d0ff,#70b0ff);border:1px solid rgba(27,74,138,0.4)"></div>
+          空席
+        </div>
+        <div class="seat-legend__item">
+          <div class="seat-legend__swatch" style="background:linear-gradient(180deg,#90b8ec,#6898e0);border:1px solid rgba(27,74,138,0.5);box-shadow:0 0 0 2px rgba(27,74,138,0.25)"></div>
+          選択中
+        </div>
+        <div class="seat-legend__item">
+          <div class="seat-legend__swatch" style="background:rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.1)"></div>
+          売り切れ
+        </div>
+        <div class="seat-legend__item">
+          <div class="seat-legend__swatch" style="background:linear-gradient(180deg,#f5eddc,#edd8b0);border:1px solid rgba(200,164,91,0.35)"></div>
+          プレミアム席 (+¥500)
+        </div>
+      </div>
+
+      <div class="seat-bar">
+        <div class="seat-bar__info">
+          <div class="seat-bar__label">選択中</div>
+          <div class="seat-bar__value" id="selected-seats-text">—</div>
+        </div>
+        <div class="seat-bar__info">
+          <div class="seat-bar__label">合計</div>
+          <div class="seat-bar__value" id="total-price-text">¥0</div>
+        </div>
+        <button class="btn btn--solid" id="next-btn" onclick="goToCheckout()" disabled style="opacity:0.5;cursor:not-allowed">
+          支払い情報を入力
+        </button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    var booking = JSON.parse(localStorage.getItem('hal_booking') || '{}');
+    var selected = [];
+    var PRICE_NORMAL = 1800;
+    var PRICE_PREMIUM = 2300;
+
+    document.getElementById('booking-hint').textContent =
+      (booking.movieTitle || '作品未選択') + ' / ' +
+      (booking.dateLabel || '日付未選択') + ' ' +
+      (booking.time || '') + ' / ' +
+      (booking.theater || '') + ' ' + (booking.screen || '');
+
+    document.getElementById('booking-summary-bar').innerHTML =
+      '<strong>' + (booking.movieTitle || '—') + '</strong>' +
+      ' &nbsp;|&nbsp; ' + (booking.dateLabel || '—') +
+      ' ' + (booking.time || '') +
+      ' &nbsp;|&nbsp; ' + (booking.theater || '') + ' ' + (booking.screen || '');
+
+    var rows = ['A','B','C','D','E','F','G','H','J','K'];
+    var cols = 12;
+    var takenSeats = ['B3','B4','B5','C7','C8','D1','D2','E5','E6','E7','F10','F11','G3','G4','H8','H9'];
+    var premiumRows = ['A','B'];
+
+    var mapEl = document.getElementById('seat-map');
+    var screenDiv = document.createElement('div');
+    screenDiv.className = 'seat-screen';
+    mapEl.appendChild(screenDiv);
+
+    rows.forEach(function (row) {
+      var rowDiv = document.createElement('div');
+      rowDiv.className = 'seat-row';
+      var label = document.createElement('span');
+      label.className = 'seat-row__label';
+      label.textContent = row;
+      rowDiv.appendChild(label);
+
+      for (var c = 1; c <= cols; c++) {
+        if (c === 7) {
+          var gap = document.createElement('div');
+          gap.className = 'seat seat--gap';
+          rowDiv.appendChild(gap);
+        }
+        var seatId = row + c;
+        var btn = document.createElement('button');
+        btn.className = 'seat';
+        btn.dataset.id = seatId;
+        btn.title = row + '列 ' + c + '番';
+        btn.textContent = c;
+
+        if (takenSeats.indexOf(seatId) !== -1) {
+          btn.classList.add('seat--taken');
+          btn.disabled = true;
+        } else if (premiumRows.indexOf(row) !== -1) {
+          btn.classList.add('seat--premium');
+          btn.addEventListener('click', toggleSeat);
+        } else {
+          btn.classList.add('seat--available');
+          btn.addEventListener('click', toggleSeat);
+        }
+        rowDiv.appendChild(btn);
+      }
+
+      var label2 = document.createElement('span');
+      label2.className = 'seat-row__label';
+      label2.textContent = row;
+      rowDiv.appendChild(label2);
+      mapEl.appendChild(rowDiv);
+    });
+
+    function toggleSeat() {
+      var id = this.dataset.id;
+      var isPremium = premiumRows.indexOf(id[0]) !== -1;
+      var idx = selected.indexOf(id);
+      if (idx === -1) {
+        if (selected.length >= 6) { alert('一度に選択できる座席は最大6席です'); return; }
+        selected.push(id);
+        this.classList.remove('seat--available', 'seat--premium');
+        this.classList.add('seat--selected');
+      } else {
+        selected.splice(idx, 1);
+        this.classList.remove('seat--selected');
+        this.classList.add(isPremium ? 'seat--premium' : 'seat--available');
+      }
+      updateBar();
+    }
+
+    function updateBar() {
+      var total = 0;
+      selected.forEach(function (s) {
+        total += premiumRows.indexOf(s[0]) !== -1 ? PRICE_PREMIUM : PRICE_NORMAL;
+      });
+      var seatsText = selected.length > 0 ? selected.join(', ') + ' (' + selected.length + '席)' : '—';
+      document.getElementById('selected-seats-text').textContent = seatsText;
+      document.getElementById('total-price-text').textContent = '¥' + total.toLocaleString();
+      var btn = document.getElementById('next-btn');
+      btn.disabled = selected.length === 0;
+      btn.style.opacity = selected.length > 0 ? '1' : '0.5';
+      btn.style.cursor = selected.length > 0 ? 'pointer' : 'not-allowed';
+    }
+
+    function goToCheckout() {
+      if (selected.length === 0) return;
+      var total = 0;
+      selected.forEach(function (s) {
+        total += premiumRows.indexOf(s[0]) !== -1 ? PRICE_PREMIUM : PRICE_NORMAL;
+      });
+      booking.seats = selected;
+      booking.totalPrice = total;
+      booking.seatCount = selected.length;
+      localStorage.setItem('hal_booking', JSON.stringify(booking));
+      window.location.href = 'checkout.html';
+    }
+  </script>
+</body>
+</html>

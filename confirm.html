@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | 購入確認</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" style="padding-top: 48px; max-width: 700px;">
+      <div style="margin-bottom:20px">
+        <a href="checkout.html" style="font-size:12px;letter-spacing:0.06em;color:var(--ink-500);text-decoration:none">← 支払い情報に戻る</a>
+      </div>
+      <div class="booking-steps">
+        <div class="booking-step done">
+          <div class="booking-step__num">✓</div>
+          <div class="booking-step__label">スケジュール</div>
+        </div>
+        <div class="booking-step done">
+          <div class="booking-step__num">✓</div>
+          <div class="booking-step__label">座席選択</div>
+        </div>
+        <div class="booking-step done">
+          <div class="booking-step__num">✓</div>
+          <div class="booking-step__label">支払い情報</div>
+        </div>
+        <div class="booking-step active">
+          <div class="booking-step__num">4</div>
+          <div class="booking-step__label">確認</div>
+        </div>
+        <div class="booking-step">
+          <div class="booking-step__num">5</div>
+          <div class="booking-step__label">完了</div>
+        </div>
+      </div>
+
+      <div class="section__head" style="margin-bottom:26px">
+        <div>
+          <div class="section__hint">Confirmation</div>
+          <h1 class="section__title">購入内容の確認</h1>
+        </div>
+        <a href="checkout.html" class="text-link">← 支払い方法を変更</a>
+      </div>
+
+      <div class="confirm-block">
+        <div class="confirm-block__head">作品・日時</div>
+        <div class="confirm-row">
+          <span class="confirm-row__label">作品名</span>
+          <span class="confirm-row__value" id="c-movie">—</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-row__label">上映日</span>
+          <span class="confirm-row__value" id="c-date">—</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-row__label">時間</span>
+          <span class="confirm-row__value" id="c-time">—</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-row__label">シアター</span>
+          <span class="confirm-row__value" id="c-theater">—</span>
+        </div>
+      </div>
+
+      <div class="confirm-block">
+        <div class="confirm-block__head">座席情報</div>
+        <div class="confirm-row">
+          <span class="confirm-row__label">座席番号</span>
+          <span class="confirm-row__value" id="c-seats">—</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-row__label">枚数</span>
+          <span class="confirm-row__value" id="c-count">—</span>
+        </div>
+      </div>
+
+      <div class="confirm-block">
+        <div class="confirm-block__head">お支払い</div>
+        <div class="confirm-row">
+          <span class="confirm-row__label">支払い方法</span>
+          <span class="confirm-row__value" id="c-payment">—</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-row__label">チケット料金</span>
+          <span class="confirm-row__value" id="c-ticket-price">—</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-row__label">手数料</span>
+          <span class="confirm-row__value">¥0</span>
+        </div>
+      </div>
+
+      <div class="total-row">
+        <span class="total-row__label">お支払い合計</span>
+        <span class="total-row__value" id="c-total">—<em> 円</em></span>
+      </div>
+
+      <p style="font-size:12px;color:var(--ink-500);line-height:1.7;margin-bottom:20px">
+        「購入を確定する」ボタンを押すと予約が確定されます。キャンセルは上映24時間前まで可能です。<br>
+        購入後、電子チケットが発行されます。
+      </p>
+
+      <button class="btn btn--solid btn--wide" onclick="completePurchase()">購入を確定する</button>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    var booking = JSON.parse(localStorage.getItem('hal_booking') || '{}');
+
+    var paymentLabels = { card: 'クレジットカード', qr: 'QRコード決済', convenience: 'コンビニ決済' };
+
+    document.getElementById('c-movie').textContent = booking.movieTitle || '—';
+    document.getElementById('c-date').textContent = booking.dateLabel || '—';
+    document.getElementById('c-time').textContent = booking.time || '—';
+    document.getElementById('c-theater').textContent = (booking.theater || '') + ' ' + (booking.screen || '');
+    document.getElementById('c-seats').textContent = (booking.seats || []).join('、') || '—';
+    document.getElementById('c-count').textContent = (booking.seatCount || 0) + '席';
+    document.getElementById('c-payment').textContent = paymentLabels[booking.paymentMethod] || (booking.paymentMethod || '—');
+    document.getElementById('c-ticket-price').textContent = '¥' + (booking.totalPrice || 0).toLocaleString();
+    document.getElementById('c-total').innerHTML = (booking.totalPrice || 0).toLocaleString() + '<em> 円</em>';
+
+    function completePurchase() {
+      var ref = 'HAL-' + new Date().getFullYear() +
+        String(new Date().getMonth() + 1).padStart(2,'0') +
+        String(new Date().getDate()).padStart(2,'0') +
+        '-' + String(Math.floor(Math.random() * 9000) + 1000);
+      booking.bookingRef = ref;
+      booking.purchasedAt = new Date().toISOString();
+      localStorage.setItem('hal_booking', JSON.stringify(booking));
+
+      var history = JSON.parse(localStorage.getItem('hal_booking_history') || '[]');
+      history.unshift(JSON.parse(JSON.stringify(booking)));
+      localStorage.setItem('hal_booking_history', JSON.stringify(history));
+
+      window.location.href = 'complete.html';
+    }
+  </script>
+</body>
+</html>

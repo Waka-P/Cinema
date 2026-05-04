@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | Starry Theater</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" style="padding-top:56px">
+      <div style="margin-bottom:16px">
+        <a href="theaters.html" class="text-link" style="padding-right:0;font-size:11px">← シアター一覧に戻る</a>
+      </div>
+      <div class="theater-hero">
+        <div class="theater-hero__image theater-hero__image--starry"></div>
+        <div>
+          <div style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-500);margin-bottom:8px">Starry Theater</div>
+          <h1 style="font-size:32px;letter-spacing:0.08em;margin:0 0 10px;color:var(--ink-900)">Solaris Dome</h1>
+          <p style="font-size:14px;line-height:1.85;color:#2b3d5f;margin:0 0 20px">プラネタリウム型の上方投影スクリーンを採用。天井を覆う全天周映像と背中を包むリクライニングシートで、映画の世界に完全に没入できる唯一無二の体験をお届けします。</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+            <span class="meta-chip">200席 × 3スクリーン</span>
+            <span class="meta-chip">上方投影</span>
+            <span class="meta-chip">リクライニング</span>
+            <span class="meta-chip">Dolby Atmos</span>
+          </div>
+          <a href="schedule.html?movieId=why-write-love-letters" class="btn btn--solid" style="font-size:14px;padding:12px 24px">このシアターで予約する</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:20px">
+      <div class="section__head" style="margin-bottom:16px">
+        <div>
+          <div class="section__hint">Now Showing</div>
+          <h2 class="section__title">上映中の作品</h2>
+        </div>
+        <a href="movies.html" class="text-link">すべての作品</a>
+      </div>
+      <div class="theater-now-showing">
+        <a class="theater-movie-card" href="movie-detail.html?id=why-write-love-letters">
+          <div class="theater-movie-card__poster" style="background-image:url('images/thumbnail/thumb2.jpg')"></div>
+          <div class="theater-movie-card__body">
+            <div class="theater-movie-card__genre">ドラマ</div>
+            <div class="theater-movie-card__title">人はなぜラブレターを書くのか</div>
+            <div class="theater-movie-card__meta">2h 18m · 字幕・吹替</div>
+          </div>
+        </a>
+        <a class="theater-movie-card" href="movie-detail.html?id=thank-you-chuck">
+          <div class="theater-movie-card__poster" style="background-image:url('images/thumbnail/thumb1.jpg')"></div>
+          <div class="theater-movie-card__body">
+            <div class="theater-movie-card__genre">ミステリー</div>
+            <div class="theater-movie-card__title">[字幕] サンキュー、チャック</div>
+            <div class="theater-movie-card__meta">1h 58m · 字幕</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:20px">
+      <div class="section__head" style="margin-bottom:16px">
+        <div>
+          <div class="section__hint">Today's Showtime</div>
+          <h2 class="section__title">本日の上映スケジュール</h2>
+        </div>
+        <a href="schedule.html?mode=date" class="text-link">全日程</a>
+      </div>
+      <div class="schedule-theater">
+        <div class="schedule-theater__header">
+          <span class="schedule-theater__name">Starry Theater — Solaris Dome</span>
+          <span class="schedule-theater__badge">Screen 1</span>
+        </div>
+        <div class="time-slots">
+          <button class="time-btn" onclick="book('Starry','Screen 1','10:30','人はなぜラブレターを書くのか','why-write-love-letters')">
+            <span class="time-btn__time">10:30</span>
+            <span class="time-btn__info">人はなぜ… / 残席68</span>
+          </button>
+          <button class="time-btn" onclick="book('Starry','Screen 1','14:20','人はなぜラブレターを書くのか','why-write-love-letters')">
+            <span class="time-btn__time">14:20</span>
+            <span class="time-btn__info">人はなぜ… / 残席42</span>
+          </button>
+          <button class="time-btn taken">
+            <span class="time-btn__time">18:00</span>
+            <span class="time-btn__info">満席</span>
+          </button>
+          <button class="time-btn" onclick="book('Starry','Screen 1','21:10','[字幕] サンキュー、チャック','thank-you-chuck')">
+            <span class="time-btn__time">21:10</span>
+            <span class="time-btn__info">[字幕] サンキュー… / 残席115</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+  <script>
+    function book(theater, screen, time, movieTitle, movieId) {
+      var today = new Date();
+      var days   = ['日','月','火','水','木','金','土'];
+      var months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+      var b = JSON.parse(localStorage.getItem('hal_booking') || '{}');
+      b.theater = theater; b.screen = screen; b.time = time;
+      b.movieTitle = movieTitle; b.movieId = movieId;
+      if (!b.dateLabel) {
+        b.date = today.toISOString().split('T')[0];
+        b.dateLabel = months[today.getMonth()] + today.getDate() + '日（' + days[today.getDay()] + '）';
+      }
+      localStorage.setItem('hal_booking', JSON.stringify(b));
+      window.location.href = 'seats.html';
+    }
+  </script>
+</body>
+</html>

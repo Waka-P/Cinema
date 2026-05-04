@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | 映画一覧</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/carousel.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="page-hero">
+      <div class="section__hint">Movie Lineup</div>
+      <h1 class="page-hero__title">上映中・公開予定</h1>
+      <p class="page-hero__lead">作品情報は後日登録予定。現在はレイアウトの確認用サンプルです。</p>
+    </section>
+
+    <section class="section" id="top-carousel">
+      <div class="section__head">
+        <div>
+          <div class="section__hint">Featured</div>
+          <h2 class="section__title">ピックアップ</h2>
+        </div>
+      </div>
+      <div class="carousel-wrapper">
+        <div class="container">
+          <div class="carousel">
+            <div class="item a"></div>
+            <div class="item b"></div>
+            <div class="item c"></div>
+            <div class="item d"></div>
+            <div class="item e"></div>
+            <div class="item f"></div>
+            <div class="item g"></div>
+            <div class="item h"></div>
+            <div class="item i"></div>
+            <div class="item j"></div>
+            <div class="item k"></div>
+            <div class="item l"></div>
+            <div class="item m"></div>
+            <div class="item n"></div>
+            <div class="item o"></div>
+            <div class="item p"></div>
+            <div class="item q"></div>
+            <div class="item r"></div>
+          </div>
+        </div>
+        <div class="next">Next</div>
+        <div class="prev">Prev</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section__head">
+        <div>
+          <div class="section__hint">Coming Soon</div>
+          <h2 class="section__title">近日公開</h2>
+        </div>
+      </div>
+      <div class="film-grid film-grid--editorial">
+        <a class="film-card film-card--compact" href="movie-detail.html?id=placeholder-1" style="text-decoration:none;color:inherit">
+          <div class="film-card__poster film-card__poster--gold">
+            <div class="film-card__badge">SOON</div>
+          </div>
+          <div class="film-card__body">
+            <div class="film-card__title">夜明けのアトリエ</div>
+            <div class="film-card__meta">1h 54m · Standard</div>
+          </div>
+        </a>
+        <a class="film-card film-card--compact" href="movie-detail.html?id=placeholder-2" style="text-decoration:none;color:inherit">
+          <div class="film-card__poster film-card__poster--abyss">
+            <div class="film-card__badge">NEXT</div>
+          </div>
+          <div class="film-card__body">
+            <div class="film-card__title">潮の記録</div>
+            <div class="film-card__meta">2h 12m · Abyss</div>
+          </div>
+        </a>
+        <a class="film-card film-card--compact" href="movie-detail.html?id=why-write-love-letters" style="text-decoration:none;color:inherit">
+          <div class="film-card__poster film-card__poster--star">
+            <div class="film-card__badge">PREVIEW</div>
+          </div>
+          <div class="film-card__body">
+            <div class="film-card__title">惑星の庭</div>
+            <div class="film-card__meta">1h 48m · Starry</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div>
+          <strong>HAL CINEMA</strong>
+          <div>想像を超える、立体シネマ体験。</div>
+        </div>
+        <div>
+          <div>〒000-0000 東京都千代田区HAL 8F</div>
+          <div>OPEN 10:00 - 24:00</div>
+        </div>
+        <div>
+          <div>スクリーン: 8 / 座席: 1,050</div>
+          <div>お問い合わせ: info@halcinema.jp</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
