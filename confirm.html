@@ -112,6 +112,10 @@
           <span class="confirm-row__label">枚数</span>
           <span class="confirm-row__value" id="c-count">—</span>
         </div>
+        <div class="confirm-row" id="c-ticket-types-row" style="display:none">
+          <span class="confirm-row__label">チケット区分</span>
+          <span class="confirm-row__value" id="c-ticket-types" style="text-align:right;line-height:1.6">—</span>
+        </div>
       </div>
 
       <div class="confirm-block">
@@ -163,6 +167,17 @@
     document.getElementById('c-theater').textContent = (booking.theater || '') + ' ' + (booking.screen || '');
     document.getElementById('c-seats').textContent = (booking.seats || []).join('、') || '—';
     document.getElementById('c-count').textContent = (booking.seatCount || 0) + '席';
+
+    if (booking.ticketTypes) {
+      var lines = Object.keys(booking.ticketTypes)
+        .filter(function(k) { return booking.ticketTypes[k] > 0; })
+        .map(function(k) { return k + ' × ' + booking.ticketTypes[k] + '枚'; });
+      if (lines.length > 0) {
+        document.getElementById('c-ticket-types').innerHTML = lines.join('<br>');
+        document.getElementById('c-ticket-types-row').style.display = '';
+      }
+    }
+
     document.getElementById('c-payment').textContent = paymentLabels[booking.paymentMethod] || (booking.paymentMethod || '—');
     document.getElementById('c-ticket-price').textContent = '¥' + (booking.totalPrice || 0).toLocaleString();
     document.getElementById('c-total').innerHTML = (booking.totalPrice || 0).toLocaleString() + '<em> 円</em>';

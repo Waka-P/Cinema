@@ -356,17 +356,22 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px 22px;
+  padding: 16px 24px;
   border-bottom: 1px solid rgba(200, 164, 91, 0.1);
 }
-
-.price-list-row:last-child { border-bottom: none; }
 
 .price-list-row:nth-child(odd) { background: rgba(200, 164, 91, 0.03); }
 
 .price-list-row__name {
-  font-size: 11px;
-  letter-spacing: 0.26em;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  color: var(--ink-900);
+  margin-bottom: 3px;
+}
+
+.price-list-row__sub {
+  font-size: 10px;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ink-500);
 }
@@ -379,7 +384,7 @@
 
 .price-list-row__amount {
   font-family: "Barlow Condensed", sans-serif;
-  font-size: 26px;
+  font-size: 30px;
   letter-spacing: 0.08em;
   color: var(--ink-900);
   line-height: 1;
@@ -389,6 +394,123 @@
   font-size: 11px;
   color: var(--ink-500);
   letter-spacing: 0.08em;
+}
+
+.price-list-footer {
+  padding: 12px 24px;
+  font-size: 11px;
+  color: var(--ink-500);
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(200, 164, 91, 0.04);
+  border-top: 1px solid rgba(200, 164, 91, 0.12);
+}
+
+/* ===== TICKET TYPE SELECTOR ===== */
+.ticket-type-panel {
+  margin-top: 18px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), #f4f7fb);
+  border: 1px solid rgba(200, 164, 91, 0.16);
+  box-shadow: var(--soft-shadow);
+  overflow: hidden;
+}
+
+.ticket-type-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 20px;
+  border-bottom: 1px solid rgba(200, 164, 91, 0.1);
+  background: rgba(200, 164, 91, 0.04);
+}
+
+.ticket-type-panel__title {
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--ink-900);
+}
+
+.ticket-type-note {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-500);
+}
+
+.ticket-type-note--error { color: #b0360a; }
+.ticket-type-note--ok    { color: #1a6a1a; }
+
+.ticket-type-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px;
+  border-bottom: 1px solid rgba(200, 164, 91, 0.08);
+}
+
+.ticket-type-row:last-child { border-bottom: none; }
+
+.ticket-type-row__name {
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: var(--ink-900);
+  margin-bottom: 2px;
+}
+
+.ticket-type-row__price {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--ink-500);
+}
+
+.ticket-type-counter {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(200, 164, 91, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-700);
+  transition: all 0.15s ease;
+  font-family: inherit;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.qty-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0b2249, #1a4080);
+  color: white;
+  border-color: rgba(200, 164, 91, 0.5);
+}
+
+.qty-btn:disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+}
+
+.qty-value {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  color: var(--ink-900);
+  min-width: 24px;
+  text-align: center;
+  line-height: 1;
 }
 
 .feature-tiles {

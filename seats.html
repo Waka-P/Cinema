@@ -108,6 +108,14 @@
         </div>
       </div>
 
+      <div class="ticket-type-panel" id="ticket-type-panel">
+        <div class="ticket-type-panel__head">
+          <span class="ticket-type-panel__title">チケット区分</span>
+          <span class="ticket-type-note" id="ticket-type-note">座席を選択してください</span>
+        </div>
+        <div id="ticket-type-rows"></div>
+      </div>
+
       <div class="seat-bar">
         <div class="seat-bar__info">
           <div class="seat-bar__label">選択中</div>
@@ -135,8 +143,16 @@
   <script>
     var booking = JSON.parse(localStorage.getItem('hal_booking') || '{}');
     var selected = [];
-    var PRICE_NORMAL = 1800;
-    var PRICE_PREMIUM = 2300;
+
+    var TICKET_TYPES = [
+      { name: '一般',         price: 1800 },
+      { name: '大学生等',     price: 1600 },
+      { name: '中学・高校生', price: 1400 },
+      { name: '小学生・幼児', price: 1000 }
+    ];
+    var PREMIUM_SURCHARGE = 500;
+    var quantities = {};
+    TICKET_TYPES.forEach(function(t) { quantities[t.name] = 0; });
 
     document.getElementById('booking-hint').textContent =
       (booking.movieTitle || '作品未選択') + ' / ' +
@@ -160,7 +176,7 @@
     screenDiv.className = 'seat-screen';
     mapEl.appendChild(screenDiv);
 
-    rows.forEach(function (row) {
+    rows.forEach(function(row) {
       var rowDiv = document.createElement('div');
       rowDiv.className = 'seat-row';
       var label = document.createElement('span');
@@ -201,6 +217,49 @@
       mapEl.appendChild(rowDiv);
     });
 
+    // Build ticket type rows
+    var ttRows = document.getElementById('ticket-type-rows');
+    TICKET_TYPES.forEach(function(type) {
+      var row = document.createElement('div');
+      row.className = 'ticket-type-row';
+      row.innerHTML =
+        '<div>' +
+          '<div class="ticket-type-row__name">' + type.name + '</div>' +
+          '<div class="ticket-type-row__price">¥' + type.price.toLocaleString() + '</div>' +
+        '</div>' +
+        '<div class="ticket-type-counter">' +
+          '<button class="qty-btn" data-type="' + type.name + '" data-action="minus" disabled>−</button>' +
+          '<span class="qty-value" id="qty-' + type.name + '">0</span>' +
+          '<button class="qty-btn" data-type="' + type.name + '" data-action="plus" disabled>+</button>' +
+        '</div>';
+      ttRows.appendChild(row);
+    });
+
+    document.querySelectorAll('.qty-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var type = this.dataset.type;
+        var action = this.dataset.action;
+        if (action === 'plus') {
+          if (getTotalTickets() >= selected.length) return;
+          quantities[type]++;
+        } else {
+          if (quantities[type] <= 0) return;
+          quantities[type]--;
+        }
+        document.getElementById('qty-' + type).textContent = quantities[type];
+        refreshQtyButtons();
+        updateBar();
+      });
+    });
+
+    function getTotalTickets() {
+      return TICKET_TYPES.reduce(function(sum, t) { return sum + quantities[t.name]; }, 0);
+    }
+
+    function getPremiumCount() {
+      return selected.filter(function(s) { return premiumRows.indexOf(s[0]) !== -1; }).length;
+    }
+
     function toggleSeat() {
       var id = this.dataset.id;
       var isPremium = premiumRows.indexOf(id[0]) !== -1;
@@ -214,33 +273,80 @@
         selected.splice(idx, 1);
         this.classList.remove('seat--selected');
         this.classList.add(isPremium ? 'seat--premium' : 'seat--available');
+        // 選択解除で枚数が超過した場合、末尾から差し引く
+        while (getTotalTickets() > selected.length) {
+          for (var i = TICKET_TYPES.length - 1; i >= 0; i--) {
+            if (quantities[TICKET_TYPES[i].name] > 0) {
+              quantities[TICKET_TYPES[i].name]--;
+              document.getElementById('qty-' + TICKET_TYPES[i].name).textContent = quantities[TICKET_TYPES[i].name];
+              break;
+            }
+          }
+        }
       }
+      refreshQtyButtons();
       updateBar();
     }
 
-    function updateBar() {
-      var total = 0;
-      selected.forEach(function (s) {
-        total += premiumRows.indexOf(s[0]) !== -1 ? PRICE_PREMIUM : PRICE_NORMAL;
+    function refreshQtyButtons() {
+      var total = getTotalTickets();
+      document.querySelectorAll('.qty-btn').forEach(function(btn) {
+        var type = btn.dataset.type;
+        var action = btn.dataset.action;
+        if (selected.length === 0) {
+          btn.disabled = true;
+        } else if (action === 'plus') {
+          btn.disabled = total >= selected.length;
+        } else {
+          btn.disabled = quantities[type] <= 0;
+        }
       });
-      var seatsText = selected.length > 0 ? selected.join(', ') + ' (' + selected.length + '席)' : '—';
-      document.getElementById('selected-seats-text').textContent = seatsText;
+    }
+
+    function updateBar() {
+      var ticketTotal = TICKET_TYPES.reduce(function(sum, t) {
+        return sum + quantities[t.name] * t.price;
+      }, 0);
+      var premiumTotal = getPremiumCount() * PREMIUM_SURCHARGE;
+      var total = ticketTotal + premiumTotal;
+
+      var totalTickets = getTotalTickets();
+      var seatsCount = selected.length;
+
+      document.getElementById('selected-seats-text').textContent =
+        seatsCount > 0 ? selected.join(', ') + ' (' + seatsCount + '席)' : '—';
       document.getElementById('total-price-text').textContent = '¥' + total.toLocaleString();
-      var btn = document.getElementById('next-btn');
-      btn.disabled = selected.length === 0;
-      btn.style.opacity = selected.length > 0 ? '1' : '0.5';
-      btn.style.cursor = selected.length > 0 ? 'pointer' : 'not-allowed';
+
+      var noteEl = document.getElementById('ticket-type-note');
+      if (seatsCount === 0) {
+        noteEl.textContent = '座席を選択してください';
+        noteEl.className = 'ticket-type-note';
+      } else if (totalTickets < seatsCount) {
+        noteEl.textContent = 'あと' + (seatsCount - totalTickets) + '枚の区分を選択してください';
+        noteEl.className = 'ticket-type-note ticket-type-note--error';
+      } else {
+        noteEl.textContent = seatsCount + '枚すべての区分が選択されました';
+        noteEl.className = 'ticket-type-note ticket-type-note--ok';
+      }
+
+      var canProceed = seatsCount > 0 && totalTickets === seatsCount;
+      var nextBtn = document.getElementById('next-btn');
+      nextBtn.disabled = !canProceed;
+      nextBtn.style.opacity = canProceed ? '1' : '0.5';
+      nextBtn.style.cursor = canProceed ? 'pointer' : 'not-allowed';
     }
 
     function goToCheckout() {
-      if (selected.length === 0) return;
-      var total = 0;
-      selected.forEach(function (s) {
-        total += premiumRows.indexOf(s[0]) !== -1 ? PRICE_PREMIUM : PRICE_NORMAL;
-      });
+      if (selected.length === 0 || getTotalTickets() !== selected.length) return;
+      var ticketTotal = TICKET_TYPES.reduce(function(sum, t) {
+        return sum + quantities[t.name] * t.price;
+      }, 0);
+      var premiumTotal = getPremiumCount() * PREMIUM_SURCHARGE;
       booking.seats = selected;
-      booking.totalPrice = total;
+      booking.totalPrice = ticketTotal + premiumTotal;
       booking.seatCount = selected.length;
+      booking.ticketTypes = JSON.parse(JSON.stringify(quantities));
+      booking.premiumCount = getPremiumCount();
       localStorage.setItem('hal_booking', JSON.stringify(booking));
       window.location.href = 'checkout.html';
     }

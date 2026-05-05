@@ -185,6 +185,9 @@
             <div class="booking-summary__row">
               <span>枚数</span><span id="s-count">—</span>
             </div>
+            <div class="booking-summary__row" id="s-ticket-types-row" style="display:none;align-items:flex-start">
+              <span style="flex-shrink:0">区分</span><span id="s-ticket-types" style="text-align:right;line-height:1.7">—</span>
+            </div>
             <div class="booking-summary__total">
               <span class="booking-summary__total-label">合計金額</span>
               <span class="booking-summary__total-value" id="s-total">—<em> 円</em></span>
@@ -212,6 +215,16 @@
     document.getElementById('s-seats').textContent = (booking.seats || []).join(', ') || '—';
     document.getElementById('s-count').textContent = (booking.seatCount || 0) + '席';
     document.getElementById('s-total').innerHTML = (booking.totalPrice || 0).toLocaleString() + '<em> 円</em>';
+
+    if (booking.ticketTypes) {
+      var lines = Object.keys(booking.ticketTypes)
+        .filter(function(k) { return booking.ticketTypes[k] > 0; })
+        .map(function(k) { return k + ' × ' + booking.ticketTypes[k]; });
+      if (lines.length > 0) {
+        document.getElementById('s-ticket-types').innerHTML = lines.join('<br>');
+        document.getElementById('s-ticket-types-row').style.display = '';
+      }
+    }
 
     document.querySelectorAll('.payment-method').forEach(function (label) {
       label.addEventListener('click', function () {

@@ -14,6 +14,180 @@
   <link rel="stylesheet" href="css/animations.css" />
   <script src="js/parallax-bg.js" defer></script>
   <script src="js/nav.js" defer></script>
+  <style>
+    .sched-block {
+      border-radius: 22px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), #f4f7fb);
+      border: 1px solid rgba(200,164,91,0.16);
+      box-shadow: 0 8px 28px rgba(10,22,40,0.08);
+      margin-bottom: 20px;
+    }
+    .sched-block__header {
+      padding: 18px 24px;
+      background: linear-gradient(130deg, #080f22, #0b2249 55%, #1a4080);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .sched-block__header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 90% 50%, rgba(200,164,91,0.12), transparent 55%);
+      pointer-events: none;
+    }
+    .sched-block__header > * { position: relative; z-index: 1; }
+    .sched-block__type {
+      font-size: 10px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(200,164,91,0.8);
+      margin-bottom: 4px;
+    }
+    .sched-block__hall {
+      font-size: 20px;
+      letter-spacing: 0.08em;
+    }
+    .sched-block__cap {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.45);
+      text-align: right;
+    }
+
+    .sched-entry {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 18px;
+      padding: 20px 24px;
+      border-top: 1px solid rgba(200,164,91,0.1);
+      align-items: start;
+    }
+    .sched-entry__poster {
+      width: 76px;
+      height: 108px;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      display: block;
+      text-decoration: none;
+      box-shadow: 0 6px 18px rgba(8,20,48,0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      flex-shrink: 0;
+    }
+    .sched-entry__poster:hover {
+      transform: scale(1.04);
+      box-shadow: 0 10px 26px rgba(8,20,48,0.32);
+    }
+    .sched-entry__genre {
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold-600);
+      margin-bottom: 5px;
+    }
+    .sched-entry__title {
+      font-size: 16px;
+      letter-spacing: 0.06em;
+      color: var(--ink-900);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 6px;
+      line-height: 1.4;
+      transition: color 0.15s ease;
+    }
+    .sched-entry__title:hover { color: var(--gold-600); }
+    .sched-entry__meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--ink-500);
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
+    }
+    .sched-entry__meta-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(200,164,91,0.5);
+      flex-shrink: 0;
+    }
+
+    .sched-times { display: flex; flex-wrap: wrap; gap: 7px; }
+
+    .sched-time {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 8px 13px;
+      border-radius: 11px;
+      border: 1px solid rgba(200,164,91,0.22);
+      background: rgba(255,255,255,0.9);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      min-width: 72px;
+    }
+    .sched-time:hover {
+      background: linear-gradient(135deg, #0b2249, #1a4080);
+      border-color: rgba(200,164,91,0.55);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(11,34,73,0.25);
+    }
+    .sched-time--taken {
+      opacity: 0.35;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .sched-time__clock {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 19px;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      color: var(--ink-900);
+    }
+    .sched-time:hover .sched-time__clock { color: white; }
+    .sched-time__avail {
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      color: var(--ink-500);
+      white-space: nowrap;
+    }
+    .sched-time:hover .sched-time__avail { color: rgba(255,255,255,0.65); }
+    .sched-time--few .sched-time__avail { color: #c05820; font-weight: 600; }
+
+    .sched-date-label {
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      color: var(--ink-700);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sched-date-label::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 1px;
+      background: var(--gold-500);
+    }
+
+    @media (max-width: 560px) {
+      .sched-entry { grid-template-columns: 60px 1fr; gap: 12px; padding: 16px 16px; }
+      .sched-entry__poster { width: 60px; height: 86px; }
+      .sched-block__header { padding: 14px 16px; }
+      .sched-entry__title { font-size: 14px; }
+    }
+  </style>
 </head>
 <body>
   <div class="bg-stack" aria-hidden="true">
@@ -50,183 +224,30 @@
     <section class="page-hero">
       <div class="section__hint">Showtime</div>
       <h1 class="page-hero__title">上映スケジュール</h1>
-      <p class="page-hero__lead">作品から探す、または日付から探す。お好みの方法でチケットをご予約ください。</p>
+      <p class="page-hero__lead">日付・作品・シアターから上映時間をご確認ください。時間をクリックして予約へ。</p>
     </section>
 
     <section class="section" style="padding-top: 16px;">
 
-      <!-- Step 1: Mode selector -->
-      <div style="margin-bottom:8px">
-        <div class="section__hint">Step 1 — Choose</div>
-        <h2 class="section__title" style="margin-bottom:16px">検索方法を選択</h2>
-      </div>
-      <div class="booking-mode-wrap" id="mode-wrap">
-        <div class="booking-mode-card active" id="mode-movie" onclick="selectMode('movie')">
-          <div class="booking-mode-card__icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="8" y1="4" x2="8" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/><line x1="2" y1="8" x2="8" y2="8"/><line x1="16" y1="8" x2="22" y2="8"/><line x1="2" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="22" y2="16"/></svg>
-          </div>
-          <div>
-            <div class="booking-mode-card__title">作品から選ぶ</div>
-            <div class="booking-mode-card__sub">観たい映画を先に決める</div>
-          </div>
-        </div>
-        <div class="booking-mode-card" id="mode-date" onclick="selectMode('date')">
-          <div class="booking-mode-card__icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          </div>
-          <div>
-            <div class="booking-mode-card__title">日付から選ぶ</div>
-            <div class="booking-mode-card__sub">先に日程を決める</div>
-          </div>
-        </div>
+      <!-- Date strip -->
+      <div class="date-strip" id="date-strip"></div>
+
+      <!-- Active date label -->
+      <div class="sched-date-label" id="date-label"></div>
+
+      <!-- Theater filter -->
+      <div class="news-filter" id="theater-filter" style="margin-bottom:28px">
+        <button class="filter-btn active" data-theater="all">すべてのシアター</button>
+        <button class="filter-btn" data-theater="starry">Starry Theater</button>
+        <button class="filter-btn" data-theater="abyss">Abyss Theater</button>
+        <button class="filter-btn" data-theater="standard">Standard Theater</button>
       </div>
 
-      <!-- Mode A: By Movie -->
-      <div id="panel-movie">
-        <div style="margin-bottom:8px">
-          <div class="section__hint">Step 2 — Movie</div>
-          <h2 class="section__title" style="margin-bottom:16px">作品を選択</h2>
-        </div>
-        <div class="movie-select-grid" id="movie-select-grid">
-          <div class="movie-select-card" data-id="thank-you-chuck" onclick="selectMovie('thank-you-chuck')">
-            <div class="movie-select-card__poster" style="background-image:url('images/thumbnail/thumb1.jpg');background-size:cover;background-position:center"></div>
-            <div class="movie-select-card__body">
-              <div class="movie-select-card__genre">ミステリー</div>
-              <div class="movie-select-card__title">[字幕] サンキュー、チャック</div>
-            </div>
-          </div>
-          <div class="movie-select-card" data-id="why-write-love-letters" onclick="selectMovie('why-write-love-letters')">
-            <div class="movie-select-card__poster" style="background-image:url('images/thumbnail/thumb2.jpg');background-size:cover;background-position:center"></div>
-            <div class="movie-select-card__body">
-              <div class="movie-select-card__genre">ドラマ</div>
-              <div class="movie-select-card__title">人はなぜラブレターを書くのか</div>
-            </div>
-          </div>
-          <div class="movie-select-card" data-id="placeholder-1" onclick="selectMovie('placeholder-1')">
-            <div class="movie-select-card__poster" style="background-image:url('images/thumbnail/thumb3.jpg');background-size:cover;background-position:center"></div>
-            <div class="movie-select-card__body">
-              <div class="movie-select-card__genre">アドベンチャー</div>
-              <div class="movie-select-card__title">夜明けの航海</div>
-            </div>
-          </div>
-          <div class="movie-select-card" data-id="placeholder-2" onclick="selectMovie('placeholder-2')">
-            <div class="movie-select-card__poster" style="background-image:url('images/thumbnail/thumb4.jpg');background-size:cover;background-position:center"></div>
-            <div class="movie-select-card__body">
-              <div class="movie-select-card__genre">音楽</div>
-              <div class="movie-select-card__title">街角の交響曲</div>
-            </div>
-          </div>
-        </div>
+      <!-- Schedule blocks -->
+      <div id="schedule-container"></div>
 
-        <!-- Step 3A: Date + schedule for the selected movie -->
-        <div id="panel-movie-schedule" style="display:none">
-          <div style="margin-bottom:8px;margin-top:8px">
-            <div class="section__hint">Step 3 — Date &amp; Time</div>
-            <h2 class="section__title" id="movie-schedule-title" style="margin-bottom:16px">日時を選択</h2>
-          </div>
-          <div class="date-strip" id="date-strip-movie"></div>
-          <div style="margin-top:24px">
-            <div class="schedule-grid" id="schedule-grid-movie"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mode B: By Date -->
-      <div id="panel-date" style="display:none">
-        <div style="margin-bottom:8px">
-          <div class="section__hint">Step 2 — Date</div>
-          <h2 class="section__title" style="margin-bottom:16px">日付を選択</h2>
-        </div>
-        <div class="date-strip" id="date-strip-date"></div>
-
-        <div style="margin-top:28px;margin-bottom:8px">
-          <div class="section__hint">Filter</div>
-          <h2 class="section__title" style="margin-bottom:14px">作品で絞り込む</h2>
-        </div>
-        <div class="news-filter" id="movie-filter">
-          <button class="filter-btn active" data-movie="all">すべて</button>
-          <button class="filter-btn" data-movie="why-write-love-letters">人はなぜラブレターを書くのか</button>
-          <button class="filter-btn" data-movie="thank-you-chuck">[字幕] サンキュー、チャック</button>
-          <button class="filter-btn" data-movie="placeholder-1">夜明けの航海</button>
-          <button class="filter-btn" data-movie="placeholder-2">街角の交響曲</button>
-        </div>
-
-        <div style="margin-top:24px">
-          <div class="section__head" style="margin-bottom:14px">
-            <div>
-              <div class="section__hint" id="selected-date-hint">—</div>
-              <h2 class="section__title">上映スケジュール</h2>
-            </div>
-          </div>
-          <div class="schedule-grid" id="schedule-grid-date">
-            <div class="schedule-theater" data-theater="starry">
-              <div class="schedule-theater__header">
-                <span class="schedule-theater__name">Starry Theater — Solaris Dome</span>
-                <span class="schedule-theater__badge">200席</span>
-              </div>
-              <div class="time-slots">
-                <button class="time-btn" data-movie="why-write-love-letters" onclick="pickTime('Starry','Screen 1','10:30','人はなぜラブレターを書くのか','why-write-love-letters')">
-                  <span class="time-btn__time">10:30</span>
-                  <span class="time-btn__info">人はなぜ… / 残席68</span>
-                </button>
-                <button class="time-btn" data-movie="why-write-love-letters" onclick="pickTime('Starry','Screen 1','14:20','人はなぜラブレターを書くのか','why-write-love-letters')">
-                  <span class="time-btn__time">14:20</span>
-                  <span class="time-btn__info">人はなぜ… / 残席42</span>
-                </button>
-                <button class="time-btn taken" data-movie="why-write-love-letters">
-                  <span class="time-btn__time">18:00</span>
-                  <span class="time-btn__info">満席</span>
-                </button>
-                <button class="time-btn" data-movie="thank-you-chuck" onclick="pickTime('Starry','Screen 1','21:10','[字幕] サンキュー、チャック','thank-you-chuck')">
-                  <span class="time-btn__time">21:10</span>
-                  <span class="time-btn__info">[字幕] サンキュー… / 残席115</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="schedule-theater" data-theater="abyss">
-              <div class="schedule-theater__header">
-                <span class="schedule-theater__name">Abyss Theater — Abyss Hall</span>
-                <span class="schedule-theater__badge">120席</span>
-              </div>
-              <div class="time-slots">
-                <button class="time-btn" data-movie="placeholder-1" onclick="pickTime('Abyss','Screen 2','11:00','夜明けの航海','placeholder-1')">
-                  <span class="time-btn__time">11:00</span>
-                  <span class="time-btn__info">夜明けの航海 / 残席54</span>
-                </button>
-                <button class="time-btn" data-movie="why-write-love-letters" onclick="pickTime('Abyss','Screen 2','15:45','人はなぜラブレターを書くのか','why-write-love-letters')">
-                  <span class="time-btn__time">15:45</span>
-                  <span class="time-btn__info">人はなぜ… / 残席21</span>
-                </button>
-                <button class="time-btn" data-movie="placeholder-2" onclick="pickTime('Abyss','Screen 2','19:30','街角の交響曲','placeholder-2')">
-                  <span class="time-btn__time">19:30</span>
-                  <span class="time-btn__info">街角の交響曲 / 残席88</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="schedule-theater" data-theater="standard">
-              <div class="schedule-theater__header">
-                <span class="schedule-theater__name">Standard Theater — Classic Studio</span>
-                <span class="schedule-theater__badge">70席</span>
-              </div>
-              <div class="time-slots">
-                <button class="time-btn taken" data-movie="placeholder-2">
-                  <span class="time-btn__time">12:00</span>
-                  <span class="time-btn__info">満席</span>
-                </button>
-                <button class="time-btn" data-movie="placeholder-2" onclick="pickTime('Standard','Screen 3','16:30','街角の交響曲','placeholder-2')">
-                  <span class="time-btn__time">16:30</span>
-                  <span class="time-btn__info">街角の交響曲 / 残席34</span>
-                </button>
-                <button class="time-btn" data-movie="thank-you-chuck" onclick="pickTime('Standard','Screen 3','20:00','[字幕] サンキュー、チャック','thank-you-chuck')">
-                  <span class="time-btn__time">20:00</span>
-                  <span class="time-btn__info">[字幕] サンキュー… / 残席58</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div id="schedule-empty" style="display:none;text-align:center;padding:48px 20px;color:var(--ink-500)">
+        <div style="font-size:15px;letter-spacing:0.06em">該当する上映がありません</div>
       </div>
 
     </section>
@@ -241,25 +262,129 @@
   </div>
 
   <script>
-    var days   = ['日','月','火','水','木','金','土'];
-    var months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+    var DAYS   = ['日','月','火','水','木','金','土'];
+    var MONTHS = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
     var today  = new Date();
+    var selectedDate = today;
+    var activeTheater = 'all';
 
-    var MOVIES = {
-      'thank-you-chuck':        { title: '[字幕] サンキュー、チャック',  showtimes: [{t:'Starry','s':'Screen 1','time':'21:10','info':'残席115'},{t:'Standard','s':'Screen 3','time':'20:00','info':'残席58'}] },
-      'why-write-love-letters': { title: '人はなぜラブレターを書くのか', showtimes: [{t:'Starry','s':'Screen 1','time':'10:30','info':'残席68'},{t:'Starry','s':'Screen 1','time':'14:20','info':'残席42'},{t:'Starry','s':'Screen 1','time':'18:00','info':'満席',taken:true},{t:'Abyss','s':'Screen 2','time':'15:45','info':'残席21'}] },
-      'placeholder-1':          { title: '夜明けの航海',                showtimes: [{t:'Abyss','s':'Screen 2','time':'11:00','info':'残席54'}] },
-      'placeholder-2':          { title: '街角の交響曲',                showtimes: [{t:'Abyss','s':'Screen 2','time':'19:30','info':'残席88'},{t:'Standard','s':'Screen 3','time':'12:00','info':'満席',taken:true},{t:'Standard','s':'Screen 3','time':'16:30','info':'残席34'}] }
-    };
+    var SCHEDULE = [
+      {
+        id: 'starry',
+        type: 'Starry Theater',
+        hall: 'Solaris Dome',
+        cap: '200席 × 3スクリーン',
+        entries: [
+          {
+            movieId: 'why-write-love-letters',
+            title: '人はなぜラブレターを書くのか',
+            genre: 'ドラマ',
+            duration: '2h 18m',
+            format: '吹替',
+            screen: 'Screen 1',
+            poster: 'images/thumbnail/thumb2.jpg',
+            showtimes: [
+              { time: '10:30', seats: 68 },
+              { time: '14:20', seats: 42 },
+              { time: '18:00', taken: true },
+            ]
+          },
+          {
+            movieId: 'thank-you-chuck',
+            title: '[字幕] サンキュー、チャック',
+            genre: 'ミステリー',
+            duration: '1h 58m',
+            format: '字幕',
+            screen: 'Screen 1',
+            poster: 'images/thumbnail/thumb1.jpg',
+            showtimes: [
+              { time: '21:10', seats: 115 }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'abyss',
+        type: 'Abyss Theater',
+        hall: 'Abyss Hall',
+        cap: '120席 × 2スクリーン',
+        entries: [
+          {
+            movieId: 'placeholder-1',
+            title: '夜明けの航海',
+            genre: 'アドベンチャー',
+            duration: '1h 52m',
+            format: '吹替',
+            screen: 'Screen 2',
+            poster: 'images/thumbnail/thumb3.jpg',
+            showtimes: [
+              { time: '11:00', seats: 54 }
+            ]
+          },
+          {
+            movieId: 'why-write-love-letters',
+            title: '人はなぜラブレターを書くのか',
+            genre: 'ドラマ',
+            duration: '2h 18m',
+            format: '吹替',
+            screen: 'Screen 2',
+            poster: 'images/thumbnail/thumb2.jpg',
+            showtimes: [
+              { time: '15:45', seats: 21 }
+            ]
+          },
+          {
+            movieId: 'placeholder-2',
+            title: '街角の交響曲',
+            genre: '音楽',
+            duration: '1h 44m',
+            format: '字幕',
+            screen: 'Screen 2',
+            poster: 'images/thumbnail/thumb4.jpg',
+            showtimes: [
+              { time: '19:30', seats: 88 }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'standard',
+        type: 'Standard Theater',
+        hall: 'Classic Studio',
+        cap: '70席 × 3スクリーン',
+        entries: [
+          {
+            movieId: 'placeholder-2',
+            title: '街角の交響曲',
+            genre: '音楽',
+            duration: '1h 44m',
+            format: '字幕・吹替',
+            screen: 'Screen 3',
+            poster: 'images/thumbnail/thumb4.jpg',
+            showtimes: [
+              { time: '12:00', taken: true },
+              { time: '16:30', seats: 34 }
+            ]
+          },
+          {
+            movieId: 'thank-you-chuck',
+            title: '[字幕] サンキュー、チャック',
+            genre: 'ミステリー',
+            duration: '1h 58m',
+            format: '字幕',
+            screen: 'Screen 3',
+            poster: 'images/thumbnail/thumb1.jpg',
+            showtimes: [
+              { time: '20:00', seats: 58 }
+            ]
+          }
+        ]
+      }
+    ];
 
-    var currentMode       = 'movie';
-    var selectedMovieId   = null;
-    var selectedDateObj   = today;
-
-    // ── Build a date strip ────────────────────────────────────────────
-    function buildDateStrip(stripId, onSelect) {
-      var strip = document.getElementById(stripId);
-      strip.innerHTML = '';
+    // ── Date strip ────────────────────────────────────────────────────
+    function buildDateStrip() {
+      var strip = document.getElementById('date-strip');
       for (var i = 0; i < 14; i++) {
         var d = new Date(today);
         d.setDate(today.getDate() + i);
@@ -267,153 +392,131 @@
           var btn = document.createElement('button');
           btn.className = 'date-btn' + (idx === 0 ? ' active' : '');
           btn.innerHTML =
-            '<span class="date-btn__day">' + days[date.getDay()] + '</span>' +
+            '<span class="date-btn__day">' + DAYS[date.getDay()] + '</span>' +
             '<span class="date-btn__num">' + date.getDate() + '</span>' +
-            '<span class="date-btn__month">' + months[date.getMonth()] + '</span>';
+            '<span class="date-btn__month">' + MONTHS[date.getMonth()] + '</span>';
           btn.addEventListener('click', function() {
             strip.querySelectorAll('.date-btn').forEach(function(b) { b.classList.remove('active'); });
             this.classList.add('active');
-            selectedDateObj = date;
-            onSelect(date);
+            selectedDate = date;
+            updateDateLabel();
           });
           strip.appendChild(btn);
         })(i, d);
       }
     }
 
-    // ── Mode switching ────────────────────────────────────────────────
-    function selectMode(mode) {
-      currentMode = mode;
-      document.getElementById('mode-movie').classList.toggle('active', mode === 'movie');
-      document.getElementById('mode-date').classList.toggle('active', mode === 'date');
-      document.getElementById('panel-movie').style.display = mode === 'movie' ? '' : 'none';
-      document.getElementById('panel-date').style.display  = mode === 'date'  ? '' : 'none';
+    function updateDateLabel() {
+      document.getElementById('date-label').textContent =
+        MONTHS[selectedDate.getMonth()] + selectedDate.getDate() + '日（' + DAYS[selectedDate.getDay()] + '）の上映スケジュール';
     }
 
-    // ── Movie-first mode ──────────────────────────────────────────────
-    function selectMovie(movieId) {
-      selectedMovieId = movieId;
-      document.querySelectorAll('#movie-select-grid .movie-select-card').forEach(function(c) {
-        c.classList.toggle('active', c.dataset.id === movieId);
-      });
+    // ── Render schedule ───────────────────────────────────────────────
+    function renderSchedule() {
+      var container = document.getElementById('schedule-container');
+      var emptyEl   = document.getElementById('schedule-empty');
+      container.innerHTML = '';
+      var anyVisible = false;
 
-      var m = MOVIES[movieId];
-      document.getElementById('movie-schedule-title').textContent = (m ? m.title : '') + ' — 日時を選択';
-      buildDateStrip('date-strip-movie', function(date) {
-        updateHintMovie(date);
-      });
-      updateHintMovie(today);
-      renderMovieSchedule(movieId);
-      document.getElementById('panel-movie-schedule').style.display = '';
-    }
+      SCHEDULE.forEach(function(theater) {
+        if (activeTheater !== 'all' && theater.id !== activeTheater) return;
+        var entries = theater.entries;
+        if (entries.length === 0) return;
+        anyVisible = true;
 
-    function updateHintMovie(date) {
-      // Save date to booking
-      var booking = JSON.parse(localStorage.getItem('hal_booking') || '{}');
-      booking.date      = date.toISOString().split('T')[0];
-      booking.dateLabel = months[date.getMonth()] + date.getDate() + '日（' + days[date.getDay()] + '）';
-      localStorage.setItem('hal_booking', JSON.stringify(booking));
-    }
-
-    function renderMovieSchedule(movieId) {
-      var m    = MOVIES[movieId];
-      var grid = document.getElementById('schedule-grid-movie');
-      grid.innerHTML = '';
-      if (!m) return;
-
-      // Group by theater
-      var theaters = {};
-      m.showtimes.forEach(function(s) {
-        if (!theaters[s.t]) theaters[s.t] = [];
-        theaters[s.t].push(s);
-      });
-
-      Object.keys(theaters).forEach(function(tname) {
         var block = document.createElement('div');
-        block.className = 'schedule-theater';
-        var seats = tname === 'Starry' ? '200席' : tname === 'Abyss' ? '120席' : '70席';
-        var slots = theaters[tname].map(function(s) {
-          if (s.taken) {
-            return '<button class="time-btn taken"><span class="time-btn__time">' + s.time + '</span><span class="time-btn__info">満席</span></button>';
-          }
-          return '<button class="time-btn" onclick="pickTime(\'' + s.t + '\',\'' + s.s + '\',\'' + s.time + '\',\'' + m.title + '\',\'' + movieId + '\')">' +
-            '<span class="time-btn__time">' + s.time + '</span>' +
-            '<span class="time-btn__info">' + s.info + '</span>' +
-            '</button>';
-        }).join('');
+        block.className = 'sched-block';
 
-        block.innerHTML =
-          '<div class="schedule-theater__header">' +
-            '<span class="schedule-theater__name">' + tname + ' Theater</span>' +
-            '<span class="schedule-theater__badge">' + seats + '</span>' +
+        // Theater header
+        var header = document.createElement('div');
+        header.className = 'sched-block__header';
+        header.innerHTML =
+          '<div>' +
+            '<div class="sched-block__type">' + theater.type + '</div>' +
+            '<div class="sched-block__hall">' + theater.hall + '</div>' +
           '</div>' +
-          '<div class="time-slots">' + slots + '</div>';
-        grid.appendChild(block);
-      });
-    }
+          '<div class="sched-block__cap">' + theater.cap + '</div>';
+        block.appendChild(header);
 
-    // ── Date-first mode ───────────────────────────────────────────────
-    function updateDateHint(date) {
-      document.getElementById('selected-date-hint').textContent =
-        months[date.getMonth()] + date.getDate() + '日（' + days[date.getDay()] + '）';
-      var booking = JSON.parse(localStorage.getItem('hal_booking') || '{}');
-      booking.date      = date.toISOString().split('T')[0];
-      booking.dateLabel = months[date.getMonth()] + date.getDate() + '日（' + days[date.getDay()] + '）';
-      localStorage.setItem('hal_booking', JSON.stringify(booking));
-    }
+        // Movie entries
+        entries.forEach(function(entry) {
+          var timesHtml = entry.showtimes.map(function(st) {
+            if (st.taken) {
+              return '<span class="sched-time sched-time--taken">' +
+                '<span class="sched-time__clock">' + st.time + '</span>' +
+                '<span class="sched-time__avail">満席</span>' +
+                '</span>';
+            }
+            var fewClass = st.seats <= 30 ? ' sched-time--few' : '';
+            return '<a class="sched-time' + fewClass + '" href="#"' +
+              ' data-theater="' + theater.id + '"' +
+              ' data-screen="' + entry.screen + '"' +
+              ' data-time="' + st.time + '"' +
+              ' data-movie-id="' + entry.movieId + '"' +
+              ' data-movie-title="' + entry.title.replace(/"/g, '&quot;') + '">' +
+              '<span class="sched-time__clock">' + st.time + '</span>' +
+              '<span class="sched-time__avail">残席' + st.seats + '</span>' +
+              '</a>';
+          }).join('');
 
-    // Movie filter in date mode
-    document.querySelectorAll('#movie-filter .filter-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('#movie-filter .filter-btn').forEach(function(b) { b.classList.remove('active'); });
-        this.classList.add('active');
-        var cat = this.dataset.movie;
-        document.querySelectorAll('#schedule-grid-date .time-btn').forEach(function(tb) {
-          tb.style.display = (cat === 'all' || tb.dataset.movie === cat) ? '' : 'none';
+          var entryEl = document.createElement('div');
+          entryEl.className = 'sched-entry';
+          entryEl.innerHTML =
+            '<a class="sched-entry__poster" href="movie-detail.html?id=' + entry.movieId + '" style="background-image:url(\'' + entry.poster + '\')"></a>' +
+            '<div>' +
+              '<div class="sched-entry__genre">' + entry.genre + '</div>' +
+              '<a class="sched-entry__title" href="movie-detail.html?id=' + entry.movieId + '">' + entry.title + '</a>' +
+              '<div class="sched-entry__meta">' +
+                '<span>' + entry.duration + '</span>' +
+                '<span class="sched-entry__meta-dot"></span>' +
+                '<span>' + entry.format + '</span>' +
+                '<span class="sched-entry__meta-dot"></span>' +
+                '<span>' + entry.screen + '</span>' +
+              '</div>' +
+              '<div class="sched-times">' + timesHtml + '</div>' +
+            '</div>';
+          block.appendChild(entryEl);
         });
+
+        container.appendChild(block);
+      });
+
+      // Attach booking listeners
+      container.querySelectorAll('.sched-time[data-theater]').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+          e.preventDefault();
+          var theaterMap = { starry: 'Starry', abyss: 'Abyss', standard: 'Standard' };
+          var booking = {
+            theater:    theaterMap[this.dataset.theater],
+            screen:     this.dataset.screen,
+            time:       this.dataset.time,
+            movieId:    this.dataset.movieId,
+            movieTitle: this.dataset.movieTitle,
+            date:       selectedDate.toISOString().split('T')[0],
+            dateLabel:  MONTHS[selectedDate.getMonth()] + selectedDate.getDate() + '日（' + DAYS[selectedDate.getDay()] + '）'
+          };
+          localStorage.setItem('hal_booking', JSON.stringify(booking));
+          window.location.href = 'seats.html';
+        });
+      });
+
+      emptyEl.style.display = anyVisible ? 'none' : '';
+    }
+
+    // ── Theater filter ────────────────────────────────────────────────
+    document.querySelectorAll('#theater-filter .filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('#theater-filter .filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        activeTheater = this.dataset.theater;
+        renderSchedule();
       });
     });
 
-    // ── pickTime (both modes) ─────────────────────────────────────────
-    function pickTime(theater, screen, time, movieTitle, movieId) {
-      var booking = JSON.parse(localStorage.getItem('hal_booking') || '{}');
-      if (!booking.dateLabel) {
-        booking.date      = selectedDateObj.toISOString().split('T')[0];
-        booking.dateLabel = months[selectedDateObj.getMonth()] + selectedDateObj.getDate() + '日（' + days[selectedDateObj.getDay()] + '）';
-      }
-      booking.theater    = theater;
-      booking.screen     = screen;
-      booking.time       = time;
-      booking.movieTitle = booking.movieTitle || movieTitle;
-      booking.movieId    = booking.movieId    || movieId;
-      localStorage.setItem('hal_booking', JSON.stringify(booking));
-      window.location.href = 'seats.html';
-    }
-
     // ── Init ──────────────────────────────────────────────────────────
-    (function init() {
-      // Build date strip for date mode
-      buildDateStrip('date-strip-date', updateDateHint);
-      updateDateHint(today);
-
-      // Check URL params and localStorage for pre-selection
-      var params  = new URLSearchParams(window.location.search);
-      var urlMode = params.get('mode');
-      var urlId   = params.get('movieId');
-
-      var stored  = JSON.parse(localStorage.getItem('hal_booking') || '{}');
-      var storedId = stored.movieId;
-
-      if (urlId || storedId) {
-        var id = urlId || storedId;
-        selectMode('movie');
-        selectMovie(id);
-      } else if (urlMode === 'date') {
-        selectMode('date');
-      } else {
-        selectMode('movie');
-      }
-    })();
+    buildDateStrip();
+    updateDateLabel();
+    renderSchedule();
   </script>
 </body>
 </html>
