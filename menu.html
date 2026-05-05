@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | 料金・メニュー</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <style>
+    /* ── Menu image cards ────────────────────────────────────────── */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .menu-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 0 1rem;
+    }
+
+    .menu-section__body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      align-items: center;
+    }
+
+    .menu-section:nth-child(even) .menu-section__body {
+      flex-direction: row-reverse;
+    }
+
+    .menu-section__title {
+      font-size: 1.3rem;
+      letter-spacing: 0.15em;
+      color: #1a4080;
+      margin: 0;
+      font-family: "Zen Old Mincho", serif;
+      font-weight: bold;
+    }
+
+    .menu-section:nth-child(even) .menu-section__title {
+      text-align: right;
+    }
+
+    .menu-section__desc {
+      flex: auto;
+      color: #060e22;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      line-height: 1.85;
+      margin: 0 0 0 1.2rem;
+      width: fit-content;
+      min-width: fit-content;
+    }
+
+    .menu-img-card {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid rgba(200,164,91,0.35);
+      box-shadow: 0 8px 28px rgba(10,22,40,0.15);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .menu-img-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 52px rgba(10,22,40,0.25);
+    }
+
+    .menu-img-card--wide {
+      grid-column: auto;
+    }
+
+    .menu-img-card img {
+      width: 650px;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .menu-img-card__label {
+      display: none;
+    }
+
+    .menu-img-card__icon,
+    .menu-img-card__text,
+    .menu-img-card__tag,
+    .menu-img-card__name {
+      display: none;
+    }
+
+    /* ── Ticket section layout ───────────────────────────────────── */
+    .ticket-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      align-items: start;
+      margin: 0 1rem;
+    }
+
+    .ticket-note-panel {
+      flex: 1;
+      width: fit-content;
+      min-width: fit-content;
+      border-radius: 10px;
+      background: linear-gradient(155deg, #060e22, #0b2249 48%, #1a4080);
+      color: white;
+      padding: 32px 40px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(200,164,91,0.22);
+      box-shadow: 0 20px 52px rgba(6,13,31,0.28);
+    }
+
+    .ticket-note-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 90% 10%, rgba(200,164,91,0.14), transparent 55%);
+      pointer-events: none;
+    }
+
+    .ticket-note-panel > * { position: relative; z-index: 1; }
+
+    .ticket-note-panel__eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(200,164,91,0.8);
+      margin-bottom: 14px;
+    }
+
+    .ticket-note-panel__title {
+      font-size: 22px;
+      letter-spacing: 0.1em;
+      margin: 0 0 18px;
+      color: white;
+    }
+
+    .ticket-note-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .ticket-note-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.04em;
+      line-height: 1.65;
+    }
+
+    .ticket-note-list li::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold-500);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .premium-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 24px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: rgba(200,164,91,0.12);
+      border: 1px solid rgba(200,164,91,0.28);
+    }
+
+    .premium-badge__icon {
+      color: var(--gold-500);
+    }
+
+    .premium-badge__text {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .premium-badge__price {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      color: var(--gold-300);
+      margin-left: auto;
+    }
+
+    .menu-img-card { cursor: pointer; }
+
+    @media (max-width: 760px) {
+      .ticket-layout { grid-template-columns: 1fr; }
+      .menu-grid { gap: 32px; }
+      .menu-section__body { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .menu-grid { gap: 24px; }
+      .menu-section__title { font-size: 18px; }
+    }
+
+    /* ── Local nav ───────────────────────────────────────────────── */
+    .local-nav {
+      position: sticky;
+      top: 82px;
+      margin-bottom: 1rem;
+      z-index: 15;
+      background: #ffffffb3;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(200,164,91,0.14);
+      box-shadow: 0 4px 16px rgba(10,22,40,0.06);
+    }
+
+    .local-nav__inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: stretch;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .local-nav__inner::-webkit-scrollbar { display: none; }
+
+    .local-nav__item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 14px 16px;
+      font-size: 13px;
+      letter-spacing: 0.07em;
+      color: var(--ink-700);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color 0.15s ease, border-color 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .local-nav__item svg { opacity: 0.65; transition: opacity 0.15s; }
+
+    .local-nav__item:hover { color: var(--ink-900); }
+    .local-nav__item:hover svg { opacity: 1; }
+
+    .local-nav__item.is-active {
+      color: var(--gold-600);
+      border-bottom-color: var(--gold-500);
+      font-weight: 600;
+    }
+
+    .local-nav__item.is-active svg { opacity: 1; color: var(--gold-600); }
+
+    .local-nav__sep {
+      width: 1px;
+      background: rgba(200,164,91,0.18);
+      align-self: stretch;
+      margin: 10px 4px;
+      flex-shrink: 0;
+    }
+
+    /* Scroll offset so sticky navs don't cover headings */
+    #section-ticket, #section-menu, #popcorn, #drink, #food, #sweets, #set {
+      scroll-margin-top: 148px;
+    }
+
+    /* ── Lightbox ─────────────────────────────────────────────────── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s ease;
+    }
+
+    .lightbox.is-open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(3, 7, 20, 0.92);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .lightbox__inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      max-width: min(92vw, 960px);
+    }
+
+    .lightbox__img {
+      max-width: 100%;
+      max-height: calc(85vh - 60px);
+      object-fit: contain;
+      border-radius: 14px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.55);
+      display: block;
+      will-change: transform, opacity;
+    }
+
+    .lightbox__caption {
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lightbox__caption-tag {
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(200,164,91,0.85);
+    }
+
+    .lightbox__caption-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(200,164,91,0.4);
+      flex-shrink: 0;
+    }
+
+    .lightbox__caption-name {
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .lightbox__close {
+      position: fixed;
+      top: 22px;
+      right: 26px;
+      z-index: 2;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.13);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.85);
+      transition: background 0.15s, transform 0.15s;
+    }
+
+    .lightbox__close:hover {
+      background: rgba(255,255,255,0.15);
+      transform: scale(1.1);
+    }
+
+    .lightbox__nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(200,164,91,0.22);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.85);
+      transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    }
+
+    .lightbox__nav:hover {
+      background: rgba(200,164,91,0.15);
+      border-color: rgba(200,164,91,0.48);
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .lightbox__nav--prev { left: 22px; }
+    .lightbox__nav--next { right: 22px; }
+
+    .lightbox__counter {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      color: rgba(255,255,255,0.45);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    @media (max-width: 600px) {
+      .lightbox__nav--prev { left: 10px; }
+      .lightbox__nav--next { right: 10px; }
+      .lightbox__close { top: 14px; right: 14px; }
+    }
+
+    /* ── Back to top ─────────────────────────────────────────────── */
+    .back-to-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 50;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0b2249, #1a4080);
+      border: 1px solid rgba(200,164,91,0.45);
+      box-shadow: 0 8px 20px #060d1f6f;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(200,164,91,0.9);
+      opacity: 0;
+      transform: translateY(14px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .back-to-top.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .back-to-top:hover {
+      box-shadow: 0 2px 28px #001d2e61, 0 -1px 22px #001d2e61;
+      border-color: rgba(200,164,91,0.75);
+      transition: all 0.3s ease;
+    }
+
+    @media (max-width: 480px) {
+      .back-to-top { bottom: 18px; right: 18px; width: 44px; height: 44px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="menu.html">料金・メニュー</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="section__hint">Pricing &amp; Menu</div>
+      <h1 class="page-hero__title">料金・メニュー</h1>
+      <p class="page-hero__lead">チケット料金とシアター内でお楽しみいただけるフード＆ドリンクのご案内です。</p>
+    </section>
+
+    <!-- Local Navigation -->
+    <nav class="local-nav" id="local-nav" aria-label="ページ内ナビゲーション">
+      <div class="local-nav__inner">
+        <a class="local-nav__item is-active" href="#section-ticket">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          チケット料金
+        </a>
+        <div class="local-nav__sep"></div>
+        <a class="local-nav__item" href="#popcorn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3m8-3v3"/><path d="M5 5h14l-1.5 14h-11z"/><path d="M9 11h6"/></svg>
+          ポップコーン
+        </a>
+        <a class="local-nav__item" href="#drink">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/></svg>
+          ドリンク
+        </a>
+        <a class="local-nav__item" href="#food">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="2" x2="8" y2="22"/><path d="M5 2v7a3 3 0 0 0 6 0V2"/><line x1="17" y1="2" x2="17" y2="22"/></svg>
+          フード
+        </a>
+        <a class="local-nav__item" href="#sweets">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          スイーツ
+        </a>
+        <a class="local-nav__item" href="#set">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          お得なセット
+        </a>
+      </div>
+    </nav>
+
+    <!-- Ticket Pricing -->
+    <section class="section" id="section-ticket" style="padding-top: 10px;">
+      <div class="section__head" style="margin-bottom:28px">
+        <div>
+          <div class="section__hint">Ticket Pricing</div>
+          <h2 class="section__title">チケット料金</h2>
+        </div>
+        <a href="schedule.html" class="btn btn--solid" style="font-size:12px;padding:10px 20px">今すぐ予約する</a>
+      </div>
+
+      <div class="ticket-layout">
+        <div class="price-list-panel">
+          <div class="price-list-row">
+            <div>
+              <div class="price-list-row__name">一般</div>
+              <div class="price-list-row__sub">General</div>
+            </div>
+            <div class="price-list-row__right">
+              <span class="price-list-row__amount">1,800</span>
+              <span class="price-list-row__unit">円</span>
+            </div>
+          </div>
+          <div class="price-list-row">
+            <div>
+              <div class="price-list-row__name">大学生等</div>
+              <div class="price-list-row__sub">University / College</div>
+            </div>
+            <div class="price-list-row__right">
+              <span class="price-list-row__amount">1,600</span>
+              <span class="price-list-row__unit">円</span>
+            </div>
+          </div>
+          <div class="price-list-row">
+            <div>
+              <div class="price-list-row__name">中学・高校生</div>
+              <div class="price-list-row__sub">Junior High / High School</div>
+            </div>
+            <div class="price-list-row__right">
+              <span class="price-list-row__amount">1,400</span>
+              <span class="price-list-row__unit">円</span>
+            </div>
+          </div>
+          <div class="price-list-row">
+            <div>
+              <div class="price-list-row__name">小学生・幼児</div>
+              <div class="price-list-row__sub">Children</div>
+            </div>
+            <div class="price-list-row__right">
+              <span class="price-list-row__amount">1,000</span>
+              <span class="price-list-row__unit">円</span>
+            </div>
+          </div>
+          <div class="price-list-footer">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Starry / Abyss シアターはプレミアム席あり（+¥500）
+          </div>
+        </div>
+
+        <div class="ticket-note-panel">
+          <div class="ticket-note-panel__eyebrow">Notes</div>
+          <h3 class="ticket-note-panel__title">ご購入前にご確認ください</h3>
+          <ul class="ticket-note-list">
+            <li>チケット料金は税込です。</li>
+            <li>大学生等割引には、学生証のご提示が必要です。</li>
+            <li>中学・高校生割引には、学生証または生徒手帳のご提示が必要です。</li>
+            <li>小学生・幼児の方は保護者の同伴が必要な作品があります。</li>
+            <li>オンライン購入後のキャンセルは上映24時間前まで可能です。</li>
+            <li>電子チケットは当日スマートフォンで入場ゲートにご提示ください。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Food & Drinks Menu -->
+    <section class="section" id="section-menu" style="padding-top: 0;">
+      <div class="section__head" style="margin-bottom:28px">
+        <div>
+          <div class="section__hint">Food &amp; Drinks</div>
+          <h2 class="section__title">フード＆ドリンク</h2>
+        </div>
+      </div>
+
+      <div class="menu-grid">
+
+        <!-- Popcorn -->
+        <div class="menu-section" id="popcorn">
+          <h3 class="menu-section__title">ポップコーン</h3>
+          <div class="menu-section__body">
+            <div class="menu-img-card">
+              <img src="images/menu/popcorn.png" alt="ポップコーン" />
+              <div class="menu-img-card__label" style="display:none;">
+                <div class="menu-img-card__icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3m8-3v3"/><path d="M5 5h14l-1.5 14h-11z"/><path d="M9 11h6"/></svg>
+                </div>
+                <div class="menu-img-card__text">
+                  <span class="menu-img-card__tag">Snack</span>
+                  <span class="menu-img-card__name">ポップコーン</span>
+                </div>
+              </div>
+            </div>
+            <p class="menu-section__desc">
+              王道の塩から塩バター、キャラメル、塩キャラメル、<br>
+              ミックスまで、選べる組み合わせが豊富。<br><br>
+              お子様やおひとりさま向けの小さいサイズも<br>
+              ご用意しています。
+            </p>
+          </div>
+        </div>
+
+        <!-- Drinks -->
+        <div class="menu-section" id="drink">
+          <h3 class="menu-section__title">ドリンク</h3>
+          <div class="menu-section__body">
+            <div class="menu-img-card">
+              <img src="images/menu/drink.png" alt="ドリンク" />
+              <div class="menu-img-card__label" style="display:none;">
+                <div class="menu-img-card__icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+                </div>
+                <div class="menu-img-card__text">
+                  <span class="menu-img-card__tag">Drink</span>
+                  <span class="menu-img-card__name">ドリンク</span>
+                </div>
+              </div>
+            </div>
+            <p class="menu-section__desc">
+              コーラやレモンスカッシュなどのアイスドリンク、<br>
+              ホットコーヒーやラテまで種類が豊富。<br><br>
+              さらに星空をイメージした「Stella Horizon」と<br>
+              深海の「Deep Sea Melody」のオリジナルドリンクも<br>
+              ご用意しています。
+            </p>
+          </div>
+        </div>
+
+        <!-- Food -->
+        <div class="menu-section" id="food">
+          <h3 class="menu-section__title">フード</h3>
+          <div class="menu-section__body">
+            <div class="menu-img-card">
+              <img src="images/menu/food.png" alt="フード" />
+              <div class="menu-img-card__label" style="display:none;">
+                <div class="menu-img-card__icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="2" x2="8" y2="22"/><path d="M5 2v7a3 3 0 0 0 6 0V2"/><line x1="17" y1="2" x2="17" y2="22"/></svg>
+                </div>
+                <div class="menu-img-card__text">
+                  <span class="menu-img-card__tag">Food</span>
+                  <span class="menu-img-card__name">フード</span>
+                </div>
+              </div>
+            </div>
+            <p class="menu-section__desc">
+              種類豊富なラインナップ。<br>
+              食べ比べたり、シェアしたり、<br>
+              そのときの気分に合わせて楽しめる。<br><br>
+              小腹を満たすサイズ展開もそろっています。
+            </p>
+          </div>
+        </div>
+
+        <!-- Sweets -->
+        <div class="menu-section" id="sweets">
+          <h3 class="menu-section__title">スイーツ</h3>
+          <div class="menu-section__body">
+            <div class="menu-img-card menu-img-card--wide">
+              <img src="images/menu/sweets.png" alt="スイーツ" />
+              <div class="menu-img-card__label" style="display:none;">
+                <div class="menu-img-card__icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </div>
+                <div class="menu-img-card__text">
+                  <span class="menu-img-card__tag">Sweets</span>
+                  <span class="menu-img-card__name">スイーツ</span>
+                </div>
+              </div>
+            </div>
+            <p class="menu-section__desc">
+              チュロス、クレープ、アイス＆ソフトなど、<br>
+              映画時間にぴったりの甘いメニューが勢ぞろい。<br><br>
+              ドリンク同様に、<br>
+              星空を閉じ込めた「星空シアターパルフェ」と<br>
+              深海のきらめきを映した「深海のパールサンデー」の<br>
+              オリジナルスイーツもお楽しみいただけます。
+            </p>
+          </div>
+        </div>
+
+        <!-- Set -->
+        <div class="menu-section" id="set">
+          <h3 class="menu-section__title">お得なセット</h3>
+          <div class="menu-section__body">
+            <div class="menu-img-card">
+              <img src="images/menu/set.png" alt="お得なセットメニュー" />
+              <div class="menu-img-card__label" style="display:none;">
+                <div class="menu-img-card__icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <div class="menu-img-card__text">
+                  <span class="menu-img-card__tag">Recommended</span>
+                  <span class="menu-img-card__name">お得なセット</span>
+                </div>
+              </div>
+            </div>
+            <p class="menu-section__desc">
+              ポップコーンセット、ホットドッグセット、<br>
+              ナチョスセット、スイーツセットまで、<br>
+              お好きなメニューとドリンクを組み合わせたセットを<br>
+              ご用意。<br><br>
+              手軽に楽しめる定番から、シアターオリジナルの<br>
+              スペシャルセットまで。
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <p style="margin:2.5rem 2rem 0 2rem;font-size:11px;color:var(--ink-500);letter-spacing:0.06em;line-height:1.8">
+        ※ 表示価格は税込です。メニューの内容・価格は予告なく変更する場合があります。<br>
+        ※ フード＆ドリンクはシアター内へお持ち込みいただけます。
+      </p>
+    </section>
+
+    <!-- Back to top -->
+    <button class="back-to-top" id="back-to-top" aria-label="ページトップへ戻る">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="メニュー画像">
+      <div class="lightbox__backdrop" id="lightbox-backdrop"></div>
+      <div class="lightbox__counter" id="lightbox-counter"></div>
+      <button class="lightbox__close" id="lightbox-close" aria-label="閉じる">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <button class="lightbox__nav lightbox__nav--prev" id="lightbox-prev" aria-label="前へ">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="lightbox__nav lightbox__nav--next" id="lightbox-next" aria-label="次へ">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="lightbox__inner">
+        <img class="lightbox__img" id="lightbox-img" src="" alt="" />
+        <div class="lightbox__caption">
+          <span class="lightbox__caption-tag" id="lightbox-tag"></span>
+          <span class="lightbox__caption-dot"></span>
+          <span class="lightbox__caption-name" id="lightbox-name"></span>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+  <script>
+    (function () {
+      var ITEMS = [
+        { src: 'images/menu/popcorn.png', tag: 'Snack',       name: 'ポップコーン' },
+        { src: 'images/menu/drink.png',   tag: 'Drink',       name: 'ドリンク' },
+        { src: 'images/menu/food.png',    tag: 'Food',        name: 'フード' },
+        { src: 'images/menu/sweets.png',  tag: 'Sweets',      name: 'スイーツ' },
+        { src: 'images/menu/set.png',     tag: 'Recommended', name: 'お得なセット' }
+      ];
+
+      var current = 0;
+      var lb       = document.getElementById('lightbox');
+      var lbImg    = document.getElementById('lightbox-img');
+      var lbTag    = document.getElementById('lightbox-tag');
+      var lbName   = document.getElementById('lightbox-name');
+      var lbCtr    = document.getElementById('lightbox-counter');
+
+      function updateCaption() {
+        var item = ITEMS[current];
+        lbTag.textContent  = item.tag;
+        lbName.textContent = item.name;
+        lbCtr.textContent  = (current + 1) + ' / ' + ITEMS.length;
+      }
+
+      function openLightbox(idx) {
+        current = idx;
+        lbImg.src = ITEMS[idx].src;
+        lbImg.alt = ITEMS[idx].name;
+        updateCaption();
+        lb.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lb.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+
+      function navigate(dir) {
+        var outX = dir > 0 ? '-90px' : '90px';
+        var inX  = dir > 0 ?  '90px' : '-90px';
+
+        lbImg.style.transition = 'transform 0.22s ease, opacity 0.22s ease';
+        lbImg.style.transform  = 'translateX(' + outX + ')';
+        lbImg.style.opacity    = '0';
+
+        setTimeout(function () {
+          current = (current + dir + ITEMS.length) % ITEMS.length;
+          lbImg.src = ITEMS[current].src;
+          lbImg.alt = ITEMS[current].name;
+          updateCaption();
+
+          lbImg.style.transition = 'none';
+          lbImg.style.transform  = 'translateX(' + inX + ')';
+          lbImg.style.opacity    = '0';
+
+          lbImg.offsetHeight; // force reflow
+
+          lbImg.style.transition = 'transform 0.22s ease, opacity 0.22s ease';
+          lbImg.style.transform  = 'translateX(0)';
+          lbImg.style.opacity    = '1';
+        }, 200);
+      }
+
+      document.querySelectorAll('.menu-img-card').forEach(function (card, idx) {
+        card.addEventListener('click', function () { openLightbox(idx); });
+      });
+
+      document.getElementById('lightbox-backdrop').addEventListener('click', closeLightbox);
+      document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+      document.getElementById('lightbox-prev').addEventListener('click', function () { navigate(-1); });
+      document.getElementById('lightbox-next').addEventListener('click', function () { navigate(1); });
+
+      document.addEventListener('keydown', function (e) {
+        if (!lb.classList.contains('is-open')) return;
+        if (e.key === 'Escape')     closeLightbox();
+        if (e.key === 'ArrowLeft')  navigate(-1);
+        if (e.key === 'ArrowRight') navigate(1);
+      });
+    })();
+
+    // ── Back to top ───────────────────────────────────────────────────
+    (function () {
+      var btn = document.getElementById('back-to-top');
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 400) {
+          btn.classList.add('is-visible');
+        } else {
+          btn.classList.remove('is-visible');
+        }
+      }, { passive: true });
+      btn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+
+    // ── Local nav active state (IntersectionObserver) ────────────────
+    (function () {
+      var navItems = document.querySelectorAll('.local-nav__item');
+      var targets  = ['section-ticket', 'popcorn', 'drink', 'food', 'sweets', 'set'];
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var id = entry.target.id;
+          navItems.forEach(function (item) {
+            var href = item.getAttribute('href');
+            if (href === '#' + id) {
+              item.classList.add('is-active');
+            } else {
+              item.classList.remove('is-active');
+            }
+          });
+        });
+      }, { rootMargin: '-15% 0px -75% 0px', threshold: 0 });
+
+      targets.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    })();
+  </script>
+</body>
+</html>
