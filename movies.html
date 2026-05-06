@@ -15,6 +15,218 @@
   <script src="js/parallax-bg.js" defer></script>
   <script src="js/carousel.js" defer></script>
   <script src="js/nav.js" defer></script>
+  <style>
+    /* ── Movies Hero ─────────────────────────────────────── */
+    .movies-hero {
+      position: relative;
+      background: linear-gradient(180deg, #050c1c 0%, #091628 55%, #0d1e36 100%);
+      overflow: hidden;
+    }
+    .movies-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 60% at 50% 0%, rgba(27, 74, 138, 0.42) 0%, transparent 68%),
+        radial-gradient(ellipse 50% 35% at 88% 85%, rgba(200, 164, 91, 0.1) 0%, transparent 58%),
+        radial-gradient(ellipse 40% 30% at 8% 75%, rgba(18, 50, 110, 0.16) 0%, transparent 58%);
+      pointer-events: none;
+    }
+    .movies-hero::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, rgba(244, 247, 251, 0.18));
+      pointer-events: none;
+    }
+    .movies-hero__header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 64px 20px 0;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .movies-hero__eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold-500);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+    }
+    .movies-hero__eyebrow::before,
+    .movies-hero__eyebrow::after {
+      content: "";
+      width: 54px;
+      height: 1px;
+      flex-shrink: 0;
+    }
+    .movies-hero__eyebrow::before {
+      background: linear-gradient(90deg, transparent, var(--gold-500));
+    }
+    .movies-hero__eyebrow::after {
+      background: linear-gradient(90deg, var(--gold-500), transparent);
+    }
+    .movies-hero__title {
+      font-size: 45px;
+      letter-spacing: 0.18em;
+      color: #ffffff;
+      text-shadow: 0 10px 40px rgba(6, 13, 31, 0.6);
+    }
+    .movies-hero__sub {
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.44);
+      margin: 0;
+    }
+    #top-carousel {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── Now Showing Grid ─────────────────────────────────── */
+    .film-grid--movies {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 22px;
+    }
+    .film-card--portrait {
+      display: flex;
+      flex-direction: column;
+      border-radius: 8px;
+      overflow: hidden;
+      background: linear-gradient(170deg, #ffffff 0%, #f2f6fb 100%);
+      border: 1px solid rgba(200, 164, 91, 0.16);
+      box-shadow: 0 12px 32px rgba(10, 22, 40, 0.1);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.28s ease, box-shadow 0.28s ease;
+    }
+    .film-card--portrait:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 56px rgba(10, 22, 40, 0.18);
+    }
+    .film-card--portrait .film-card__poster {
+      height: 300px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .film-card--portrait .film-card__poster-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(6, 13, 31, 0.65) 0%, rgba(6, 13, 31, 0.05) 50%, transparent 100%);
+    }
+    .film-card--portrait .film-card__badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #091638a7;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid #a0730b75;
+    }
+    .film-card--portrait .film-card__badge--status {
+      left: auto;
+      right: 12px;
+      background: rgba(11, 34, 73, 0.72);
+      border-color: rgba(200, 164, 91, 0.5);
+      color: var(--gold-300);
+    }
+    .film-card--portrait .film-card__body {
+      padding: 0.55rem 18px 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+    .film-card--portrait .film-card__title {
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      line-height: 1.45;
+      color: var(--ink-900);
+      font-weight: 600;
+      display: -webkit-box;
+      line-clamp: 1;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .film-card--portrait .film-card__desc {
+      font-size: 12px;
+      line-height: 1.75;
+      color: #4c5e7f;
+      margin: 0;
+      display: -webkit-box;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .film-card--portrait .film-card__footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .film-card--portrait .film-card__meta {
+      margin-left: 0.2rem;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--ink-500);
+      font-family: "Barlow Condensed", sans-serif;
+    }
+    .film-card--portrait .film-card__cta {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--gold-600);
+      white-space: nowrap;
+    }
+
+    /* ── Genre Filter ─────────────────────────────────────── */
+    .movies-filter {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* ── Divider ──────────────────────────────────────────── */
+    .section-divider {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .section-divider hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(200, 164, 91, 0.28) 28%, rgba(200, 164, 91, 0.28) 72%, transparent 100%);
+    }
+
+    /* ── Responsive ───────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .movies-hero__title { font-size: 36px; }
+      .film-grid--movies { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .film-card--portrait .film-card__poster { height: 200px; }
+    }
+    @media (max-width: 400px) {
+      .film-grid--movies { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
   <div class="bg-stack" aria-hidden="true">
@@ -47,47 +259,138 @@
       </div>
     </header>
 
-    <section class="page-hero">
-      <div class="section__hint">Movie Lineup</div>
-      <h1 class="page-hero__title">上映中・公開予定</h1>
-      <p class="page-hero__lead">作品情報は後日登録予定。現在はレイアウトの確認用サンプルです。</p>
-    </section>
+    <!-- ── Dark Cinematic Hero + 3D Carousel ── -->
+    <div class="movies-hero">
+      <div class="movies-hero__header">
+        <div class="movies-hero__eyebrow">Movie Lineup</div>
+        <h1 class="movies-hero__title">上映ラインナップ</h1>
+      </div>
+      <div id="top-carousel">
+        <div class="carousel-wrapper">
+          <div class="container">
+            <div class="carousel">
+              <div class="item a"></div>
+              <div class="item b"></div>
+              <div class="item c"></div>
+              <div class="item d"></div>
+              <div class="item e"></div>
+              <div class="item f"></div>
+              <div class="item g"></div>
+              <div class="item h"></div>
+              <div class="item i"></div>
+              <div class="item j"></div>
+              <div class="item k"></div>
+              <div class="item l"></div>
+              <div class="item m"></div>
+              <div class="item n"></div>
+              <div class="item o"></div>
+              <div class="item p"></div>
+              <div class="item q"></div>
+              <div class="item r"></div>
+              <div class="item s"></div>
+              <div class="item t"></div>
+              <div class="item u"></div>
+              <div class="item v"></div>
+            </div>
+          </div>
+          <div class="next">Next</div>
+          <div class="prev">Prev</div>
+        </div>
+      </div>
+      <p class="movies-hero__hint">カードをクリックで詳細・予約へ</p>
+    </div>
 
-    <section class="section" id="top-carousel">
+    <!-- ── Now Showing ── -->
+    <section class="section">
       <div class="section__head">
         <div>
-          <div class="section__hint">Featured</div>
-          <h2 class="section__title">ピックアップ</h2>
+          <div class="section__hint">Now Showing</div>
+          <h2 class="section__title">上映中</h2>
+        </div>
+        <div class="movies-filter" id="theater-filter">
+          <button class="filter-btn active" data-theater="all">すべて</button>
+          <button class="filter-btn" data-theater="Starry">Starry</button>
+          <button class="filter-btn" data-theater="Standard">Standard</button>
+          <button class="filter-btn" data-theater="Abyss">Abyss</button>
         </div>
       </div>
-      <div class="carousel-wrapper">
-        <div class="container">
-          <div class="carousel">
-            <div class="item a"></div>
-            <div class="item b"></div>
-            <div class="item c"></div>
-            <div class="item d"></div>
-            <div class="item e"></div>
-            <div class="item f"></div>
-            <div class="item g"></div>
-            <div class="item h"></div>
-            <div class="item i"></div>
-            <div class="item j"></div>
-            <div class="item k"></div>
-            <div class="item l"></div>
-            <div class="item m"></div>
-            <div class="item n"></div>
-            <div class="item o"></div>
-            <div class="item p"></div>
-            <div class="item q"></div>
-            <div class="item r"></div>
+      <div class="film-grid film-grid--movies" id="now-showing-grid">
+        <a class="film-card film-card--portrait" href="movie-detail.html?id=thank-you-chuck" data-theater="Starry">
+          <div class="film-card__poster" style="background-image: url('images/thumbnail/thumb1.jpg')">
+            <div class="film-card__poster-overlay"></div>
+            <div class="film-card__badge">ミステリー</div>
           </div>
-        </div>
-        <div class="next">Next</div>
-        <div class="prev">Prev</div>
+          <div class="film-card__body">
+            <div class="film-card__title">[字幕] サンキュー、チャック</div>
+            <!-- <p class="film-card__desc">世界の終わりに明かされる、愛すべき贈り物とは？スティーヴン・キング原作のミステリー。</p> -->
+            <div class="film-card__footer">
+              <div class="film-card__meta">2h 10m · Starry</div>
+              <span class="film-card__cta">詳細 →</span>
+            </div>
+          </div>
+        </a>
+        <a class="film-card film-card--portrait" href="movie-detail.html?id=why-write-love-letters" data-theater="Standard">
+          <div class="film-card__poster" style="background-image: url('images/thumbnail/thumb2.jpg')">
+            <div class="film-card__poster-overlay"></div>
+            <div class="film-card__badge">ドラマ</div>
+          </div>
+          <div class="film-card__body">
+            <div class="film-card__title">人はなぜラブレターを書くのか</div>
+            <!-- <p class="film-card__desc">24年前の記憶と現在が交差するとき、一通の手紙が奇跡を起こす。綾瀬はるか主演。</p> -->
+            <div class="film-card__footer">
+              <div class="film-card__meta">1h 58m · Standard</div>
+              <span class="film-card__cta">詳細 →</span>
+            </div>
+          </div>
+        </a>
+        <a class="film-card film-card--portrait" href="movie-detail.html?id=placeholder-1" data-theater="Abyss">
+          <div class="film-card__poster" style="background-image: url('images/thumbnail/thumb3.jpg')">
+            <div class="film-card__poster-overlay"></div>
+            <div class="film-card__badge">アドベンチャー</div>
+          </div>
+          <div class="film-card__body">
+            <div class="film-card__title">夜明けの航海</div>
+            <!-- <p class="film-card__desc">海を渡る若者たちの群像劇。嵐の夜、小さな船に乗り合わせた五人が辿り着く先とは。</p> -->
+            <div class="film-card__footer">
+              <div class="film-card__meta">2h 02m · Abyss</div>
+              <span class="film-card__cta">詳細 →</span>
+            </div>
+          </div>
+        </a>
+        <a class="film-card film-card--portrait" href="movie-detail.html?id=placeholder-2" data-theater="Standard">
+          <div class="film-card__poster" style="background-image: url('images/thumbnail/thumb4.jpg')">
+            <div class="film-card__poster-overlay"></div>
+            <div class="film-card__badge">音楽</div>
+          </div>
+          <div class="film-card__body">
+            <div class="film-card__title">街角の交響曲</div>
+            <!-- <p class="film-card__desc">廃れかけた楽団が再び息を吹き返す瞬間を、温かいまなざしで描く感動作。</p> -->
+            <div class="film-card__footer">
+              <div class="film-card__meta">1h 45m · Standard</div>
+              <span class="film-card__cta">詳細 →</span>
+            </div>
+          </div>
+        </a>
+        <a class="film-card film-card--portrait" href="movie-detail.html?id=placeholder-1" data-theater="Starry">
+          <div class="film-card__poster" style="background-image: url('images/thumbnail/thumb5.jpg')">
+            <div class="film-card__poster-overlay"></div>
+            <div class="film-card__badge">アドベンチャー</div>
+          </div>
+          <div class="film-card__body">
+            <div class="film-card__title">夜明けの航海 — リバイバル上映</div>
+            <!-- <p class="film-card__desc">大好評につき再上映。Starry Screenで体感する、圧倒的な海と嵐のスペクタクル。</p> -->
+            <div class="film-card__footer">
+              <div class="film-card__meta">2h 02m · Starry</div>
+              <span class="film-card__cta">詳細 →</span>
+            </div>
+          </div>
+        </a>
       </div>
     </section>
 
+    <div class="section-divider"><hr /></div>
+
+    <!-- ── Coming Soon ── -->
     <section class="section">
       <div class="section__head">
         <div>
@@ -95,32 +398,44 @@
           <h2 class="section__title">近日公開</h2>
         </div>
       </div>
-      <div class="film-grid film-grid--editorial">
-        <a class="film-card film-card--compact" href="movie-detail.html?id=placeholder-1" style="text-decoration:none;color:inherit">
-          <div class="film-card__poster film-card__poster--gold">
-            <div class="film-card__badge">SOON</div>
+      <div class="film-grid film-grid--movies">
+        <a class="film-card film-card--portrait" href="movie-detail.html?id=placeholder-1">
+          <div class="film-card__poster" style="background-image: url('images/thumbnail/thumb3.jpg')">
+            <div class="film-card__poster-overlay"></div>
+            <div class="film-card__badge">ドラマ</div>
           </div>
           <div class="film-card__body">
             <div class="film-card__title">夜明けのアトリエ</div>
-            <div class="film-card__meta">1h 54m · Standard</div>
+            <div class="film-card__footer">
+              <div class="film-card__meta">1h 54m · Standard</div>
+              <span class="film-card__cta">詳細 →</span>
+            </div>
           </div>
         </a>
-        <a class="film-card film-card--compact" href="movie-detail.html?id=placeholder-2" style="text-decoration:none;color:inherit">
-          <div class="film-card__poster film-card__poster--abyss">
-            <div class="film-card__badge">NEXT</div>
+        <a class="film-card film-card--portrait" href="movie-detail.html?id=placeholder-2">
+          <div class="film-card__poster" style="background-image: url('images/thumbnail/thumb4.jpg')">
+            <div class="film-card__poster-overlay"></div>
+            <div class="film-card__badge">ミステリー</div>
           </div>
           <div class="film-card__body">
             <div class="film-card__title">潮の記録</div>
-            <div class="film-card__meta">2h 12m · Abyss</div>
+            <div class="film-card__footer">
+              <div class="film-card__meta">2h 12m · Abyss</div>
+              <span class="film-card__cta">詳細 →</span>
+            </div>
           </div>
         </a>
-        <a class="film-card film-card--compact" href="movie-detail.html?id=why-write-love-letters" style="text-decoration:none;color:inherit">
-          <div class="film-card__poster film-card__poster--star">
-            <div class="film-card__badge">PREVIEW</div>
+        <a class="film-card film-card--portrait" href="movie-detail.html?id=why-write-love-letters">
+          <div class="film-card__poster" style="background-image: url('images/thumbnail/thumb5.jpg')">
+            <div class="film-card__poster-overlay"></div>
+            <div class="film-card__badge">音楽</div>
           </div>
           <div class="film-card__body">
             <div class="film-card__title">惑星の庭</div>
-            <div class="film-card__meta">1h 48m · Starry</div>
+            <div class="film-card__footer">
+              <div class="film-card__meta">1h 48m · Starry</div>
+              <span class="film-card__cta">詳細 →</span>
+            </div>
           </div>
         </a>
       </div>
@@ -143,6 +458,20 @@
       </div>
     </footer>
   </div>
+
+  <script>
+    var filterBtns = document.querySelectorAll('#theater-filter .filter-btn');
+    var filmCards  = document.querySelectorAll('#now-showing-grid .film-card--portrait');
+    filterBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        var theater = btn.dataset.theater;
+        filmCards.forEach(function(card) {
+          card.style.display = (theater === 'all' || card.dataset.theater === theater) ? '' : 'none';
+        });
+      });
+    });
+  </script>
 </body>
 </html>
-
