@@ -39,7 +39,7 @@
 }
 
 .hero__panel--left {
-  background-image: url("../images/starry1.png");
+  background-image: url("../images/starry/starry1.png");
   clip-path: polygon(0 0, 94% 0, 6% 100%, 0 100%);
 }
 
@@ -57,7 +57,7 @@
 }
 
 .hero__panel--right {
-  background-image: url("../images/abyss1.png");
+  background-image: url("../images/abyss/abyss1.png");
   clip-path: polygon(94% 0, 100% 0, 100% 100%, 6% 100%);
 }
 

@@ -615,11 +615,11 @@
 }
 
 .theater-card--starry {
-  background-image: url("../images/starry1.png");
+  background-image: url("../images/starry/starry1.png");
 }
 
 .theater-card--abyss {
-  background-image: url("../images/abyss1.png");
+  background-image: url("../images/abyss/abyss1.png");
 }
 
 .theater-card--standard {
@@ -692,11 +692,11 @@
 }
 
 .theater-hero__image--starry {
-  background-image: url("../images/starry1.png");
+  background-image: url("../images/starry/starry1.png");
 }
 
 .theater-hero__image--abyss {
-  background-image: url("../images/abyss1.png");
+  background-image: url("../images/abyss/abyss1.png");
 }
 
 .theater-hero__image--standard {
