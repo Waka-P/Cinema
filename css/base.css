@@ -23,7 +23,7 @@
 html {
   scroll-behavior: smooth;
   position: relative;
-  background: #ffffff;
+  background: #fdfdfd;
 }
 
 html::before,
@@ -43,7 +43,7 @@ html::before {
     linear-gradient(100deg, rgba(10, 35, 80, 0.1) 0%, rgba(10, 35, 80, 0.04) 45%, rgba(10, 35, 80, 0) 100%);
   clip-path: polygon(0 8%, 100% 0, 100% 36%, 0 52%);
   opacity: 0.36;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.12px), 0);
+  transform: translate3d(0, calc(var(--scroll-y) * -0.12px + 100vh), 0);
 }
 
 html::after {
@@ -54,7 +54,7 @@ html::after {
     linear-gradient(88deg, rgba(12, 40, 100, 0.09), rgba(12, 40, 100, 0.01));
   clip-path: polygon(0 18%, 100% 32%, 100% 68%, 0 76%);
   opacity: 0.30;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.10px), 0);
+  transform: translate3d(0, calc(var(--scroll-y) * -0.10px + 110vh), 0);
 }
 
 body {

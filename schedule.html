@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
@@ -15,177 +15,368 @@
   <script src="js/parallax-bg.js" defer></script>
   <script src="js/nav.js" defer></script>
   <style>
-    .sched-block {
-      border-radius: 22px;
-      overflow: hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,0.98), #f4f7fb);
-      border: 1px solid rgba(200,164,91,0.16);
-      box-shadow: 0 8px 28px rgba(10,22,40,0.08);
-      margin-bottom: 20px;
+    /* ── Timeline wrapper ─────────────────────────────────────────── */
+    .tl-wrap {
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(200,164,91,0.35) transparent;
+      margin: 0 -20px;
     }
-    .sched-block__header {
-      padding: 18px 24px;
-      background: linear-gradient(130deg, #080f22, #0b2249 55%, #1a4080);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+    .tl-wrap::-webkit-scrollbar { height: 5px; }
+    .tl-wrap::-webkit-scrollbar-track { background: transparent; }
+    .tl-wrap::-webkit-scrollbar-thumb { background: rgba(200,164,91,0.4); border-radius: 3px; }
+
+    .tl-inner {
+      width: max-content;
+      min-width: 100%;
       position: relative;
-      overflow: hidden;
-    }
-    .sched-block__header::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 90% 50%, rgba(200,164,91,0.12), transparent 55%);
-      pointer-events: none;
-    }
-    .sched-block__header > * { position: relative; z-index: 1; }
-    .sched-block__type {
-      font-size: 10px;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: rgba(200,164,91,0.8);
-      margin-bottom: 4px;
-    }
-    .sched-block__hall {
-      font-size: 20px;
-      letter-spacing: 0.08em;
-    }
-    .sched-block__cap {
-      font-family: "Barlow Condensed", sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.14em;
-      color: rgba(255,255,255,0.45);
-      text-align: right;
+      box-sizing: border-box;
     }
 
-    .sched-entry {
-      display: grid;
-      grid-template-columns: 76px 1fr;
-      gap: 18px;
-      padding: 20px 24px;
-      border-top: 1px solid rgba(200,164,91,0.1);
-      align-items: start;
+    /* ── Sticky axis wrapper (handles vertical sticky) ──────────── */
+    .tl-axis-sticky {
+      position: sticky;
+      z-index: 19;
+      overflow-x: hidden;
+      margin: 0 -20px;
+      transform: translateY(-1px);
     }
-    .sched-entry__poster {
-      width: 76px;
-      height: 108px;
-      border-radius: 10px;
-      background-size: cover;
-      background-position: center;
-      display: block;
-      text-decoration: none;
-      box-shadow: 0 6px 18px rgba(8,20,48,0.22);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    /* ── Time axis ────────────────────────────────────────────────── */
+    .tl-axis {
+      display: flex;
+      border-bottom: 1px solid rgba(200,164,91,0.22);
+      box-sizing: border-box;
+      clip-path: polygon(1% 0, 99% 0, 100% 50%, 99% 100%, 1% 100%, 0% 50%);
+      background-color: rgba(255,255,255,0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .tl-axis__corner {
+      width: 148px;
+      min-width: 148px;
+      padding: 9px 0 9px 2rem;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgb(200, 164, 91);
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      position: sticky;
+      left: 0;
+      z-index: 22;
+      background-color: rgba(255,255,255,0.8);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    .tl-axis__hours {
+      display: flex;
       flex-shrink: 0;
     }
-    .sched-entry__poster:hover {
-      transform: scale(1.04);
-      box-shadow: 0 10px 26px rgba(8,20,48,0.32);
+    .tl-axis__hour {
+      width: 100px;
+      min-width: 100px;
+      padding: 9px 0;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--ink-600, #4c5e7f);
+      border-left: 1px solid rgba(200,164,91,0.2);
+      box-sizing: border-box;
+      text-indent: 5px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
     }
-    .sched-entry__genre {
-      font-size: 10px;
-      letter-spacing: 0.26em;
+
+    /* ── Timeline body ────────────────────────────────────────────── */
+    .tl-body {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ── Theater group ────────────────────────────────────────────── */
+    .tl-group {
+      position: relative;
+      border-radius: 5px 0 0 0;
+      background-color: #fdfdfda2;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+
+    /* Per-theater track tint */
+    .tl-group--starry   .tl-row__track { background: rgba(30,63,122,0.07); }
+    .tl-group--abyss    .tl-row__track { background: rgba(10,61,82,0.07); }
+    .tl-group--standard .tl-row__track { background: rgba(44,74,136,0.05); }
+
+    /* Per-theater label left accent */
+    .tl-group--starry   .tl-row__label { border-left: 3px solid rgba(42,90,168,0.45);  padding-left: 11px; }
+    .tl-group--abyss    .tl-row__label { border-left: 3px solid rgba(18,104,130,0.45); padding-left: 11px; }
+    .tl-group--standard .tl-row__label { border-left: 3px solid rgba(44,74,136,0.45);  padding-left: 11px; }
+
+    /* ── Theater group header ─────────────────────────────────────── */
+    .tl-theater-head {
+      display: flex;
+      height: 32px;
+      border-radius: 5px 0 0 0;
+    }
+
+    .tl-theater-head__label {
+      width: 148px;
+      min-width: 148px;
+      padding: 0 12px 0 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--gold-600);
-      margin-bottom: 5px;
-    }
-    .sched-entry__title {
-      font-size: 16px;
-      letter-spacing: 0.06em;
-      color: var(--ink-900);
-      text-decoration: none;
-      display: block;
-      margin-bottom: 6px;
-      line-height: 1.4;
-      transition: color 0.15s ease;
-    }
-    .sched-entry__title:hover { color: var(--gold-600); }
-    .sched-entry__meta {
+      color: rgba(255,255,255,0.92);
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 11px;
-      color: var(--ink-500);
-      letter-spacing: 0.06em;
-      margin-bottom: 14px;
+      border-radius: 5px 0 0 0;
+      box-sizing: border-box;
+      position: sticky;
+      left: 0;
+      z-index: 6;
     }
-    .sched-entry__meta-dot {
-      width: 3px;
-      height: 3px;
+    .tl-theater-head__dot {
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
-      background: rgba(200,164,91,0.5);
+      background: rgba(255,255,255,0.55);
       flex-shrink: 0;
     }
+    .tl-theater-head__bar {
+      flex-shrink: 0;
+      border-radius: 0 5px 5px 0;
+      box-sizing: border-box;
+    }
 
-    .sched-times { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tl-theater-head--starry .tl-theater-head__label   { background: linear-gradient(90deg, #1e3f7a 0%, #2a5aa8 100%); }
+    .tl-theater-head--starry .tl-theater-head__bar     { background: linear-gradient(90deg, #2a5aa8 0%, rgba(42,90,168,0.18) 45%, transparent 85%); }
+    .tl-theater-head--abyss .tl-theater-head__label    { background: linear-gradient(90deg, #0a3d52 0%, #126882 100%); }
+    .tl-theater-head--abyss .tl-theater-head__bar      { background: linear-gradient(90deg, #126882 0%, rgba(18,104,130,0.18) 45%, transparent 85%); }
+    .tl-theater-head--standard .tl-theater-head__label { background: linear-gradient(90deg, #1a2e5e 0%, #2c4a88 100%); }
+    .tl-theater-head--standard .tl-theater-head__bar   { background: linear-gradient(90deg, #2c4a88 0%, rgba(44,74,136,0.18) 45%, transparent 85%); }
 
-    .sched-time {
-      display: inline-flex;
-      flex-direction: column;
+    /* ── Screen row ───────────────────────────────────────────────── */
+    .tl-row {
+      display: flex;
+      height: 76px;
+      border-top: 1px solid rgba(200,164,91,0.1);
+    }
+    .tl-row:last-of-type { border-bottom: 1px solid rgba(200,164,91,0.1); }
+
+    .tl-row__label {
+      width: 148px;
+      min-width: 148px;
+      padding: 0 14px;
+      display: flex;
       align-items: center;
-      gap: 3px;
-      padding: 8px 13px;
-      border-radius: 11px;
-      border: 1px solid rgba(200,164,91,0.22);
-      background: rgba(255,255,255,0.9);
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.15s ease;
-      min-width: 72px;
+      background: #e8f0fcd8;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      position: sticky;
+      left: 0;
+      z-index: 5;
+      border-right: 1px solid rgba(200,164,91,0.12);
+      box-sizing: border-box;
     }
-    .sched-time:hover {
-      background: linear-gradient(135deg, #0b2249, #1a4080);
-      border-color: rgba(200,164,91,0.55);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(11,34,73,0.25);
-    }
-    .sched-time--taken {
-      opacity: 0.35;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-    .sched-time__clock {
+    .tl-row__screen {
+      margin: 0 auto;
       font-family: "Barlow Condensed", sans-serif;
-      font-size: 19px;
-      letter-spacing: 0.05em;
-      line-height: 1;
-      color: var(--ink-900);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-700, #3a4f6c);
     }
-    .sched-time:hover .sched-time__clock { color: white; }
-    .sched-time__avail {
-      font-size: 9px;
+
+    /* ── Track area ───────────────────────────────────────────────── */
+    .tl-row__track {
+      flex-shrink: 0;
+      height: 76px;
+      position: relative;
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          rgba(200,164,91,0.16) 0px,
+          rgba(200,164,91,0.16) 1px,
+          transparent 1px,
+          transparent 100px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          rgba(200,164,91,0.07) 0px,
+          rgba(200,164,91,0.07) 1px,
+          transparent 1px,
+          transparent 50px
+        );
+      box-sizing: border-box;
+    }
+
+    /* ── Movie block ──────────────────────────────────────────────── */
+    .tl-block {
+      position: absolute;
+      top: 8px;
+      height: 60px;
+      border-radius: 10px;
+      padding: 7px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 3px 14px rgba(6,13,31,0.24), inset 0 1px 0 rgba(255,255,255,0.1);
+      transition: filter 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+      box-sizing: border-box;
+      min-width: 0;
+    }
+    .tl-block:hover {
+      filter: brightness(1.14);
+      box-shadow: 0 10px 28px rgba(6,13,31,0.32), inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    /* Theater border only — background is set per-movie via JS */
+    .tl-block           { background: linear-gradient(150deg, #1a2a4a, #2a4878); }
+    .tl-block--taken    { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
+    .tl-block__time {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.95);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .tl-block__title {
+      font-size: 11px;
+      letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.82);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      flex-shrink: 0;
+    }
+    .tl-block__foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .tl-block__seats {
+      font-size: 10px;
       letter-spacing: 0.06em;
-      color: var(--ink-500);
+      color: rgba(255,255,255,0.5);
       white-space: nowrap;
     }
-    .sched-time:hover .sched-time__avail { color: rgba(255,255,255,0.65); }
-    .sched-time--few .sched-time__avail { color: #c05820; font-weight: 600; }
+    .tl-block__seats--few { color: #f5a623; font-weight: 700; }
+    .tl-block__format {
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.32);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
+    /* ── Now line ─────────────────────────────────────────────────── */
+    .tl-now-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(200,164,91,0.9), rgba(200,164,91,0.1));
+      pointer-events: none;
+      z-index: 12;
+    }
+    .tl-now-dot {
+      position: absolute;
+      top: -3px;
+      left: -4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(200,164,91,0.95);
+      box-shadow: 0 0 0 0 rgba(200,164,91,0.5);
+      animation: tl-pulse 2.2s ease-out infinite;
+    }
+    @keyframes tl-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(200,164,91,0.5); }
+      70%  { box-shadow: 0 0 0 9px rgba(200,164,91,0); }
+      100% { box-shadow: 0 0 0 0 rgba(200,164,91,0); }
+    }
+    .tl-now-time {
+      position: absolute;
+      top: 6px;
+      left: 7px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: rgba(200,164,91,0.98);
+      white-space: nowrap;
+      background: rgba(235,242,252,0.93);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(200,164,91,0.4);
+      pointer-events: none;
+    }
+
+    /* ── Date label ───────────────────────────────────────────────── */
     .sched-date-label {
       font-size: 13px;
       letter-spacing: 0.1em;
       color: var(--ink-700);
-      margin-bottom: 24px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
     .sched-date-label::before {
       content: "";
-      display: inline-block;
       width: 18px;
       height: 1px;
       background: var(--gold-500);
+      flex-shrink: 0;
     }
 
-    @media (max-width: 560px) {
-      .sched-entry { grid-template-columns: 60px 1fr; gap: 12px; padding: 16px 16px; }
-      .sched-entry__poster { width: 60px; height: 86px; }
-      .sched-block__header { padding: 14px 16px; }
-      .sched-entry__title { font-size: 14px; }
+    /* ── Top bar: date label + filter ─────────────────────────────── */
+    .sched-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 2rem 0 1rem 0;
+    }
+
+    /* ── Empty state ──────────────────────────────────────────────── */
+    .sched-empty {
+      text-align: center;
+      padding: 64px 20px;
+      color: var(--ink-500);
+      font-size: 15px;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .tl-axis__corner,
+      .tl-row__label,
+      .tl-theater-head__label { width: 72px; min-width: 72px; }
+      .tl-theater-head__label { font-size: 8px; letter-spacing: 0.18em; }
     }
   </style>
 </head>
@@ -200,6 +391,7 @@
   <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
   <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
   <div class="page">
+
     <header class="nav">
       <div class="nav__inner">
         <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
@@ -225,31 +417,44 @@
     <section class="page-hero">
       <div class="section__hint">Showtime</div>
       <h1 class="page-hero__title">上映スケジュール</h1>
-      <p class="page-hero__lead">日付・作品・シアターから上映時間をご確認ください。時間をクリックして予約へ。</p>
+      <p class="page-hero__lead">日付を選択し、シアターで絞り込んで上映時間を確認。時間バーをクリックして予約へ。</p>
     </section>
 
-    <section class="section" style="padding-top: 16px;">
+    <section class="section" style="padding-top:16px">
 
       <!-- Date strip -->
       <div class="date-strip" id="date-strip"></div>
 
-      <!-- Active date label -->
-      <div class="sched-date-label" id="date-label"></div>
-
-      <!-- Theater filter -->
-      <div class="news-filter" id="theater-filter" style="margin-bottom:28px">
-        <button class="filter-btn active" data-theater="all">すべてのシアター</button>
-        <button class="filter-btn" data-theater="starry">Starry Theater</button>
-        <button class="filter-btn" data-theater="abyss">Abyss Theater</button>
-        <button class="filter-btn" data-theater="standard">Standard Theater</button>
+      <!-- Top bar: date label + theater filter -->
+      <div class="sched-topbar">
+        <div class="sched-date-label" id="date-label"></div>
+        <div class="theater-filter" id="theater-filter">
+          <button class="filter-btn active" data-theater="all">すべて</button>
+          <button class="filter-btn" data-theater="starry">Starry</button>
+          <button class="filter-btn" data-theater="abyss">Abyss</button>
+          <button class="filter-btn" data-theater="standard">Standard</button>
+        </div>
       </div>
 
-      <!-- Schedule blocks -->
-      <div id="schedule-container"></div>
-
-      <div id="schedule-empty" style="display:none;text-align:center;padding:48px 20px;color:var(--ink-500)">
-        <div style="font-size:15px;letter-spacing:0.06em">該当する上映がありません</div>
+      <!-- Sticky time axis (outside tl-wrap for viewport-level sticky) -->
+      <div class="tl-axis-sticky" id="tl-axis-sticky">
+        <div class="tl-inner">
+          <div class="tl-axis" id="tl-axis">
+            <div class="tl-axis__corner">Time</div>
+            <div class="tl-axis__hours" id="tl-hours"></div>
+          </div>
+        </div>
       </div>
+
+      <!-- Timeline -->
+      <div class="tl-wrap" id="tl-wrap">
+        <div class="tl-inner">
+          <!-- Body: JS renders theater groups + rows here -->
+          <div class="tl-body" id="tl-body"></div>
+        </div>
+      </div>
+
+      <div class="sched-empty" id="schedule-empty" style="display:none">該当する上映がありません</div>
 
     </section>
 
@@ -260,130 +465,137 @@
         <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
       </div>
     </footer>
+
   </div>
 
   <script>
+    /* ── Constants ─────────────────────────────────────────────────── */
     var DAYS   = ['日','月','火','水','木','金','土'];
     var MONTHS = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-    var today  = new Date();
+
+    var PX_HR    = 100;   // px per hour
+    var TL_START = 10;    // timeline start hour
+    var TL_END   = 24;    // timeline end hour
+    var TL_HOURS = TL_END - TL_START;
+    var LABEL_W  = 148;   // label column width (px)
+    var TRACK_W  = TL_HOURS * PX_HR;  // 1400px
+
+    var today        = new Date();
     var selectedDate = today;
     var activeTheater = 'all';
 
-    var SCHEDULE = [
-      {
-        id: 'starry',
-        type: 'Starry Theater',
-        hall: 'Starry Theater',
-        cap: '200席 × 3スクリーン',
-        entries: [
-          {
-            movieId: 'why-write-love-letters',
-            title: '人はなぜラブレターを書くのか',
-            genre: 'ドラマ',
-            duration: '2h 18m',
-            format: '吹替',
-            screen: 'Screen 1',
-            poster: 'images/thumbnail/thumb2.jpg',
-            showtimes: [
-              { time: '10:30', seats: 68 },
-              { time: '14:20', seats: 42 },
-              { time: '18:00', taken: true },
-            ]
-          },
-          {
-            movieId: 'thank-you-chuck',
-            title: '[字幕] サンキュー、チャック',
-            genre: 'ミステリー',
-            duration: '1h 58m',
-            format: '字幕',
-            screen: 'Screen 1',
-            poster: 'images/thumbnail/thumb1.jpg',
-            showtimes: [
-              { time: '21:10', seats: 115 }
-            ]
-          }
-        ]
-      },
-      {
-        id: 'abyss',
-        type: 'Abyss Theater',
-        hall: 'Abyss Theater',
-        cap: '120席 × 2スクリーン',
-        entries: [
-          {
-            movieId: 'placeholder-1',
-            title: '夜明けの航海',
-            genre: 'アドベンチャー',
-            duration: '1h 52m',
-            format: '吹替',
-            screen: 'Screen 2',
-            poster: 'images/thumbnail/thumb3.jpg',
-            showtimes: [
-              { time: '11:00', seats: 54 }
-            ]
-          },
-          {
-            movieId: 'why-write-love-letters',
-            title: '人はなぜラブレターを書くのか',
-            genre: 'ドラマ',
-            duration: '2h 18m',
-            format: '吹替',
-            screen: 'Screen 2',
-            poster: 'images/thumbnail/thumb2.jpg',
-            showtimes: [
-              { time: '15:45', seats: 21 }
-            ]
-          },
-          {
-            movieId: 'placeholder-2',
-            title: '街角の交響曲',
-            genre: '音楽',
-            duration: '1h 44m',
-            format: '字幕',
-            screen: 'Screen 2',
-            poster: 'images/thumbnail/thumb4.jpg',
-            showtimes: [
-              { time: '19:30', seats: 88 }
-            ]
-          }
-        ]
-      },
-      {
-        id: 'standard',
-        type: 'Standard Theater',
-        hall: 'Standard Theater',
-        cap: '70席 × 3スクリーン',
-        entries: [
-          {
-            movieId: 'placeholder-2',
-            title: '街角の交響曲',
-            genre: '音楽',
-            duration: '1h 44m',
-            format: '字幕・吹替',
-            screen: 'Screen 3',
-            poster: 'images/thumbnail/thumb4.jpg',
-            showtimes: [
-              { time: '12:00', taken: true },
-              { time: '16:30', seats: 34 }
-            ]
-          },
-          {
-            movieId: 'thank-you-chuck',
-            title: '[字幕] サンキュー、チャック',
-            genre: 'ミステリー',
-            duration: '1h 58m',
-            format: '字幕',
-            screen: 'Screen 3',
-            poster: 'images/thumbnail/thumb1.jpg',
-            showtimes: [
-              { time: '20:00', seats: 58 }
-            ]
-          }
-        ]
-      }
+    /* ── Theater metadata ──────────────────────────────────────────── */
+    var THEATERS = [
+      { id: 'starry',   label: 'STARRY'   },
+      { id: 'abyss',    label: 'ABYSS'    },
+      { id: 'standard', label: 'STANDARD' },
     ];
 
-    // ── Date strip ────────────────────────────────────────────────────
+    /* ── Movie color + poster palette ─────────────────────────────── */
+    var MOVIE_COLORS = {
+      'why-write-love-letters': { poster: 'images/thumbnail/thumb2.jpg', solid: '#4e1238', fade: 'rgba(78,18,56,0)'  },
+      'thank-you-chuck':        { poster: 'images/thumbnail/thumb1.jpg', solid: '#0c3e2c', fade: 'rgba(12,62,44,0)'  },
+      'placeholder-1':          { poster: 'images/thumbnail/thumb3.jpg', solid: '#0c2c56', fade: 'rgba(12,44,86,0)'  },
+      'placeholder-2':          { poster: 'images/thumbnail/thumb4.jpg', solid: '#422006', fade: 'rgba(66,32,6,0)'   },
+    };
+
+    /* ── Screen data ───────────────────────────────────────────────── */
+    var SCREENS = [
+      /* ---- Starry Theater ---- */
+      {
+        id: 'starry', screen: 'Screen 1',
+        shows: [
+          { movieId: 'why-write-love-letters', title: '人はなぜラブレターを書くのか', start: '10:30', duration: 138, format: '吹替',    seats: 68 },
+          { movieId: 'why-write-love-letters', title: '人はなぜラブレターを書くのか', start: '14:20', duration: 138, format: '吹替',    seats: 42 },
+          { movieId: 'why-write-love-letters', title: '人はなぜラブレターを書くのか', start: '18:00', duration: 138, format: '吹替',    taken: true },
+          { movieId: 'thank-you-chuck',         title: '[字幕] サンキュー、チャック',   start: '21:10', duration: 118, format: '字幕',    seats: 115 },
+        ]
+      },
+      {
+        id: 'starry', screen: 'Screen 2',
+        shows: [
+          { movieId: 'placeholder-1',  title: '夜明けの航海',               start: '11:00', duration: 122, format: '吹替', seats: 82 },
+          { movieId: 'placeholder-1',  title: '夜明けの航海',               start: '15:30', duration: 122, format: '吹替', seats: 71 },
+          { movieId: 'thank-you-chuck', title: '[字幕] サンキュー、チャック', start: '20:00', duration: 118, format: '字幕', seats: 143 },
+        ]
+      },
+      {
+        id: 'starry', screen: 'Screen 3',
+        shows: [
+          { movieId: 'why-write-love-letters', title: '人はなぜラブレターを書くのか', start: '13:00', duration: 138, format: '字幕', seats: 55 },
+          { movieId: 'why-write-love-letters', title: '人はなぜラブレターを書くのか', start: '17:45', duration: 138, format: '字幕', seats: 31 },
+        ]
+      },
+
+      /* ---- Abyss Theater ---- */
+      {
+        id: 'abyss', screen: 'Screen 1',
+        shows: [
+          { movieId: 'placeholder-1', title: '夜明けの航海', start: '11:00', duration: 112, format: '吹替', seats: 54 },
+          { movieId: 'placeholder-1', title: '夜明けの航海', start: '15:45', duration: 112, format: '吹替', seats: 21 },
+          { movieId: 'placeholder-1', title: '夜明けの航海', start: '20:30', duration: 112, format: '吹替', taken: true },
+        ]
+      },
+      {
+        id: 'abyss', screen: 'Screen 2',
+        shows: [
+          { movieId: 'placeholder-2',          title: '街角の交響曲',                  start: '10:30', duration: 104, format: '字幕', seats: 88 },
+          { movieId: 'placeholder-2',          title: '街角の交響曲',                  start: '14:30', duration: 104, format: '字幕', seats: 62 },
+          { movieId: 'why-write-love-letters', title: '人はなぜラブレターを書くのか',  start: '19:30', duration: 138, format: '吹替', seats: 74 },
+        ]
+      },
+
+      /* ---- Standard Theater ---- */
+      {
+        id: 'standard', screen: 'Screen 1',
+        shows: [
+          { movieId: 'why-write-love-letters', title: '人はなぜラブレターを書くのか', start: '10:00', duration: 138, format: '字幕', seats: 70 },
+          { movieId: 'why-write-love-letters', title: '人はなぜラブレターを書くのか', start: '13:50', duration: 138, format: '字幕', seats: 48 },
+          { movieId: 'placeholder-1',          title: '夜明けの航海',                start: '18:30', duration: 112, format: '吹替', seats: 26 },
+        ]
+      },
+      {
+        id: 'standard', screen: 'Screen 2',
+        shows: [
+          { movieId: 'placeholder-1', title: '夜明けの航海',  start: '11:30', duration: 112, format: '吹替', seats: 43 },
+          { movieId: 'placeholder-2', title: '街角の交響曲',  start: '15:00', duration: 104, format: '吹替', seats: 55 },
+          { movieId: 'placeholder-1', title: '夜明けの航海',  start: '19:00', duration: 112, format: '吹替', seats: 67 },
+        ]
+      },
+      {
+        id: 'standard', screen: 'Screen 3',
+        shows: [
+          { movieId: 'placeholder-2',  title: '街角の交響曲',             start: '12:00', duration: 104, format: '字幕・吹替', taken: true },
+          { movieId: 'placeholder-2',  title: '街角の交響曲',             start: '16:30', duration: 104, format: '字幕・吹替', seats: 34 },
+          { movieId: 'thank-you-chuck', title: '[字幕] サンキュー、チャック', start: '20:00', duration: 118, format: '字幕', seats: 58 },
+        ]
+      },
+    ];
+
+    /* ── Helpers ───────────────────────────────────────────────────── */
+    function toMin(t) {
+      var p = t.split(':');
+      return +p[0] * 60 + +p[1];
+    }
+    function timeLeft(t) {
+      return (toMin(t) - TL_START * 60) / 60 * PX_HR;
+    }
+    function durWidth(min) {
+      return min / 60 * PX_HR - 4;
+    }
+
+    /* ── Build axis ────────────────────────────────────────────────── */
+    function buildAxis() {
+      var el = document.getElementById('tl-hours');
+      for (var h = TL_START; h < TL_END; h++) {
+        var d = document.createElement('div');
+        d.className = 'tl-axis__hour';
+        d.textContent = h + ':00';
+        el.appendChild(d);
+      }
+    }
+
+    /* ── Date strip ────────────────────────────────────────────────── */
     function buildDateStrip() {
       var strip = document.getElementById('date-strip');
       for (var i = 0; i < 14; i++) {
@@ -393,14 +605,15 @@
           var btn = document.createElement('button');
           btn.className = 'date-btn' + (idx === 0 ? ' active' : '');
           btn.innerHTML =
-            '<span class="date-btn__day">' + DAYS[date.getDay()] + '</span>' +
-            '<span class="date-btn__num">' + date.getDate() + '</span>' +
+            '<span class="date-btn__day">'   + DAYS[date.getDay()]    + '</span>' +
+            '<span class="date-btn__num">'   + date.getDate()         + '</span>' +
             '<span class="date-btn__month">' + MONTHS[date.getMonth()] + '</span>';
           btn.addEventListener('click', function() {
             strip.querySelectorAll('.date-btn').forEach(function(b) { b.classList.remove('active'); });
-            this.classList.add('active');
+            btn.classList.add('active');
             selectedDate = date;
             updateDateLabel();
+            renderTimeline();
           });
           strip.appendChild(btn);
         })(i, d);
@@ -409,94 +622,150 @@
 
     function updateDateLabel() {
       document.getElementById('date-label').textContent =
-        MONTHS[selectedDate.getMonth()] + selectedDate.getDate() + '日（' + DAYS[selectedDate.getDay()] + '）の上映スケジュール';
+        MONTHS[selectedDate.getMonth()] + selectedDate.getDate() +
+        '日（' + DAYS[selectedDate.getDay()] + '）の上映スケジュール';
     }
 
-    // ── Render schedule ───────────────────────────────────────────────
-    function renderSchedule() {
-      var container = document.getElementById('schedule-container');
-      var emptyEl   = document.getElementById('schedule-empty');
-      container.innerHTML = '';
+    /* ── Now indicator ─────────────────────────────────────────────── */
+    function buildNowLine() {
+      var now = new Date();
+      if (selectedDate.toDateString() !== now.toDateString()) return null;
+      var min = now.getHours() * 60 + now.getMinutes();
+      if (min < TL_START * 60 || min > TL_END * 60) return null;
+
+      var left = LABEL_W + (min - TL_START * 60) / 60 * PX_HR;
+      var line = document.createElement('div');
+      line.className = 'tl-now-line';
+      line.style.left = left + 'px';
+
+      var dot = document.createElement('div');
+      dot.className = 'tl-now-dot';
+      line.appendChild(dot);
+
+      var lbl = document.createElement('div');
+      lbl.className = 'tl-now-time';
+      var h = now.getHours(), m = now.getMinutes();
+      lbl.textContent = h + ':' + (m < 10 ? '0' : '') + m;
+      line.appendChild(lbl);
+
+      return line;
+    }
+
+    /* ── Render timeline ───────────────────────────────────────────── */
+    function renderTimeline() {
+      var body     = document.getElementById('tl-body');
+      var emptyEl  = document.getElementById('schedule-empty');
+      body.innerHTML = '';
       var anyVisible = false;
 
-      SCHEDULE.forEach(function(theater) {
+      THEATERS.forEach(function(theater) {
         if (activeTheater !== 'all' && theater.id !== activeTheater) return;
-        var entries = theater.entries;
-        if (entries.length === 0) return;
+        var screens = SCREENS.filter(function(s) { return s.id === theater.id; });
+        if (!screens.length) return;
         anyVisible = true;
 
-        var block = document.createElement('div');
-        block.className = 'sched-block';
+        /* Theater group wrapper */
+        var group = document.createElement('div');
+        group.className = 'tl-group tl-group--' + theater.id;
 
-        // Theater header
-        var header = document.createElement('div');
-        header.className = 'sched-block__header';
-        header.innerHTML =
-          '<div>' +
-            '<div class="sched-block__type">' + theater.type + '</div>' +
-            '<div class="sched-block__hall">' + theater.hall + '</div>' +
-          '</div>' +
-          '<div class="sched-block__cap">' + theater.cap + '</div>';
-        block.appendChild(header);
+        /* Theater group header */
+        var head = document.createElement('div');
+        head.className = 'tl-theater-head tl-theater-head--' + theater.id;
+        var headBar = document.createElement('div');
+        headBar.className = 'tl-theater-head__bar';
+        headBar.style.width = TRACK_W + 'px';
+        head.innerHTML = '<div class="tl-theater-head__label"><span class="tl-theater-head__dot"></span>' + theater.label + '</div>';
+        head.appendChild(headBar);
+        group.appendChild(head);
 
-        // Movie entries
-        entries.forEach(function(entry) {
-          var timesHtml = entry.showtimes.map(function(st) {
-            if (st.taken) {
-              return '<span class="sched-time sched-time--taken">' +
-                '<span class="sched-time__clock">' + st.time + '</span>' +
-                '<span class="sched-time__avail">満席</span>' +
-                '</span>';
+        /* Screen rows */
+        screens.forEach(function(screen) {
+          var row = document.createElement('div');
+          row.className = 'tl-row';
+
+          /* Label */
+          var label = document.createElement('div');
+          label.className = 'tl-row__label';
+          label.innerHTML = '<span class="tl-row__screen">' + screen.screen + '</span>';
+          row.appendChild(label);
+
+          /* Track */
+          var track = document.createElement('div');
+          track.className = 'tl-row__track';
+          track.style.width = TRACK_W + 'px';
+
+          /* Movie blocks */
+          screen.shows.forEach(function(show) {
+            var left  = timeLeft(show.start);
+            var width = durWidth(show.duration);
+            var taken = !!show.taken;
+            var few   = !taken && show.seats <= 30;
+
+            var block = document.createElement(taken ? 'div' : 'a');
+            block.className = 'tl-block tl-block--' + screen.id + (taken ? ' tl-block--taken' : '');
+            block.style.left  = left  + 'px';
+            block.style.width = width + 'px';
+
+            var mc = MOVIE_COLORS[show.movieId];
+            if (mc) {
+              block.style.background =
+                'linear-gradient(to right, ' + mc.solid + ' 0%, ' + mc.solid + ' 46%, ' + mc.fade + ' 90%),' +
+                'url(\'' + mc.poster + '\') center / cover no-repeat';
             }
-            var fewClass = st.seats <= 30 ? ' sched-time--few' : '';
-            return '<a class="sched-time' + fewClass + '" href="#"' +
-              ' data-theater="' + theater.id + '"' +
-              ' data-screen="' + entry.screen + '"' +
-              ' data-time="' + st.time + '"' +
-              ' data-movie-id="' + entry.movieId + '"' +
-              ' data-movie-title="' + entry.title.replace(/"/g, '&quot;') + '">' +
-              '<span class="sched-time__clock">' + st.time + '</span>' +
-              '<span class="sched-time__avail">残席' + st.seats + '</span>' +
-              '</a>';
-          }).join('');
 
-          var entryEl = document.createElement('div');
-          entryEl.className = 'sched-entry';
-          entryEl.innerHTML =
-            '<a class="sched-entry__poster" href="movie-detail.html?id=' + entry.movieId + '" style="background-image:url(\'' + entry.poster + '\')"></a>' +
-            '<div>' +
-              '<div class="sched-entry__genre">' + entry.genre + '</div>' +
-              '<a class="sched-entry__title" href="movie-detail.html?id=' + entry.movieId + '">' + entry.title + '</a>' +
-              '<div class="sched-entry__meta">' +
-                '<span>' + entry.duration + '</span>' +
-                '<span class="sched-entry__meta-dot"></span>' +
-                '<span>' + entry.format + '</span>' +
-                '<span class="sched-entry__meta-dot"></span>' +
-                '<span>' + entry.screen + '</span>' +
-              '</div>' +
-              '<div class="sched-times">' + timesHtml + '</div>' +
-            '</div>';
-          block.appendChild(entryEl);
+            if (!taken) {
+              block.href = '#';
+              block.dataset.theaterId  = screen.id;
+              block.dataset.screen     = screen.screen;
+              block.dataset.time       = show.start;
+              block.dataset.movieId    = show.movieId;
+              block.dataset.movieTitle = show.title;
+            }
+
+            var seatsHtml;
+            if (taken) {
+              seatsHtml = '<span class="tl-block__seats">満席</span>';
+            } else {
+              seatsHtml = '<span class="tl-block__seats' + (few ? ' tl-block__seats--few' : '') + '">残席' + show.seats + '</span>';
+            }
+
+            block.innerHTML =
+              '<span class="tl-block__time">' + show.start + '</span>' +
+              '<span class="tl-block__title">' + show.title + '</span>' +
+              '<div class="tl-block__foot">' +
+                seatsHtml +
+                '<span class="tl-block__format">' + show.format + '</span>' +
+              '</div>';
+
+            track.appendChild(block);
+          });
+
+          row.appendChild(track);
+          group.appendChild(row);
         });
 
-        container.appendChild(block);
+        body.appendChild(group);
       });
 
-      // Attach booking listeners
-      container.querySelectorAll('.sched-time[data-theater]').forEach(function(el) {
+      /* Now line */
+      var nowLine = buildNowLine();
+      if (nowLine) body.appendChild(nowLine);
+
+      /* Booking click */
+      body.querySelectorAll('.tl-block[data-theater-id]').forEach(function(el) {
         el.addEventListener('click', function(e) {
           e.preventDefault();
-          var theaterMap = { starry: 'Starry', abyss: 'Abyss', standard: 'Standard' };
-          var booking = {
-            theater:    theaterMap[this.dataset.theater],
+          var map = { starry: 'Starry', abyss: 'Abyss', standard: 'Standard' };
+          localStorage.setItem('hal_booking', JSON.stringify({
+            theater:    map[this.dataset.theaterId],
             screen:     this.dataset.screen,
             time:       this.dataset.time,
             movieId:    this.dataset.movieId,
             movieTitle: this.dataset.movieTitle,
             date:       selectedDate.toISOString().split('T')[0],
-            dateLabel:  MONTHS[selectedDate.getMonth()] + selectedDate.getDate() + '日（' + DAYS[selectedDate.getDay()] + '）'
-          };
-          localStorage.setItem('hal_booking', JSON.stringify(booking));
+            dateLabel:  MONTHS[selectedDate.getMonth()] + selectedDate.getDate() +
+                        '日（' + DAYS[selectedDate.getDay()] + '）'
+          }));
           window.location.href = 'seats.html';
         });
       });
@@ -504,21 +773,48 @@
       emptyEl.style.display = anyVisible ? 'none' : '';
     }
 
-    // ── Theater filter ────────────────────────────────────────────────
+    /* ── Scroll to current time ────────────────────────────────────── */
+    function scrollToNow() {
+      var now = new Date();
+      if (selectedDate.toDateString() !== now.toDateString()) return;
+      var min = now.getHours() * 60 + now.getMinutes();
+      var offset = (min - TL_START * 60 - 60) / 60 * PX_HR; // 1h before now
+      document.getElementById('tl-wrap').scrollLeft = Math.max(0, offset);
+    }
+
+    /* ── Theater filter ────────────────────────────────────────────── */
     document.querySelectorAll('#theater-filter .filter-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        document.querySelectorAll('#theater-filter .filter-btn').forEach(function(b) { b.classList.remove('active'); });
-        this.classList.add('active');
-        activeTheater = this.dataset.theater;
-        renderSchedule();
+        document.querySelectorAll('#theater-filter .filter-btn').forEach(function(b) {
+          b.classList.remove('active');
+        });
+        btn.classList.add('active');
+        activeTheater = btn.dataset.theater;
+        renderTimeline();
       });
     });
 
-    // ── Init ──────────────────────────────────────────────────────────
+    /* ── Sticky axis: set top to nav height + sync horizontal scroll ── */
+    (function() {
+      var nav = document.querySelector('.nav');
+      var axisSticky = document.getElementById('tl-axis-sticky');
+      var wrap = document.getElementById('tl-wrap');
+      if (nav && axisSticky) {
+        axisSticky.style.top = nav.offsetHeight + 'px';
+      }
+      if (wrap && axisSticky) {
+        wrap.addEventListener('scroll', function() {
+          axisSticky.scrollLeft = wrap.scrollLeft;
+        });
+      }
+    })();
+
+    /* ── Init ──────────────────────────────────────────────────────── */
+    buildAxis();
     buildDateStrip();
     updateDateLabel();
-    renderSchedule();
+    renderTimeline();
+    scrollToNow();
   </script>
 </body>
 </html>
-
