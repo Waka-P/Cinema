@@ -49,59 +49,52 @@
       </div>
     </header>
 
-    <section class="hero-triptych">
-      <!-- Diagonal image panels -->
-      <div class="tri-panel tri-panel--starry" aria-hidden="true">
-        <div class="tri-panel__bg"></div>
-        <div class="tri-panel__shade"></div>
-      </div>
-      <div class="tri-panel tri-panel--abyss" aria-hidden="true">
-        <div class="tri-panel__bg"></div>
-        <div class="tri-panel__shade"></div>
-      </div>
-      <div class="tri-panel tri-panel--cyber" aria-hidden="true">
-        <div class="tri-panel__bg"></div>
-        <div class="tri-panel__shade"></div>
+    <section class="hero-brand">
+      <!-- Background -->
+      <div class="hb-bg" aria-hidden="true">
+        <div class="hb-bg__halo"></div>
       </div>
 
-      <!-- Glowing seam dividers -->
-      <div class="tri-seam-glow tri-seam-glow--1" aria-hidden="true"></div>
-      <div class="tri-seam tri-seam--1" aria-hidden="true"></div>
-      <div class="tri-seam-glow tri-seam-glow--2" aria-hidden="true"></div>
-      <div class="tri-seam tri-seam--2" aria-hidden="true"></div>
+      <!-- Film-frame corner brackets -->
+      <div class="hb-frame" aria-hidden="true">
+        <span class="hb-corner hb-corner--tl"></span>
+        <span class="hb-corner hb-corner--tr"></span>
+        <span class="hb-corner hb-corner--bl"></span>
+        <span class="hb-corner hb-corner--br"></span>
+      </div>
 
-      <!-- Theater labels -->
-      <a class="tri-label tri-label--starry" href="theater-starry.html">
-        <span class="tri-label__dot"></span>
-        <span class="tri-label__text">
-          <span class="tri-label__name">Starry</span>
-          <span class="tri-label__sub">200席 × 3</span>
-        </span>
-      </a>
-      <a class="tri-label tri-label--abyss" href="theater-abyss.html">
-        <span class="tri-label__dot"></span>
-        <span class="tri-label__text">
-          <span class="tri-label__name">Abyss</span>
-          <span class="tri-label__sub">120席 × 2</span>
-        </span>
-      </a>
-      <a class="tri-label tri-label--cyber" href="theater-cyber.html">
-        <span class="tri-label__dot"></span>
-        <span class="tri-label__text">
-          <span class="tri-label__name">Cyber</span>
-          <span class="tri-label__sub">70席 × 3</span>
-        </span>
-      </a>
-
-      <!-- Center content overlay -->
-      <div class="tri-content">
-        <div class="tri-eyebrow fade-up">HAL CINEMA</div>
-        <h1 class="tri-title fade-up delay-1">Dive into<br>Cinema</h1>
-        <p class="tri-tagline fade-up delay-2">3つの没入空間が、あなたの映画体験を再定義する。</p>
-        <div class="tri-cta fade-up delay-3">
-          <a class="btn btn--solid tri-btn-solid" href="movies.html">上映作品を見る</a>
-          <a class="btn tri-btn-glass" href="theaters.html">シアターを見る</a>
+      <!-- Logotype + content -->
+      <div class="hb-logotype">
+        <div class="hb-ornament fade-up">
+          <span class="hb-ornament__line hb-ornament__line--l"></span>
+          <span class="hb-ornament__text">Nagoya · CINEMA</span>
+          <span class="hb-ornament__line hb-ornament__line--r"></span>
         </div>
+        <img class="hb-logo fade-up delay-1" src="images/logo_dark.png" alt="HAL CINEMA" />
+        <p class="hb-tagline fade-up delay-2"><em>Dive into Cinema</em></p>
+        <div class="hb-cta fade-up delay-3">
+          <a class="btn hb-btn-solid" href="movies.html">上映作品を見る</a>
+          <a class="btn hb-btn-ghost" href="theaters.html">シアターを見る</a>
+        </div>
+      </div>
+
+      <!-- Theater strip -->
+      <div class="hb-theaters">
+        <a class="hb-th hb-th--starry" href="theater-starry.html">
+          <div class="hb-th__bg"></div>
+          <div class="hb-th__shade"></div>
+          <div class="hb-th__label"><span class="hb-th__dot"></span>Starry</div>
+        </a>
+        <a class="hb-th hb-th--abyss" href="theater-abyss.html">
+          <div class="hb-th__bg"></div>
+          <div class="hb-th__shade"></div>
+          <div class="hb-th__label"><span class="hb-th__dot"></span>Abyss</div>
+        </a>
+        <a class="hb-th hb-th--cyber" href="theater-cyber.html">
+          <div class="hb-th__bg"></div>
+          <div class="hb-th__shade"></div>
+          <div class="hb-th__label"><span class="hb-th__dot"></span>Cyber</div>
+        </a>
       </div>
     </section>
 
