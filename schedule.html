@@ -112,14 +112,14 @@
     }
 
     /* Per-theater track tint */
-    .tl-group--starry   .tl-row__track { background: rgba(30,63,122,0.07); }
+    .tl-group--starry   .tl-row__track { background: rgba(200,164,91,0.07); }
     .tl-group--abyss    .tl-row__track { background: rgba(10,61,82,0.07); }
-    .tl-group--standard .tl-row__track { background: rgba(44,74,136,0.05); }
+    .tl-group--cyber    .tl-row__track { background: rgba(40,100,220,0.07); }
 
     /* Per-theater label left accent */
-    .tl-group--starry   .tl-row__label { border-left: 3px solid rgba(42,90,168,0.45);  padding-left: 11px; }
+    .tl-group--starry   .tl-row__label { border-left: 3px solid rgba(200,164,91,0.55);  padding-left: 11px; }
     .tl-group--abyss    .tl-row__label { border-left: 3px solid rgba(18,104,130,0.45); padding-left: 11px; }
-    .tl-group--standard .tl-row__label { border-left: 3px solid rgba(44,74,136,0.45);  padding-left: 11px; }
+    .tl-group--cyber    .tl-row__label { border-left: 3px solid rgba(40,100,220,0.5); padding-left: 11px; }
 
     /* ── Theater group header ─────────────────────────────────────── */
     .tl-theater-head {
@@ -159,12 +159,12 @@
       box-sizing: border-box;
     }
 
-    .tl-theater-head--starry .tl-theater-head__label   { background: linear-gradient(90deg, #1e3f7a 0%, #2a5aa8 100%); }
-    .tl-theater-head--starry .tl-theater-head__bar     { background: linear-gradient(90deg, #2a5aa8 0%, rgba(42,90,168,0.18) 45%, transparent 85%); }
+    .tl-theater-head--starry .tl-theater-head__label   { background: linear-gradient(90deg, #2a1c04 0%, #6b4a14 100%); }
+    .tl-theater-head--starry .tl-theater-head__bar     { background: linear-gradient(90deg, #6b4a14 0%, rgba(200,164,91,0.22) 45%, transparent 85%); }
     .tl-theater-head--abyss .tl-theater-head__label    { background: linear-gradient(90deg, #0a3d52 0%, #126882 100%); }
     .tl-theater-head--abyss .tl-theater-head__bar      { background: linear-gradient(90deg, #126882 0%, rgba(18,104,130,0.18) 45%, transparent 85%); }
-    .tl-theater-head--standard .tl-theater-head__label { background: linear-gradient(90deg, #1a2e5e 0%, #2c4a88 100%); }
-    .tl-theater-head--standard .tl-theater-head__bar   { background: linear-gradient(90deg, #2c4a88 0%, rgba(44,74,136,0.18) 45%, transparent 85%); }
+    .tl-theater-head--cyber    .tl-theater-head__label { background: linear-gradient(90deg, #060d22 0%, #0d2060 100%); }
+    .tl-theater-head--cyber    .tl-theater-head__bar   { background: linear-gradient(90deg, #0d2060 0%, rgba(40,100,220,0.22) 45%, transparent 85%); }
 
     /* ── Screen row ───────────────────────────────────────────────── */
     .tl-row {
@@ -432,7 +432,7 @@
           <button class="filter-btn active" data-theater="all">すべて</button>
           <button class="filter-btn" data-theater="starry">Starry</button>
           <button class="filter-btn" data-theater="abyss">Abyss</button>
-          <button class="filter-btn" data-theater="standard">Standard</button>
+          <button class="filter-btn" data-theater="cyber">Cyber</button>
         </div>
       </div>
 
@@ -488,7 +488,7 @@
     var THEATERS = [
       { id: 'starry',   label: 'STARRY'   },
       { id: 'abyss',    label: 'ABYSS'    },
-      { id: 'standard', label: 'STANDARD' },
+      { id: 'cyber',    label: 'CYBER'    },
     ];
 
     /* ── Movie color + poster palette ─────────────────────────────── */
@@ -545,9 +545,9 @@
         ]
       },
 
-      /* ---- Standard Theater ---- */
+      /* ---- Cyber Theater ---- */
       {
-        id: 'standard', screen: 'Screen 1',
+        id: 'cyber', screen: 'Screen 1',
         shows: [
           { movieId: 'why-write-love-letters', title: '人はなぜラブレターを書くのか', start: '10:00', duration: 138, format: '字幕', seats: 70 },
           { movieId: 'why-write-love-letters', title: '人はなぜラブレターを書くのか', start: '13:50', duration: 138, format: '字幕', seats: 48 },
@@ -555,7 +555,7 @@
         ]
       },
       {
-        id: 'standard', screen: 'Screen 2',
+        id: 'cyber', screen: 'Screen 2',
         shows: [
           { movieId: 'placeholder-1', title: '夜明けの航海',  start: '11:30', duration: 112, format: '吹替', seats: 43 },
           { movieId: 'placeholder-2', title: '街角の交響曲',  start: '15:00', duration: 104, format: '吹替', seats: 55 },
@@ -563,7 +563,7 @@
         ]
       },
       {
-        id: 'standard', screen: 'Screen 3',
+        id: 'cyber', screen: 'Screen 3',
         shows: [
           { movieId: 'placeholder-2',  title: '街角の交響曲',             start: '12:00', duration: 104, format: '字幕・吹替', taken: true },
           { movieId: 'placeholder-2',  title: '街角の交響曲',             start: '16:30', duration: 104, format: '字幕・吹替', seats: 34 },
@@ -755,7 +755,7 @@
       body.querySelectorAll('.tl-block[data-theater-id]').forEach(function(el) {
         el.addEventListener('click', function(e) {
           e.preventDefault();
-          var map = { starry: 'Starry', abyss: 'Abyss', standard: 'Standard' };
+          var map = { starry: 'Starry', abyss: 'Abyss', cyber: 'Cyber' };
           localStorage.setItem('hal_booking', JSON.stringify({
             theater:    map[this.dataset.theaterId],
             screen:     this.dataset.screen,

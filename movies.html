@@ -114,7 +114,9 @@
       box-shadow: 0 24px 56px rgba(10, 22, 40, 0.18);
     }
     .film-card--portrait .film-card__poster {
-      height: 300px;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 212 / 300;
       background-size: cover;
       background-position: center;
       position: relative;
@@ -148,6 +150,9 @@
       color: var(--gold-300);
     }
     .film-card--portrait .film-card__body {
+      height: fit-content;
+      min-height: fit-content;
+      max-height: fit-content;
       padding: 0.55rem 18px 0.75rem;
       display: flex;
       flex-direction: column;
@@ -163,17 +168,6 @@
       display: -webkit-box;
       line-clamp: 1;
       -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .film-card--portrait .film-card__desc {
-      font-size: 12px;
-      line-height: 1.75;
-      color: #4c5e7f;
-      margin: 0;
-      display: -webkit-box;
-      line-clamp: 2;
-      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -221,7 +215,6 @@
     @media (max-width: 640px) {
       .movies-hero__title { font-size: 36px; }
       .film-grid--movies { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-      .film-card--portrait .film-card__poster { height: 200px; }
     }
     @media (max-width: 400px) {
       .film-grid--movies { grid-template-columns: 1fr; }
@@ -310,7 +303,7 @@
         <div class="movies-filter" id="theater-filter">
           <button class="filter-btn active" data-theater="all">すべて</button>
           <button class="filter-btn" data-theater="Starry">Starry</button>
-          <button class="filter-btn" data-theater="Standard">Standard</button>
+          <button class="filter-btn" data-theater="Cyber">Cyber</button>
           <button class="filter-btn" data-theater="Abyss">Abyss</button>
         </div>
       </div>
@@ -329,7 +322,7 @@
             </div>
           </div>
         </a>
-        <a class="film-card film-card--portrait" href="movie-detail.html?id=why-write-love-letters" data-theater="Standard">
+        <a class="film-card film-card--portrait" href="movie-detail.html?id=why-write-love-letters" data-theater="Cyber">
           <div class="film-card__poster" style="background-image: url('images/thumbnail/thumb2.jpg')">
             <div class="film-card__poster-overlay"></div>
             <div class="film-card__badge">ドラマ</div>
@@ -338,7 +331,7 @@
             <div class="film-card__title">人はなぜラブレターを書くのか</div>
             <!-- <p class="film-card__desc">24年前の記憶と現在が交差するとき、一通の手紙が奇跡を起こす。綾瀬はるか主演。</p> -->
             <div class="film-card__footer">
-              <div class="film-card__meta">1h 58m · Standard</div>
+              <div class="film-card__meta">1h 58m · Cyber</div>
               <span class="film-card__cta">詳細 →</span>
             </div>
           </div>
@@ -357,7 +350,7 @@
             </div>
           </div>
         </a>
-        <a class="film-card film-card--portrait" href="movie-detail.html?id=placeholder-2" data-theater="Standard">
+        <a class="film-card film-card--portrait" href="movie-detail.html?id=placeholder-2" data-theater="Cyber">
           <div class="film-card__poster" style="background-image: url('images/thumbnail/thumb4.jpg')">
             <div class="film-card__poster-overlay"></div>
             <div class="film-card__badge">音楽</div>
@@ -366,7 +359,7 @@
             <div class="film-card__title">街角の交響曲</div>
             <!-- <p class="film-card__desc">廃れかけた楽団が再び息を吹き返す瞬間を、温かいまなざしで描く感動作。</p> -->
             <div class="film-card__footer">
-              <div class="film-card__meta">1h 45m · Standard</div>
+              <div class="film-card__meta">1h 45m · Cyber</div>
               <span class="film-card__cta">詳細 →</span>
             </div>
           </div>
@@ -407,7 +400,7 @@
           <div class="film-card__body">
             <div class="film-card__title">夜明けのアトリエ</div>
             <div class="film-card__footer">
-              <div class="film-card__meta">1h 54m · Standard</div>
+              <div class="film-card__meta">1h 54m · Cyber</div>
               <span class="film-card__cta">詳細 →</span>
             </div>
           </div>

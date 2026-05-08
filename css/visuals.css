@@ -1,172 +1,324 @@
-.hero__visual {
+/* ════════════════════════════════════════
+   Hero Triptych  (index.html)
+   ════════════════════════════════════════ */
+
+.hero-triptych {
   position: relative;
-  min-height: 460px;
-  perspective: 1000px;
-  border-radius: 28px;
+  width: 100%;
+  min-height: 580px;
+  height: calc(100svh - 72px);
+  max-height: 900px;
   overflow: hidden;
-  background: linear-gradient(140deg, rgba(6, 13, 31, 0.92), rgba(12, 30, 60, 0.88));
-  box-shadow: 0 30px 70px rgba(6, 13, 31, 0.35);
+  background: #030912;
 }
 
-.hero--overlay .hero__visual {
-  border-radius: 0;
-  box-shadow: none;
-}
+/* ── Panels ──────────────────────────── */
 
-.hero__halo {
+.tri-panel {
   position: absolute;
-  inset: -10% -6% auto;
-  height: 70%;
-  background:
-    radial-gradient(circle at 45% 45%, rgba(200, 164, 91, 0.25), transparent 62%),
-    radial-gradient(circle at 60% 30%, rgba(27, 74, 138, 0.22), transparent 60%);
-  filter: blur(16px);
+  inset: 0;
+  overflow: hidden;
   z-index: 1;
 }
 
-.hero__panels {
+.tri-panel--starry { clip-path: polygon(0 0, 38% 0, 32% 100%, 0 100%); }
+.tri-panel--abyss  { clip-path: polygon(38% 0, 66% 0, 60% 100%, 32% 100%); }
+.tri-panel--cyber  { clip-path: polygon(66% 0, 100% 0, 100% 100%, 60% 100%); }
+
+.tri-panel__bg {
+  position: absolute;
+  inset: -6%;
+  background-size: cover;
+  background-position: center;
+  animation: triZoom 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.tri-panel--starry .tri-panel__bg {
+  background-image: url('../images/starry/starry1.png');
+  animation-delay: 0s;
+}
+.tri-panel--abyss .tri-panel__bg {
+  background-image: url('../images/abyss/abyss1.png');
+  animation-delay: -8s;
+}
+.tri-panel--cyber .tri-panel__bg {
+  background-image: url('../images/cyber/cyber1.png');
+  animation-delay: -16s;
+}
+
+@keyframes triZoom {
+  0%   { transform: scale(1)    translate(0,    0);    }
+  100% { transform: scale(1.08) translate(-1%, -1.5%); }
+}
+
+.tri-panel__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 10, 24, 0.14) 0%,
+    rgba(4, 10, 24, 0.48) 58%,
+    rgba(4, 10, 24, 0.84) 100%
+  );
+  transition: background 0.55s ease;
+}
+
+.tri-panel:hover .tri-panel__shade {
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 10, 24, 0.04) 0%,
+    rgba(4, 10, 24, 0.26) 58%,
+    rgba(4, 10, 24, 0.76) 100%
+  );
+}
+
+/* ── Seam glow (wide, blurred) ───────── */
+
+.tri-seam-glow {
   position: absolute;
   inset: 0;
   z-index: 2;
-}
-
-.hero__panel {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: saturate(1.05) contrast(1.1);
-}
-
-.hero__panel--left {
-  background-image: url("../images/starry/starry1.png");
-  clip-path: polygon(0 0, 94% 0, 6% 100%, 0 100%);
-}
-
-.hero__panel--left::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg,
-    rgba(200, 164, 91, 0.45) 0%,
-    rgba(227, 199, 136, 0.98) 50%,
-    rgba(200, 164, 91, 0.45) 100%);
-  clip-path: polygon(93.6% 0, 94.4% 0, 6.4% 100%, 5.6% 100%);
-  box-shadow: 0 0 10px rgba(227, 199, 136, 0.35);
   pointer-events: none;
+  background: rgba(200, 164, 91, 0.55);
+  filter: blur(10px);
 }
 
-.hero__panel--right {
-  background-image: url("../images/abyss/abyss1.png");
-  clip-path: polygon(94% 0, 100% 0, 100% 100%, 6% 100%);
+.tri-seam-glow--1 {
+  clip-path: polygon(35% 0, 41% 0, 29% 100%, 35% 100%);
+}
+.tri-seam-glow--2 {
+  clip-path: polygon(63% 0, 69% 0, 57% 100%, 63% 100%);
 }
 
-.hero__divider {
-  display: none;
-}
+/* ── Seam bright line ────────────────── */
 
-.hero__logo-slot {
+.tri-seam {
   position: absolute;
-  left: 50%;
-  top: 18%;
-  width: 140px;
-  height: 140px;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  border: 1px solid rgba(200, 164, 91, 0.45);
-  background:
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.02));
-  box-shadow: 0 20px 50px rgba(6, 13, 31, 0.55), 0 0 40px rgba(200, 164, 91, 0.25);
-  z-index: 4;
-}
-
-.orbital {
-  position: absolute;
-  inset: auto 10% 8%;
-  height: 40%;
-  display: grid;
-  place-items: center;
+  inset: 0;
   z-index: 3;
   pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(200, 164, 91, 0.45) 0%,
+    rgba(230, 202, 140, 0.97) 50%,
+    rgba(200, 164, 91, 0.45) 100%
+  );
 }
 
-.orbital__ring {
-  width: 100%;
-  height: 100%;
-  border-radius: 36px;
-  background: linear-gradient(160deg, rgba(10, 27, 58, 0.95), rgba(18, 52, 105, 0.6));
-  transform: rotateX(12deg) rotateY(-12deg);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  border: 1px solid rgba(200, 164, 91, 0.2);
+.tri-seam--1 {
+  clip-path: polygon(37.6% 0, 38.4% 0, 31.6% 100%, 32.4% 100%);
+}
+.tri-seam--2 {
+  clip-path: polygon(65.6% 0, 66.4% 0, 59.6% 100%, 60.4% 100%);
 }
 
-.orbital__ring::before {
-  content: "";
+/* ── Theater labels (glassmorphism) ──── */
+
+.tri-label {
+  position: absolute;
+  bottom: 9%;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px 10px 12px;
+  border-radius: 12px;
+  background: rgba(4, 10, 24, 0.38);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  transform: translateX(-50%);
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.tri-label:hover {
+  background: rgba(4, 10, 24, 0.6);
+  border-color: rgba(200, 164, 91, 0.5);
+  transform: translateX(-50%) translateY(-5px);
+}
+
+/* Center each label in its panel's bottom region */
+.tri-label--starry { left: 16%; }
+.tri-label--abyss  { left: 46%; }
+.tri-label--cyber  { left: 80%; }
+
+.tri-label__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tri-label--starry .tri-label__dot {
+  background: linear-gradient(135deg, #c8a45b, #e3c788);
+  box-shadow: 0 0 7px rgba(200, 164, 91, 0.75);
+}
+.tri-label--abyss .tri-label__dot {
+  background: linear-gradient(135deg, #0e6b86, #5ac8e0);
+  box-shadow: 0 0 7px rgba(90, 200, 224, 0.75);
+}
+.tri-label--cyber .tri-label__dot {
+  background: linear-gradient(135deg, #1a3ea0, #3a7aee);
+  box-shadow: 0 0 7px rgba(58, 122, 238, 0.75);
+}
+
+.tri-label__text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tri-label__name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.tri-label__sub {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.48);
+  line-height: 1;
+}
+
+/* ── Center content overlay ──────────── */
+
+.tri-content {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 80% 20%, rgba(227, 199, 136, 0.3), transparent 55%),
-    radial-gradient(circle at 20% 80%, rgba(79, 137, 212, 0.35), transparent 60%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 clamp(20px, 6vw, 120px) 80px;
+  pointer-events: none;
 }
 
-.orbital__screen {
-  position: absolute;
-  top: 16%;
-  left: 12%;
-  right: 12%;
-  height: 44%;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #081c3c, #1f5aa5);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
-  transform: translateZ(40px);
+.tri-content > * { pointer-events: auto; }
+
+.tri-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.52em;
+  text-transform: uppercase;
+  color: #c8a45b;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-.orbital__seats {
-  position: absolute;
-  bottom: 10%;
-  left: 8%;
-  right: 8%;
-  height: 38%;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-  transform: translateZ(20px) rotateX(12deg);
+.tri-eyebrow::before,
+.tri-eyebrow::after {
+  content: '';
+  display: inline-block;
+  width: 40px;
+  height: 1px;
 }
 
-.seat {
-  border-radius: 10px;
-  background: linear-gradient(160deg, #162c52, #0c1e3a);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 -6px 14px rgba(0, 0, 0, 0.25);
+.tri-eyebrow::before {
+  background: linear-gradient(90deg, transparent, rgba(200, 164, 91, 0.8));
+}
+.tri-eyebrow::after {
+  background: linear-gradient(90deg, rgba(200, 164, 91, 0.8), transparent);
 }
 
-.glow-line {
-  position: absolute;
-  bottom: 22%;
-  left: 20%;
-  right: 20%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold-300), transparent);
-  filter: blur(0.4px);
+.tri-title {
+  font-family: 'Zen Old Mincho', serif;
+  font-size: clamp(44px, 7.5vw, 94px);
+  line-height: 1.06;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  margin: 0 0 24px;
+  text-shadow: 0 20px 60px rgba(4, 10, 24, 0.6);
 }
 
-@media (max-width: 960px) {
-  .hero__visual {
-    min-height: 360px;
+.tri-tagline {
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 42px;
+}
+
+.tri-cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero-triptych .tri-btn-solid {
+  border-color: rgba(200, 164, 91, 0.95);
+  background: linear-gradient(135deg, #0b2a57, #2a5ba8);
+  color: #ffffff;
+}
+
+.hero-triptych .tri-btn-solid:hover {
+  background: linear-gradient(135deg, #0d3368, #3469c0);
+}
+
+.tri-btn-glass {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(200, 164, 91, 0.45);
+  color: #ffffff;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.tri-btn-glass:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(200, 164, 91, 0.8);
+}
+
+/* ── Responsive ──────────────────────── */
+
+@media (max-width: 900px) {
+  .hero-triptych {
+    height: 82vh;
+    min-height: 520px;
   }
 
-  .hero__panel--left {
-    clip-path: polygon(0 0, 92% 0, 8% 100%, 0 100%);
+  .tri-label__sub { display: none; }
+}
+
+@media (max-width: 600px) {
+  .hero-triptych {
+    height: 78vh;
+    min-height: 480px;
   }
 
-  .hero__panel--left::after {
-    clip-path: polygon(91.6% 0, 92.4% 0, 8.4% 100%, 7.6% 100%);
-  }
+  .tri-panel--starry { clip-path: polygon(0 0, 38% 0, 34% 100%, 0 100%); }
+  .tri-panel--abyss  { clip-path: polygon(38% 0, 66% 0, 62% 100%, 34% 100%); }
+  .tri-panel--cyber  { clip-path: polygon(66% 0, 100% 0, 100% 100%, 62% 100%); }
 
-  .hero__panel--right {
-    clip-path: polygon(92% 0, 100% 0, 100% 100%, 8% 100%);
-  }
+  .tri-seam-glow--1 { clip-path: polygon(35% 0, 41% 0, 31% 100%, 37% 100%); }
+  .tri-seam--1      { clip-path: polygon(37.6% 0, 38.4% 0, 33.6% 100%, 34.4% 100%); }
+  .tri-seam-glow--2 { clip-path: polygon(63% 0, 69% 0, 59% 100%, 65% 100%); }
+  .tri-seam--2      { clip-path: polygon(65.6% 0, 66.4% 0, 61.6% 100%, 62.4% 100%); }
 
+  .tri-label--starry { left: 16%; bottom: 7%; }
+  .tri-label--abyss  { left: 50%; bottom: 7%; }
+  .tri-label--cyber  { left: 83%; bottom: 7%; }
+
+  .tri-tagline { display: none; }
+
+  .tri-cta {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 220px;
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tri-panel__bg {
+    animation: none;
+  }
 }

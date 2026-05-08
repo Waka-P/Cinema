@@ -622,8 +622,8 @@
   background-image: url("../images/abyss/abyss1.png");
 }
 
-.theater-card--standard {
-  background-image: linear-gradient(160deg, #091735, #1d3e7a 70%, #2a5ba8);
+.theater-card--cyber {
+  background-image: url("../images/cyber/cyber1.png");
 }
 
 .film-grid {
@@ -699,8 +699,8 @@
   background-image: url("../images/abyss/abyss1.png");
 }
 
-.theater-hero__image--standard {
-  background-image: linear-gradient(140deg, #091735, #1f4c92 70%, #2a5ba8);
+.theater-hero__image--cyber {
+  background-image: url("../images/cyber/cyber1.png");
 }
 
 .search-form {

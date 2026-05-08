@@ -66,7 +66,7 @@
     }
     .theater-nav-dot--starry   { background: linear-gradient(135deg, #c8a45b, #e3c788); }
     .theater-nav-dot--abyss    { background: linear-gradient(135deg, #0e6b86, #5ac8e0); }
-    .theater-nav-dot--standard { background: linear-gradient(135deg, #1b4a8a, #3a76c8); }
+    .theater-nav-dot--cyber    { background: linear-gradient(135deg, #0d2060, #2a6ae0); }
 
     /* ══════════════════════════════════════════════
        Page Intro
@@ -114,11 +114,8 @@
     .theater-chapter__hero--abyss {
       background-image: url('images/abyss/abyss1.png');
     }
-    .theater-chapter__hero--standard {
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(27, 74, 138, 0.6) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 50% at 90% 80%, rgba(200, 164, 91, 0.12) 0%, transparent 60%),
-        linear-gradient(160deg, #040c1e 0%, #0b2248 50%, #1a4585 100%);
+    .theater-chapter__hero--cyber {
+      background-image: url('images/cyber/cyber1.png');
     }
     .theater-chapter__hero::before {
       content: "";
@@ -262,7 +259,7 @@
       transform: scale(1.025);
       box-shadow: 0 18px 52px rgba(6, 13, 31, 0.3);
     }
-    /* Feature tiles for Standard (no photos) */
+    /* Feature tiles for Cyber */
     .theater-gallery__feature {
       border-radius: 14px;
       display: flex;
@@ -360,7 +357,9 @@
       box-shadow: 0 24px 56px rgba(10, 22, 40, 0.18);
     }
     .film-card--portrait .film-card__poster {
-      height: 300px;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 212 / 300;
       background-size: cover;
       background-position: center;
       position: relative;
@@ -394,6 +393,9 @@
       color: var(--gold-300);
     }
     .film-card--portrait .film-card__body {
+      height: fit-content;
+      min-height: fit-content;
+      max-height: fit-content;
       padding: 0.55rem 18px 0.75rem;
       display: flex;
       flex-direction: column;
@@ -409,17 +411,6 @@
       display: -webkit-box;
       line-clamp: 1;
       -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .film-card--portrait .film-card__desc {
-      font-size: 12px;
-      line-height: 1.75;
-      color: #4c5e7f;
-      margin: 0;
-      display: -webkit-box;
-      line-clamp: 2;
-      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -640,7 +631,7 @@
       <div class="section__hint">Theater Collection</div>
       <h1 class="theaters-intro__title">星と深海、そして静寂</h1>
       <p class="theaters-intro__lead">
-        Starry / Abyss / Standard — 3つのコンセプト空間。<br>
+        Starry / Abyss / Cyber — 3つのコンセプト空間。<br>
         上方投影とリクライニングシートで、空間ごとに異なる世界観をご用意しています。
       </p>
     </div>
@@ -654,8 +645,8 @@
         <a class="theater-nav-btn" href="#abyss">
           <span class="theater-nav-dot theater-nav-dot--abyss"></span>Abyss Theater
         </a>
-        <a class="theater-nav-btn" href="#standard">
-          <span class="theater-nav-dot theater-nav-dot--standard"></span>Standard Theater
+        <a class="theater-nav-btn" href="#cyber">
+          <span class="theater-nav-dot theater-nav-dot--cyber"></span>Cyber Theater
         </a>
       </div>
     </nav>
@@ -921,39 +912,39 @@
 
 
     <!-- ════════════════════════════════════════
-         Standard Theater
+         Cyber Theater
     ═════════════════════════════════════════ -->
-    <section class="theater-chapter" id="standard">
+    <section class="theater-chapter" id="cyber">
 
       <!-- Hero (CSS gradient – no images yet) -->
-      <div class="theater-chapter__hero theater-chapter__hero--standard">
+      <div class="theater-chapter__hero theater-chapter__hero--cyber">
         <div class="theater-chapter__hero-content">
-          <div class="theater-chapter__eyebrow">Standard Theater</div>
-          <h2 class="theater-chapter__title">作品と向き合う空間</h2>
-          <p class="theater-chapter__tagline">余計な演出を排し、映画本来の美しさと迫力を届けるために設計された洗練の場。<br>最新の4Kプロジェクターと高精細サウンドが、作品をそのままの姿で映し出す。</p>
+          <div class="theater-chapter__eyebrow">Cyber Theater</div>
+          <h2 class="theater-chapter__title">テクノロジーが創る映像体験</h2>
+          <p class="theater-chapter__tagline">最先端のデジタル技術が生み出す没入型シネマ空間。<br>高輝度LEDスクリーンと立体音響が、映像の限界を超えた体験を創り出す。</p>
           <div class="theater-chapter__chips">
             <span class="theater-chapter__chip">70席 × 3スクリーン</span>
-            <span class="theater-chapter__chip">4K プロジェクター</span>
-            <span class="theater-chapter__chip">7.1ch サラウンド</span>
-            <span class="theater-chapter__chip">バリアフリー対応</span>
+            <span class="theater-chapter__chip">高輝度 LEDスクリーン</span>
+            <span class="theater-chapter__chip">立体音響システム</span>
+            <span class="theater-chapter__chip">最新映像技術</span>
           </div>
-          <a href="schedule.html?theater=standard" class="theater-chapter__btn">このシアターの全上映を見る →</a>
+          <a href="schedule.html?theater=cyber" class="theater-chapter__btn">このシアターの全上映を見る →</a>
         </div>
       </div>
 
       <!-- Feature Gallery (no photos yet – CSS art) -->
       <div class="theater-gallery theater-gallery--feature">
-        <div class="theater-gallery__feature" style="background:linear-gradient(155deg,#081a3c 0%,#1a3e82 60%,#2555a8 100%)">
-          <div class="theater-gallery__feature-value">4K</div>
-          <div class="theater-gallery__feature-label">レーザープロジェクター</div>
+        <div class="theater-gallery__feature" style="background:linear-gradient(155deg,#060d22 0%,#0d2060 60%,#1e3fa0 100%)">
+          <div class="theater-gallery__feature-value">LED</div>
+          <div class="theater-gallery__feature-label">高輝度スクリーン</div>
         </div>
-        <div class="theater-gallery__feature" style="background:linear-gradient(155deg,#060f28 0%,#0e2d60 55%,#1a4888 100%)">
-          <div class="theater-gallery__feature-value">7.1</div>
-          <div class="theater-gallery__feature-label">ch サラウンドサウンド</div>
+        <div class="theater-gallery__feature" style="background:linear-gradient(155deg,#050b1c 0%,#0a1a50 55%,#163280 100%)">
+          <div class="theater-gallery__feature-value">3D</div>
+          <div class="theater-gallery__feature-label">立体音響システム</div>
         </div>
-        <div class="theater-gallery__feature" style="background:linear-gradient(155deg,#040c1e 0%,#0b2248 50%,#153a7a 100%)">
-          <div class="theater-gallery__feature-value">UHD</div>
-          <div class="theater-gallery__feature-label">バリアフリー全席対応</div>
+        <div class="theater-gallery__feature" style="background:linear-gradient(155deg,#04091a 0%,#08143a 50%,#0f2260 100%)">
+          <div class="theater-gallery__feature-value">8K</div>
+          <div class="theater-gallery__feature-label">次世代映像処理</div>
         </div>
       </div>
 
@@ -962,11 +953,11 @@
 
         <!-- Description + Stats -->
         <div class="theater-chapter__desc-row">
-          <p class="theater-chapter__desc">余計な演出を排除し、作品そのものに集中できる洗練された空間。最新の4Kプロジェクターと7.1chサラウンドシステムが、映画本来の美しさと迫力をストレートに届けます。バリアフリー設計を全席に採用しており、すべての方が快適に映画を楽しめる環境を整えています。シンプルであることが、最大の誠実さだと考えています。</p>
+          <p class="theater-chapter__desc">最先端のLEDスクリーンと立体音響システムが融合したCyberシアター。デジタル技術の粋を集めた没入型空間で、映像の新たな可能性を体験できます。高輝度・高コントラストの映像と精密な音響制御が、作品の世界観をそのままスクリーンに再現します。</p>
           <div class="theater-chapter__stats">
             <div class="lineup-stat">70<span>座席</span></div>
             <div class="lineup-stat">3<span>スクリーン</span></div>
-            <div class="lineup-stat" style="font-size:20px;letter-spacing:0.04em">7.1<span>ch</span></div>
+            <div class="lineup-stat" style="font-size:20px;letter-spacing:0.04em">8K<span>映像</span></div>
           </div>
         </div>
 
@@ -1014,7 +1005,7 @@
             </div>
             <div class="theater-sched-card">
               <div class="theater-sched-card__head">
-                <span class="theater-sched-card__name">Standard Theater</span>
+                <span class="theater-sched-card__name">Cyber Theater</span>
                 <span class="theater-sched-card__screen">Screen 3</span>
               </div>
               <div class="theater-sched-card__slots">
@@ -1022,11 +1013,11 @@
                   <span class="time-btn__time">12:00</span>
                   <span class="time-btn__info">満席</span>
                 </button>
-                <button class="time-btn" onclick="bookShowtime('Standard','Screen 3','16:30','街角の交響曲','placeholder-2')">
+                <button class="time-btn" onclick="bookShowtime('Cyber','Screen 3','16:30','街角の交響曲','placeholder-2')">
                   <span class="time-btn__time">16:30</span>
                   <span class="time-btn__info">街角の交響曲 / 残席34</span>
                 </button>
-                <button class="time-btn" onclick="bookShowtime('Standard','Screen 3','20:00','[字幕] サンキュー、チャック','thank-you-chuck')">
+                <button class="time-btn" onclick="bookShowtime('Cyber','Screen 3','20:00','[字幕] サンキュー、チャック','thank-you-chuck')">
                   <span class="time-btn__time">20:00</span>
                   <span class="time-btn__info">[字幕] サンキュー… / 残席58</span>
                 </button>
@@ -1042,7 +1033,7 @@
 
 
     <!-- ── Seat Philosophy ── -->
-    <section class="section" style="background:linear-gradient(180deg,#f4f7fb,#eef3fb)">
+    <section class="section">
       <div class="section__head">
         <div>
           <div class="section__hint">Seat Philosophy</div>
@@ -1107,7 +1098,7 @@
 
     /* ── Hash on load ── */
     var hash = window.location.hash.replace('#', '');
-    if (hash === 'starry' || hash === 'abyss' || hash === 'standard') {
+    if (hash === 'starry' || hash === 'abyss' || hash === 'cyber') {
       var target = document.getElementById(hash);
       if (target) {
         setTimeout(function() {

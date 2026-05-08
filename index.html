@@ -49,21 +49,58 @@
       </div>
     </header>
 
-    <section class="hero hero--overlay">
-      <div class="hero__content">
-        <div class="hero__subtitle fade-up">HAL CINEMA</div>
-        <h1 class="hero__title fade-up delay-1">Dive into Cinema</h1>
+    <section class="hero-triptych">
+      <!-- Diagonal image panels -->
+      <div class="tri-panel tri-panel--starry" aria-hidden="true">
+        <div class="tri-panel__bg"></div>
+        <div class="tri-panel__shade"></div>
       </div>
-      <div class="hero__visual">
-        <div class="hero__halo"></div>
-        <div class="hero__panels">
-          <div class="hero__panel hero__panel--left" role="img" aria-label="Starry Theater"></div>
-          <div class="hero__panel hero__panel--right" role="img" aria-label="Abyss Theater"></div>
-          <div class="hero__divider"></div>
-        </div>
-        <div class="nav__cta hero__visual-cta fade-up delay-3">
-          <a class="btn btn--solid" href="movies.html">上映作品を見る</a>
-          <a class="btn hero__visual-cta-glass" href="theaters.html">シアターを見る</a>
+      <div class="tri-panel tri-panel--abyss" aria-hidden="true">
+        <div class="tri-panel__bg"></div>
+        <div class="tri-panel__shade"></div>
+      </div>
+      <div class="tri-panel tri-panel--cyber" aria-hidden="true">
+        <div class="tri-panel__bg"></div>
+        <div class="tri-panel__shade"></div>
+      </div>
+
+      <!-- Glowing seam dividers -->
+      <div class="tri-seam-glow tri-seam-glow--1" aria-hidden="true"></div>
+      <div class="tri-seam tri-seam--1" aria-hidden="true"></div>
+      <div class="tri-seam-glow tri-seam-glow--2" aria-hidden="true"></div>
+      <div class="tri-seam tri-seam--2" aria-hidden="true"></div>
+
+      <!-- Theater labels -->
+      <a class="tri-label tri-label--starry" href="theater-starry.html">
+        <span class="tri-label__dot"></span>
+        <span class="tri-label__text">
+          <span class="tri-label__name">Starry</span>
+          <span class="tri-label__sub">200席 × 3</span>
+        </span>
+      </a>
+      <a class="tri-label tri-label--abyss" href="theater-abyss.html">
+        <span class="tri-label__dot"></span>
+        <span class="tri-label__text">
+          <span class="tri-label__name">Abyss</span>
+          <span class="tri-label__sub">120席 × 2</span>
+        </span>
+      </a>
+      <a class="tri-label tri-label--cyber" href="theater-cyber.html">
+        <span class="tri-label__dot"></span>
+        <span class="tri-label__text">
+          <span class="tri-label__name">Cyber</span>
+          <span class="tri-label__sub">70席 × 3</span>
+        </span>
+      </a>
+
+      <!-- Center content overlay -->
+      <div class="tri-content">
+        <div class="tri-eyebrow fade-up">HAL CINEMA</div>
+        <h1 class="tri-title fade-up delay-1">Dive into<br>Cinema</h1>
+        <p class="tri-tagline fade-up delay-2">3つの没入空間が、あなたの映画体験を再定義する。</p>
+        <div class="tri-cta fade-up delay-3">
+          <a class="btn btn--solid tri-btn-solid" href="movies.html">上映作品を見る</a>
+          <a class="btn tri-btn-glass" href="theaters.html">シアターを見る</a>
         </div>
       </div>
     </section>
@@ -158,8 +195,8 @@
           <div class="theater-card__label">Abyss Theater</div>
           <div class="theater-card__meta">120 seats × 2</div>
         </a>
-        <a class="theater-card theater-card--standard" href="theater-standard.html">
-          <div class="theater-card__label">Standard Theater</div>
+        <a class="theater-card theater-card--cyber" href="theater-cyber.html">
+          <div class="theater-card__label">Cyber Theater</div>
           <div class="theater-card__meta">70 seats × 3</div>
         </a>
       </div>
