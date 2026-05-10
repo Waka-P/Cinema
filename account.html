@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | 会員情報</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <style>
+    .account-wrap {
+      padding-top: 16px;
+    }
+
+    .account-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 120px 8% auto 8%;
+      height: 320px;
+      background: radial-gradient(circle at 20% 20%, rgba(197, 162, 94, 0.18), transparent 55%),
+        radial-gradient(circle at 80% 30%, rgba(55, 125, 194, 0.2), transparent 58%);
+      filter: blur(10px);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .account-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .account-back {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--ink-500);
+      text-decoration: none;
+    }
+
+    .account-status {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #1f2f40;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.9), rgba(197, 162, 94, 0.2));
+      border: 1px solid rgba(197, 162, 94, 0.25);
+    }
+
+    .account-shell {
+      margin-top: 18px;
+      display: grid;
+      gap: 26px;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+      align-items: start;
+    }
+
+    .account-panel {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 245, 252, 0.96));
+      border: 1px solid rgba(200, 164, 91, 0.2);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 24px 50px rgba(18, 26, 34, 0.12);
+      backdrop-filter: blur(6px);
+    }
+
+    .account-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #52606d;
+    }
+
+    .account-name {
+      font-size: 26px;
+      font-weight: 700;
+      margin-top: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .account-meta {
+      font-size: 12px;
+      color: #5a6673;
+      margin-top: 6px;
+    }
+
+    .account-pills {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .account-pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(10, 20, 30, 0.08);
+      font-size: 12px;
+      border: 1px solid rgba(10, 20, 30, 0.08);
+    }
+
+    .account-card {
+      margin-top: 18px;
+      padding: 20px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #0b162d, #1d416f);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 18px 30px rgba(6, 14, 26, 0.35);
+    }
+
+    .account-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.22), transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.12), transparent 50%);
+      pointer-events: none;
+    }
+
+    .account-card__label {
+      position: relative;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      opacity: 0.7;
+    }
+
+    .account-card__number {
+      position: relative;
+      margin-top: 14px;
+      font-size: 18px;
+      letter-spacing: 0.18em;
+    }
+
+    .account-card__meta {
+      position: relative;
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .account-section-title {
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .account-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field__label {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b7480;
+    }
+
+    .field__hint {
+      font-size: 11px;
+      color: #7b8694;
+    }
+
+    .account-panel .input {
+      border-radius: 14px;
+      border: 1px solid rgba(15, 25, 35, 0.18);
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .account-panel .input:focus {
+      border-color: rgba(30, 76, 140, 0.6);
+      box-shadow: 0 0 0 3px rgba(30, 76, 140, 0.15);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .account-panel .input::placeholder {
+      color: rgba(90, 102, 115, 0.6);
+    }
+
+    .account-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .account-note {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #6d7682;
+    }
+
+    .account-actions {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .account-panel .btn {
+      border-radius: 999px;
+      padding: 10px 20px;
+    }
+
+    @media (max-width: 900px) {
+      .account-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .account-split {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="menu.html">料金・メニュー</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="page-hero">
+      <div class="section__hint">Account</div>
+      <h1 class="page-hero__title">会員情報</h1>
+      <p class="page-hero__lead">登録情報の確認・更新ができます。</p>
+    </section>
+
+    <section class="section account-wrap" style="position:relative;overflow:hidden">
+      <div class="account-top">
+        <a href="mypage.html" class="account-back">← マイページに戻る</a>
+        <div class="account-status">Demo Profile</div>
+      </div>
+
+      <div class="account-shell">
+        <div class="account-panel">
+          <div class="account-badge">Member Profile</div>
+          <div class="account-name" id="account-display-name">—</div>
+          <div class="account-meta">会員番号: <span id="account-display-id">—</span></div>
+          <div class="account-meta" id="account-display-tier">—</div>
+
+          <div class="account-pills">
+            <div class="account-pill">優先座席案内</div>
+            <div class="account-pill">ポイント特典</div>
+            <div class="account-pill">シネマニュース配信</div>
+          </div>
+
+          <div class="account-card">
+            <div class="account-card__label">Registered Card</div>
+            <div class="account-card__number" id="card-preview-number">**** **** **** ----</div>
+            <div class="account-card__meta">
+              <div id="card-preview-name">CARDHOLDER</div>
+              <div id="card-preview-expiry">MM/YY</div>
+            </div>
+          </div>
+
+          <div class="account-note">カード情報は下4桁のみ保存されます。</div>
+        </div>
+
+        <div style="display:grid;gap:18px">
+          <div class="account-panel">
+            <div class="account-section-title">会員情報</div>
+            <div class="account-form">
+              <label class="field">
+                <div class="field__label">氏名</div>
+                <input class="input" id="account-name" type="text" placeholder="HAL 太郎" style="width:100%" />
+                <div class="field__hint">チケット表示名に反映されます</div>
+              </label>
+              <label class="field">
+                <div class="field__label">メールアドレス</div>
+                <input class="input" id="account-email" type="email" placeholder="cinema@example.jp" style="width:100%" />
+                <div class="field__hint">予約確認メールの送信先</div>
+              </label>
+              <label class="field">
+                <div class="field__label">電話番号</div>
+                <input class="input" id="account-phone" type="tel" placeholder="090-0000-0000" style="width:100%" />
+              </label>
+            </div>
+          </div>
+
+          <div class="account-panel">
+            <div class="account-section-title">クレジットカード登録</div>
+            <div class="account-form">
+              <label class="field">
+                <div class="field__label">カード名義</div>
+                <input class="input" id="card-name" type="text" placeholder="HAL TARO" style="width:100%" />
+              </label>
+              <label class="field">
+                <div class="field__label">カード番号</div>
+                <input class="input" id="card-number" type="text" inputmode="numeric" placeholder="1234 5678 9012 3456" style="width:100%" />
+                <div class="field__hint">数字のみ入力してください</div>
+              </label>
+              <div class="account-split">
+                <label class="field">
+                  <div class="field__label">有効期限</div>
+                  <input class="input" id="card-expiry" type="text" placeholder="MM/YY" style="width:100%" />
+                </label>
+                <label class="field">
+                  <div class="field__label">セキュリティコード</div>
+                  <input class="input" id="card-cvc" type="password" inputmode="numeric" placeholder="123" style="width:100%" />
+                </label>
+              </div>
+            </div>
+            <div id="card-saved" class="account-note"></div>
+
+            <div class="account-actions">
+              <button class="btn btn--solid" id="save-account">変更を保存</button>
+              <button class="btn" id="reset-account">リセット</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    var user = JSON.parse(localStorage.getItem('hal_cinema_user') || '{}');
+
+    var nameEl = document.getElementById('account-name');
+    var emailEl = document.getElementById('account-email');
+    var phoneEl = document.getElementById('account-phone');
+    var cardNameEl = document.getElementById('card-name');
+    var cardNumberEl = document.getElementById('card-number');
+    var cardExpiryEl = document.getElementById('card-expiry');
+    var cardCvcEl = document.getElementById('card-cvc');
+    var cardSavedEl = document.getElementById('card-saved');
+    var displayNameEl = document.getElementById('account-display-name');
+    var displayIdEl = document.getElementById('account-display-id');
+    var displayTierEl = document.getElementById('account-display-tier');
+    var cardPreviewNumberEl = document.getElementById('card-preview-number');
+    var cardPreviewNameEl = document.getElementById('card-preview-name');
+    var cardPreviewExpiryEl = document.getElementById('card-preview-expiry');
+
+    var savedCard = JSON.parse(localStorage.getItem('hal_cinema_card') || 'null');
+
+    nameEl.value = user.name || '';
+    emailEl.value = user.email || '';
+    phoneEl.value = user.phone || '';
+
+    displayNameEl.textContent = user.name || 'ゲスト会員';
+    displayIdEl.textContent = user.member_id || 'HAL-000';
+    displayTierEl.textContent = (user.tier || 'Standard') + ' Member';
+
+    if (savedCard && savedCard.last4) {
+      cardNameEl.value = savedCard.name || '';
+      cardExpiryEl.value = savedCard.expiry || '';
+      cardSavedEl.textContent = '登録済み: **** **** **** ' + savedCard.last4;
+      cardPreviewNumberEl.textContent = '**** **** **** ' + savedCard.last4;
+      cardPreviewNameEl.textContent = savedCard.name || 'CARDHOLDER';
+      cardPreviewExpiryEl.textContent = savedCard.expiry || 'MM/YY';
+    }
+
+    document.getElementById('save-account').addEventListener('click', function () {
+      var rawNumber = (cardNumberEl.value || '').replace(/\s+/g, '');
+      var last4 = rawNumber.slice(-4);
+
+      if (rawNumber.length >= 12) {
+        savedCard = {
+          name: cardNameEl.value || '',
+          expiry: cardExpiryEl.value || '',
+          last4: last4
+        };
+        localStorage.setItem('hal_cinema_card', JSON.stringify(savedCard));
+        cardSavedEl.textContent = '登録済み: **** **** **** ' + last4;
+        cardPreviewNumberEl.textContent = '**** **** **** ' + last4;
+        cardPreviewNameEl.textContent = savedCard.name || 'CARDHOLDER';
+        cardPreviewExpiryEl.textContent = savedCard.expiry || 'MM/YY';
+        cardNumberEl.value = '';
+        cardCvcEl.value = '';
+        alert('クレジットカードを登録しました。');
+        return;
+      }
+
+      alert('カード番号を確認してください。');
+    });
+
+    document.getElementById('reset-account').addEventListener('click', function () {
+      nameEl.value = user.name || '';
+      emailEl.value = user.email || '';
+      phoneEl.value = user.phone || '';
+      cardNameEl.value = savedCard ? (savedCard.name || '') : '';
+      cardExpiryEl.value = savedCard ? (savedCard.expiry || '') : '';
+      cardNumberEl.value = '';
+      cardCvcEl.value = '';
+      cardPreviewNumberEl.textContent = savedCard && savedCard.last4 ? '**** **** **** ' + savedCard.last4 : '**** **** **** ----';
+      cardPreviewNameEl.textContent = savedCard ? (savedCard.name || 'CARDHOLDER') : 'CARDHOLDER';
+      cardPreviewExpiryEl.textContent = savedCard ? (savedCard.expiry || 'MM/YY') : 'MM/YY';
+    });
+  </script>
+</body>
+</html>

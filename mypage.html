@@ -12,6 +12,118 @@
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/visuals.css" />
   <link rel="stylesheet" href="css/animations.css" />
+  <style>
+    .favorites-panel {
+      display: grid;
+      gap: 18px;
+      padding: 22px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 245, 252, 0.96));
+      border: 1px solid rgba(200, 164, 91, 0.2);
+      box-shadow: 0 24px 50px rgba(18, 26, 34, 0.12);
+      backdrop-filter: blur(6px);
+    }
+
+    .favorites-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .favorites-head__title {
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      margin: 0;
+    }
+
+    .favorites-head__hint {
+      font-size: 12px;
+      color: var(--ink-500);
+    }
+
+    .favorites-form {
+      display: grid;
+      grid-template-columns: 160px 1fr auto;
+      gap: 12px;
+    }
+
+    .favorites-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--ink-500);
+      letter-spacing: 0.06em;
+    }
+
+    .favorites-field select,
+    .favorites-field input {
+      border-radius: 12px;
+      border: 1px solid rgba(10, 20, 30, 0.14);
+      padding: 10px 12px;
+      font-size: 14px;
+      font-family: "Zen Old Mincho", serif;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .favorites-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .favorites-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(10, 20, 30, 0.08);
+    }
+
+    .favorites-tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(200, 164, 91, 0.18);
+      color: #6c5118;
+    }
+
+    .favorites-name {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .favorites-actions button {
+      border: none;
+      background: rgba(120, 50, 70, 0.12);
+      color: #7a2d40;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+    }
+
+    .favorites-empty {
+      text-align: center;
+      padding: 24px 12px;
+      font-size: 13px;
+      color: var(--ink-500);
+    }
+
+    @media (max-width: 900px) {
+      .favorites-form {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
   <script src="js/parallax-bg.js" defer></script>
   <script src="js/nav.js" defer></script>
 </head>
@@ -109,25 +221,25 @@
           <div class="mp-menu-card__title">電子チケット</div>
           <div class="mp-menu-card__desc">最新のQRチケットを表示</div>
         </a>
-        <a class="mp-menu-card" href="#">
+        <a class="mp-menu-card" href="points.html">
           <div class="mp-menu-card__icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
           <div class="mp-menu-card__title">ポイント履歴</div>
           <div class="mp-menu-card__desc">獲得・利用ポイントの確認</div>
         </a>
-        <a class="mp-menu-card" href="#">
+        <a class="mp-menu-card" href="notifications.html">
           <div class="mp-menu-card__icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
           </div>
           <div class="mp-menu-card__title">通知設定</div>
           <div class="mp-menu-card__desc">推し通知・キャンペーン通知の設定</div>
         </a>
-        <a class="mp-menu-card" href="#">
+        <a class="mp-menu-card" href="account.html">
           <div class="mp-menu-card__icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
-          <div class="mp-menu-card__title">会員情報の変更</div>
+          <div class="mp-menu-card__title">会員情報</div>
           <div class="mp-menu-card__desc">メール・パスワードの更新</div>
         </a>
         <a class="mp-menu-card" href="faq.html">
@@ -137,6 +249,36 @@
           <div class="mp-menu-card__title">お問い合わせ・FAQ</div>
           <div class="mp-menu-card__desc">よくあるご質問・サポート</div>
         </a>
+      </div>
+
+      <div class="section__head" style="margin-top:40px;margin-bottom:16px">
+        <div>
+          <div class="section__hint">Favorites</div>
+          <h2 class="section__title">推し登録</h2>
+        </div>
+      </div>
+
+      <div class="favorites-panel">
+        <div class="favorites-head">
+          <h3 class="favorites-head__title">推しを追加</h3>
+          <div class="favorites-head__hint">お気に入りの監督・俳優を保存できます</div>
+        </div>
+        <form id="favorites-form" class="favorites-form">
+          <label class="favorites-field">
+            区分
+            <select id="favorites-type" required>
+              <option value="director">監督</option>
+              <option value="actor">俳優</option>
+            </select>
+          </label>
+          <label class="favorites-field">
+            名前
+            <input id="favorites-name" type="text" placeholder="例: 〇〇 〇〇" required />
+          </label>
+          <button type="submit" class="btn btn--solid">登録する</button>
+        </form>
+        <div id="favorites-list" class="favorites-list"></div>
+        <div id="favorites-empty" class="favorites-empty">推しがまだ登録されていません</div>
       </div>
 
       <div style="margin-top:32px;text-align:center">
@@ -169,6 +311,77 @@
       document.getElementById('stat-points').textContent = (user.points || 0).toLocaleString();
       document.getElementById('stat-visits').textContent = user.visits || 0;
       document.getElementById('stat-bookings').textContent = history.length;
+    }
+
+    var favoritesForm = document.getElementById('favorites-form');
+    var favoritesType = document.getElementById('favorites-type');
+    var favoritesName = document.getElementById('favorites-name');
+    var favoritesList = document.getElementById('favorites-list');
+    var favoritesEmpty = document.getElementById('favorites-empty');
+    var favorites = JSON.parse(localStorage.getItem('hal_favorites') || '[]');
+
+    function saveFavorites() {
+      localStorage.setItem('hal_favorites', JSON.stringify(favorites));
+    }
+
+    function renderFavorites() {
+      if (!favoritesList || !favoritesEmpty) {
+        return;
+      }
+      favoritesList.innerHTML = '';
+      if (favorites.length === 0) {
+        favoritesEmpty.style.display = '';
+        return;
+      }
+
+      favoritesEmpty.style.display = 'none';
+      favorites.forEach(function (fav, index) {
+        var row = document.createElement('div');
+        row.className = 'favorites-item';
+        row.innerHTML =
+          '<div class="favorites-tag">' + (fav.type === 'director' ? 'Director' : 'Actor') + '</div>' +
+          '<div class="favorites-name">' + fav.name + '</div>' +
+          '<div class="favorites-actions"><button type="button" data-index="' + index + '">削除</button></div>';
+        favoritesList.appendChild(row);
+      });
+    }
+
+    if (favoritesForm) {
+      renderFavorites();
+
+      favoritesForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var name = favoritesName.value.trim();
+        if (!name) {
+          return;
+        }
+        var type = favoritesType.value;
+        var isDuplicate = favorites.some(function (fav) {
+          return fav.type === type && fav.name === name;
+        });
+        if (isDuplicate) {
+          favoritesName.value = '';
+          return;
+        }
+        favorites.unshift({ type: type, name: name });
+        saveFavorites();
+        renderFavorites();
+        favoritesName.value = '';
+      });
+
+      favoritesList.addEventListener('click', function (event) {
+        var btn = event.target.closest('button');
+        if (!btn || !btn.dataset.index) {
+          return;
+        }
+        var index = Number(btn.dataset.index);
+        if (Number.isNaN(index)) {
+          return;
+        }
+        favorites.splice(index, 1);
+        saveFavorites();
+        renderFavorites();
+      });
     }
 
     document.getElementById('logout-menu-btn').addEventListener('click', function () {

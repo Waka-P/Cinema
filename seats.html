@@ -12,6 +12,205 @@
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/visuals.css" />
   <link rel="stylesheet" href="css/animations.css" />
+  <style>
+    .request-panel {
+      margin-top: 28px;
+      padding: 22px;
+      border-radius: 20px;
+      border: 1px solid rgba(200, 164, 91, 0.2);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 245, 252, 0.96));
+      box-shadow: 0 24px 50px rgba(18, 26, 34, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .request-panel::after {
+      content: "";
+      position: absolute;
+      inset: 18px 18px auto auto;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(27, 74, 138, 0.18), transparent 65%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .request-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .request-title {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .request-desc {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #6d7682;
+    }
+
+    .request-summary {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .request-summary__item {
+      min-width: 140px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(200, 164, 91, 0.22);
+      display: grid;
+      gap: 4px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6c717c;
+    }
+
+    .request-summary__item strong {
+      font-size: 16px;
+      color: var(--ink-900);
+      letter-spacing: 0.02em;
+    }
+
+    .request-cta {
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .request-cta .btn {
+      border-radius: 999px;
+      padding: 10px 20px;
+    }
+
+    .request-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 50;
+    }
+
+    .request-modal.is-open {
+      display: flex;
+    }
+
+    .request-modal__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 16, 30, 0.55);
+      backdrop-filter: blur(4px);
+    }
+
+    .request-modal__dialog {
+      position: relative;
+      width: min(680px, 100%);
+      max-height: min(86vh, 820px);
+      overflow: auto;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(240, 245, 252, 0.98));
+      border-radius: 18px;
+      border: 1px solid rgba(200, 164, 91, 0.26);
+      box-shadow: 0 30px 70px rgba(10, 22, 40, 0.24);
+      padding: 20px;
+    }
+
+    .request-modal__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .request-modal__title {
+      font-size: 16px;
+      letter-spacing: 0.1em;
+    }
+
+    .request-modal__close {
+      border: none;
+      background: rgba(10, 20, 30, 0.08);
+      border-radius: 999px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .request-form {
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(10, 20, 30, 0.1);
+      border-radius: 16px;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .request-form__title {
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-500);
+    }
+
+    .request-fields {
+      display: grid;
+      gap: 10px;
+    }
+
+    .request-field {
+      display: grid;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--ink-700);
+    }
+
+    .request-field input,
+    .request-field textarea {
+      border-radius: 10px;
+      border: 1px solid rgba(10, 20, 30, 0.18);
+      padding: 10px 12px;
+      font-size: 12px;
+      font-family: "Zen Old Mincho", serif;
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .request-field input[readonly] {
+      background: rgba(245, 247, 250, 0.95);
+      color: #5c6672;
+    }
+
+    .request-field textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    .request-form__note {
+      font-size: 11px;
+      color: #6c717c;
+      line-height: 1.6;
+    }
+
+    .request-form__status {
+      font-size: 12px;
+      color: var(--ink-700);
+      background: rgba(27, 74, 138, 0.08);
+      border-radius: 10px;
+      padding: 8px 10px;
+      display: none;
+    }
+  </style>
   <script src="js/parallax-bg.js" defer></script>
   <script src="js/nav.js" defer></script>
 </head>
@@ -106,6 +305,73 @@
         <div class="seat-legend__item">
           <div class="seat-legend__swatch" style="background:linear-gradient(180deg,#f5eddc,#edd8b0);border:1px solid rgba(200,164,91,0.35)"></div>
           プレミアム席 (+¥500)
+        </div>
+      </div>
+
+      <section class="request-panel" aria-labelledby="seat-request-title">
+        <div class="request-head">
+          <div>
+            <div class="request-title" id="seat-request-title">座席移動リクエスト</div>
+            <div class="request-desc">座席予約時に、近くの座席の方へ移動をお願いできます。</div>
+          </div>
+          <div class="request-summary">
+            <div class="request-summary__item">
+              <span>Request fee</span>
+              <strong id="request-fee">0円</strong>
+            </div>
+            <div class="request-summary__item">
+              <span>Cashback</span>
+              <strong id="request-cashback">0円</strong>
+            </div>
+          </div>
+        </div>
+        <div class="request-cta">
+          <button class="btn btn--solid" type="button" id="request-open-btn">座席移動リクエスト</button>
+          <span class="request-desc">リクエスト送信は座席選択後に有効になります。</span>
+        </div>
+      </section>
+
+      <div class="request-modal" id="request-modal" aria-hidden="true">
+        <div class="request-modal__overlay" data-modal-close></div>
+        <div class="request-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="request-modal-title">
+          <div class="request-modal__head">
+            <div class="request-modal__title" id="request-modal-title">座席移動リクエスト</div>
+            <button class="request-modal__close" type="button" data-modal-close>閉じる</button>
+          </div>
+          <form class="request-form" id="request-form">
+            <div class="request-form__title">新しいリクエスト</div>
+            <div class="request-fields">
+              <label class="request-field">
+                上映作品
+                <input type="text" name="movie" id="request-movie" placeholder="例: 夜明けの航海" required />
+              </label>
+              <label class="request-field">
+                上映情報
+                <input type="text" name="screening" id="request-screening" placeholder="例: 5/12 19:20 スクリーン3" required />
+              </label>
+              <label class="request-field">
+                あなたの座席
+                <input type="text" name="selfSeat" id="request-self" placeholder="座席を選択してください" readonly />
+              </label>
+              <label class="request-field">
+                相手の座席
+                <input type="text" name="targetSeat" id="request-target" placeholder="例: H-12" required />
+              </label>
+              <label class="request-field">
+                希望する並び
+                <input type="text" name="desiredSeat" id="request-desired" placeholder="例: H-11 と並びたい" required />
+              </label>
+              <label class="request-field">
+                メッセージ
+                <textarea name="message" id="request-message" placeholder="例: 友人と隣に座りたいので、1席だけ移動をご相談できますか？" required></textarea>
+              </label>
+            </div>
+            <div class="request-form__note">承諾されるとリクエスト料として100円が追加されます。</div>
+            <div class="request-form__status" id="request-form-status"></div>
+            <button class="btn btn--solid" id="request-submit" type="submit" disabled style="opacity:0.5;cursor:not-allowed">
+              リクエスト送信
+            </button>
+          </form>
         </div>
       </div>
 
@@ -335,7 +601,189 @@
       nextBtn.disabled = !canProceed;
       nextBtn.style.opacity = canProceed ? '1' : '0.5';
       nextBtn.style.cursor = canProceed ? 'pointer' : 'not-allowed';
+      updateRequestSeatHint();
     }
+
+    var requestDefaults = {
+      requests: [
+        {
+          id: 'req-1021',
+          type: 'incoming',
+          status: 'pending',
+          movie: '夜明けの航海',
+          screening: '5/12 19:20 スクリーン3',
+          targetSeat: 'H-12',
+          desiredSeat: 'H-11',
+          message: '友人と隣に座りたいので、1席だけ移動をお願いできますか？',
+          createdAt: '2026/05/08 18:42'
+        },
+        {
+          id: 'req-1022',
+          type: 'outgoing',
+          status: 'approved',
+          movie: '街角の交響曲',
+          screening: '5/10 16:05 スクリーン5',
+          targetSeat: 'E-06',
+          desiredSeat: 'E-05',
+          message: '並び席を確保したいので、移動のご相談をさせてください。',
+          createdAt: '2026/05/07 12:15'
+        },
+        {
+          id: 'req-1023',
+          type: 'outgoing',
+          status: 'pending',
+          movie: '人はなぜラブレターを書くのか',
+          screening: '5/11 20:10 スクリーン2',
+          targetSeat: 'G-08',
+          desiredSeat: 'G-07',
+          message: '連番で座りたいので、1席だけ移動をご検討いただけますか？',
+          createdAt: '2026/05/09 09:08'
+        }
+      ]
+    };
+
+    var requestStoreKey = 'hal_seat_request_data';
+
+    function loadRequests() {
+      var stored = localStorage.getItem(requestStoreKey);
+      if (!stored) return JSON.parse(JSON.stringify(requestDefaults));
+      try {
+        var parsed = JSON.parse(stored);
+        if (!parsed || !Array.isArray(parsed.requests)) return JSON.parse(JSON.stringify(requestDefaults));
+        return parsed;
+      } catch (err) {
+        return JSON.parse(JSON.stringify(requestDefaults));
+      }
+    }
+
+    function saveRequests(data) {
+      localStorage.setItem(requestStoreKey, JSON.stringify(data));
+    }
+
+    function formatYen(amount) {
+      return amount.toLocaleString('ja-JP') + '円';
+    }
+
+    function getSummary(requests) {
+      var fee = 0;
+      var cashback = 0;
+      requests.forEach(function (req) {
+        if (req.status !== 'approved') return;
+        if (req.type === 'outgoing') fee += 100;
+        if (req.type === 'incoming') cashback += 100;
+      });
+      return { fee: fee, cashback: cashback };
+    }
+
+    var requestData = loadRequests();
+    var requestFeeEl = document.getElementById('request-fee');
+    var requestCashbackEl = document.getElementById('request-cashback');
+    var requestForm = document.getElementById('request-form');
+    var requestFormStatus = document.getElementById('request-form-status');
+    var requestMovieEl = document.getElementById('request-movie');
+    var requestScreeningEl = document.getElementById('request-screening');
+    var requestSelfEl = document.getElementById('request-self');
+    var requestDesiredEl = document.getElementById('request-desired');
+    var requestSubmitBtn = document.getElementById('request-submit');
+    var requestOpenBtn = document.getElementById('request-open-btn');
+    var requestModal = document.getElementById('request-modal');
+
+    function buildScreeningLabel(data) {
+      var parts = [];
+      if (data.dateLabel) parts.push(data.dateLabel);
+      if (data.time) parts.push(data.time);
+      var location = [data.theater, data.screen].filter(Boolean).join(' ');
+      if (location) parts.push(location);
+      return parts.join(' / ');
+    }
+
+    function updateRequestSeatHint() {
+      if (!requestSelfEl) return;
+      var seatText = selected.length > 0 ? selected.join(', ') : '座席を選択してください';
+      requestSelfEl.value = seatText;
+      if (selected.length === 1) {
+        requestDesiredEl.value = selected[0];
+      } else if (selected.length === 0) {
+        requestDesiredEl.value = '';
+      }
+      var enabled = selected.length > 0;
+      requestSubmitBtn.disabled = !enabled;
+      requestSubmitBtn.style.opacity = enabled ? '1' : '0.5';
+      requestSubmitBtn.style.cursor = enabled ? 'pointer' : 'not-allowed';
+    }
+
+    function updateRequestSummary() {
+      var summary = getSummary(requestData.requests);
+      requestFeeEl.textContent = formatYen(summary.fee);
+      requestCashbackEl.textContent = formatYen(summary.cashback);
+    }
+
+    function openRequestModal() {
+      requestModal.classList.add('is-open');
+      requestModal.setAttribute('aria-hidden', 'false');
+      seedRequestForm();
+    }
+
+    function closeRequestModal() {
+      requestModal.classList.remove('is-open');
+      requestModal.setAttribute('aria-hidden', 'true');
+    }
+
+    if (requestOpenBtn) {
+      requestOpenBtn.addEventListener('click', openRequestModal);
+    }
+
+    requestModal.addEventListener('click', function (event) {
+      if (event.target.hasAttribute('data-modal-close')) {
+        closeRequestModal();
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && requestModal.classList.contains('is-open')) {
+        closeRequestModal();
+      }
+    });
+
+    function seedRequestForm() {
+      requestMovieEl.value = booking.movieTitle || '';
+      requestScreeningEl.value = buildScreeningLabel(booking);
+      updateRequestSeatHint();
+    }
+
+    requestForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (selected.length === 0) return;
+
+      var payload = {
+        id: 'req-' + Math.floor(Math.random() * 9000 + 1000),
+        type: 'outgoing',
+        status: 'pending',
+        movie: requestMovieEl.value.trim(),
+        screening: requestScreeningEl.value.trim(),
+        targetSeat: document.getElementById('request-target').value.trim(),
+        desiredSeat: requestDesiredEl.value.trim(),
+        message: document.getElementById('request-message').value.trim(),
+        createdAt: new Date().toLocaleString('ja-JP', { hour12: false })
+      };
+
+      requestData.requests.unshift(payload);
+      saveRequests(requestData);
+      updateRequestSummary();
+
+      requestForm.reset();
+      seedRequestForm();
+
+      requestFormStatus.textContent = 'リクエストを送信しました。相手の回答をお待ちください。';
+      requestFormStatus.style.display = 'block';
+      setTimeout(function () {
+        requestFormStatus.style.display = 'none';
+        closeRequestModal();
+      }, 2800);
+    });
+
+    seedRequestForm();
+    updateRequestSummary();
 
     function goToCheckout() {
       if (selected.length === 0 || getTotalTickets() !== selected.length) return;

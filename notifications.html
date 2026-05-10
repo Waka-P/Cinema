@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | 通知設定</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <style>
+    .notify-wrap {
+      padding-top: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .notify-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 120px 6% auto 6%;
+      height: 260px;
+      background: radial-gradient(circle at 20% 20%, rgba(197, 162, 94, 0.18), transparent 55%),
+        radial-gradient(circle at 80% 30%, rgba(55, 125, 194, 0.2), transparent 58%);
+      filter: blur(8px);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .notify-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .notify-back {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--ink-500);
+      text-decoration: none;
+    }
+
+    .notify-shell {
+      margin-top: 18px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .notify-panel {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 245, 252, 0.96));
+      border: 1px solid rgba(200, 164, 91, 0.2);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 24px 50px rgba(18, 26, 34, 0.12);
+      backdrop-filter: blur(6px);
+    }
+
+    .notify-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .notify-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(10, 20, 30, 0.08);
+    }
+
+    .notify-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .notify-desc {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #6d7682;
+    }
+
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .toggle input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .toggle__track {
+      width: 46px;
+      height: 26px;
+      border-radius: 999px;
+      background: rgba(10, 20, 30, 0.12);
+      border: 1px solid rgba(10, 20, 30, 0.18);
+      position: relative;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .toggle__thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(10, 20, 30, 0.2);
+      transition: transform 0.2s ease;
+    }
+
+    .toggle input:checked + .toggle__track {
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.9), rgba(197, 162, 94, 0.35));
+      border-color: rgba(197, 162, 94, 0.4);
+    }
+
+    .toggle input:checked + .toggle__track .toggle__thumb {
+      transform: translateX(20px);
+    }
+
+    .toggle__text {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: #5a6673;
+    }
+
+    .notify-actions {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .notify-actions .btn {
+      border-radius: 999px;
+      padding: 10px 20px;
+    }
+
+    @media (max-width: 720px) {
+      .notify-card {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+    }
+  </style>
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="menu.html">料金・メニュー</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="page-hero">
+      <div class="section__hint">Notifications</div>
+      <h1 class="page-hero__title">通知設定</h1>
+      <p class="page-hero__lead">推し作品やキャンペーンの通知をカスタマイズできます。</p>
+    </section>
+
+    <section class="section notify-wrap">
+      <div class="notify-top">
+        <a href="mypage.html" class="notify-back">← マイページに戻る</a>
+      </div>
+
+      <div class="notify-shell">
+        <div class="notify-panel">
+          <div class="notify-grid">
+            <div class="notify-card">
+              <div>
+                <div class="notify-title">上映開始リマインド</div>
+                <div class="notify-desc">当日の開場・上映開始前に通知します</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="notify-remind" />
+                <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                <span class="toggle__text">通知を受け取る</span>
+              </label>
+            </div>
+            <div class="notify-card">
+              <div>
+                <div class="notify-title">キャンペーン情報</div>
+                <div class="notify-desc">限定特典やコラボ企画のお知らせ</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="notify-campaign" />
+                <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                <span class="toggle__text">通知を受け取る</span>
+              </label>
+            </div>
+            <div class="notify-card">
+              <div>
+                <div class="notify-title">推し作品アラート</div>
+                <div class="notify-desc">お気に入り作品の上映情報を配信</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="notify-favorite" />
+                <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                <span class="toggle__text">通知を受け取る</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    var defaultSettings = {
+      remind: true,
+      campaign: true,
+      favorite: false
+    };
+
+    var saved = JSON.parse(localStorage.getItem('hal_notify_settings') || 'null') || defaultSettings;
+
+    var remindEl = document.getElementById('notify-remind');
+    var campaignEl = document.getElementById('notify-campaign');
+    var favoriteEl = document.getElementById('notify-favorite');
+
+    function applySettings(data) {
+      remindEl.checked = !!data.remind;
+      campaignEl.checked = !!data.campaign;
+      favoriteEl.checked = !!data.favorite;
+    }
+
+    applySettings(saved);
+
+    function saveSettings() {
+      var next = {
+        remind: remindEl.checked,
+        campaign: campaignEl.checked,
+        favorite: favoriteEl.checked
+      };
+      localStorage.setItem('hal_notify_settings', JSON.stringify(next));
+    }
+
+    remindEl.addEventListener('change', saveSettings);
+    campaignEl.addEventListener('change', saveSettings);
+    favoriteEl.addEventListener('change', saveSettings);
+
+  </script>
+</body>
+</html>

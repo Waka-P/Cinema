@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HAL CINEMA | お知らせ詳細</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/visuals.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="js/parallax-bg.js" defer></script>
+  <script src="js/nav.js" defer></script>
+</head>
+<body>
+  <div class="bg-stack" aria-hidden="true">
+    <span class="bg-layer bg-layer--1"></span>
+    <span class="bg-layer bg-layer--2"></span>
+    <span class="bg-layer bg-layer--3"></span>
+    <span class="bg-layer bg-layer--4"></span>
+  </div>
+  <div class="accent-lines accent-lines--1" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--2" aria-hidden="true"></div>
+  <div class="accent-lines accent-lines--3" aria-hidden="true"></div>
+  <div class="page">
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="logo" href="index.html" aria-label="HAL CINEMA ホーム">
+          <img class="logo__image" src="images/logo.png" alt="HAL CINEMA" />
+        </a>
+        <nav class="nav__links">
+          <a href="index.html">ホーム</a>
+          <a href="movies.html">作品一覧</a>
+          <a href="schedule.html">上映スケジュール</a>
+          <a href="theaters.html">シアター</a>
+          <a href="news.html">お知らせ</a>
+          <a href="menu.html">料金・メニュー</a>
+          <a href="mypage.html" class="nav__mypage-link" style="display:none">マイページ</a>
+        </nav>
+        <div class="nav__cta">
+          <a href="login.html" class="btn nav__login-btn">ログイン</a>
+          <button class="btn nav__logout-btn" style="display:none">ログアウト</button>
+          <a href="schedule.html" class="btn btn--solid">今すぐ予約する</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="page-hero">
+      <div class="section__hint">News Detail</div>
+      <h1 class="page-hero__title">お知らせ詳細</h1>
+      <p class="page-hero__lead">最新情報の詳細と開催概要をご案内します。</p>
+    </section>
+
+    <section class="section" style="padding-top: 20px;">
+      <div style="margin-bottom:16px">
+        <a href="news.html" class="text-link" style="padding-right:0;font-size:11px">← お知らせ一覧に戻る</a>
+      </div>
+
+      <div class="news-detail-hero-card">
+        <div class="news-detail-hero" id="news-hero">
+          <div class="news-detail-hero-top">
+            <span class="news-badge" id="news-badge">お知らせ</span>
+            <div class="news-detail-date" id="news-date">2026年5月1日</div>
+          </div>
+          <h2 class="news-detail-title" id="news-title">タイトル</h2>
+          <p class="news-detail-lead" id="news-lead"></p>
+        </div>
+      </div>
+
+      <div class="news-detail-grid">
+        <article class="news-detail-panel news-detail-panel--article">
+          <div class="news-detail-body" id="news-body"></div>
+        </article>
+        <aside class="news-detail-panel news-detail-panel--sticky">
+          <div class="sub-heading">概要</div>
+          <div class="news-detail-info" id="news-info"></div>
+          <div class="news-detail-cta">
+            <a class="btn btn--solid" id="news-cta" href="schedule.html">上映スケジュールを見る</a>
+          </div>
+          <div class="news-detail-divider"></div>
+          <div class="news-detail-meta">
+            <div class="news-detail-meta-label">カテゴリ</div>
+            <div class="news-detail-meta-value" id="news-category">キャンペーン</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 10px;">
+      <div class="section__head">
+        <div>
+          <div class="section__hint">More News</div>
+          <h2 class="section__title">関連のお知らせ</h2>
+        </div>
+        <a href="news.html" class="text-link">一覧へ戻る</a>
+      </div>
+      <div class="news-list" id="news-related"></div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div><strong>HAL CINEMA</strong><div>想像を超える、立体シネマ体験。</div></div>
+        <div><div>〒000-0000 東京都千代田区HAL 8F</div><div>OPEN 10:00 - 24:00</div></div>
+        <div><div>スクリーン: 8 / 座席: 1,050</div><div>お問い合わせ: info@halcinema.jp</div></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    var newsItems = {
+      'summer-festival-2026': {
+        title: '【夏の感謝祭 2026】6月1日〜8月31日 ポイント3倍キャンペーン開催',
+        date: '2026年5月1日',
+        category: 'キャンペーン',
+        badgeClass: 'news-badge--campaign',
+        image: 'linear-gradient(135deg,#0b2249 0%,#1e4a96 50%,#c8a45b 100%)',
+        lead: '夏の感謝祭期間中は、鑑賞ポイントが通常の3倍。限定グッズが当たる抽選も同時開催します。',
+        body: [
+          '対象期間中に購入したチケットは、会員ポイントが自動的に3倍付与されます。対象作品は全作品で、オンライン予約・劇場購入のどちらも対象です。',
+          '来場回数に応じた限定グッズ抽選も実施します。応募はマイページ内のキャンペーン欄から行えます。',
+          '<ul><li>ポイント付与：上映翌日までに反映</li><li>抽選応募：6月1日〜8月31日</li><li>当選発表：9月上旬にメール連絡</li></ul>'
+        ],
+        info: [
+          { label: '対象期間', value: '2026年6月1日〜8月31日' },
+          { label: '対象者', value: 'HAL CINEMA 会員' },
+          { label: '応募方法', value: 'マイページから応募' }
+        ],
+        cta: { text: 'マイページへ進む', href: 'mypage.html' }
+      },
+      'starry-maintenance-0515': {
+        title: 'Starry Theater 定期メンテナンスのお知らせ（5月15日）',
+        date: '2026年5月3日',
+        category: 'お知らせ',
+        badgeClass: 'news-badge--info',
+        image: 'linear-gradient(135deg,#0b2249,#1e4a96)',
+        lead: '設備保守のため、5月15日（木）はStarry Theaterの上映を終日休止します。',
+        body: [
+          '音響および座席設備の定期点検を実施するため、Starry Theaterの全回が休映となります。その他のスクリーンは通常通り営業します。',
+          '対象日のチケット販売は行いません。すでにご購入済みの場合は、別日への振替または返金を承ります。',
+          '<ul><li>休映日：2026年5月15日（木）</li><li>対象スクリーン：Starry Theater</li><li>問い合わせ：info@halcinema.jp</li></ul>'
+        ],
+        info: [
+          { label: '休映日', value: '2026年5月15日（木）' },
+          { label: '対象スクリーン', value: 'Starry Theater' },
+          { label: '対応', value: '振替・返金可' }
+        ],
+        cta: { text: '上映スケジュールを見る', href: 'schedule.html' }
+      },
+      'directors-talk-0520': {
+        title: '監督トークショー「映像の哲学」5月20日（火）開催決定',
+        date: '2026年4月28日',
+        category: 'イベント',
+        badgeClass: 'news-badge--event',
+        image: 'linear-gradient(135deg,#2b1a3f,#5a2b79)',
+        lead: '話題作の監督を迎え、映像表現の裏側に迫るトークショーを開催します。',
+        body: [
+          '上映終了後に行われるトークショーでは、制作秘話やキャストとのエピソードなど、ここでしか聞けない内容をお届けします。',
+          '参加には対象回のチケットが必要です。座席数に限りがあるため、オンライン予約を推奨します。',
+          '<ul><li>開催日：2026年5月20日（火）</li><li>会場：Abyss Theater Screen 2</li><li>開始時間：上映終了後 19:30頃予定</li></ul>'
+        ],
+        info: [
+          { label: '開催日', value: '2026年5月20日（火）' },
+          { label: '会場', value: 'Abyss Theater Screen 2' },
+          { label: '参加方法', value: '対象回チケット購入' }
+        ],
+        cta: { text: 'チケットを予約する', href: 'schedule.html' }
+      },
+      'morning-discount-wed': {
+        title: '会員限定モーニング割引：毎週水曜 10時台の上映が500円引き',
+        date: '2026年4月20日',
+        category: 'キャンペーン',
+        badgeClass: 'news-badge--campaign',
+        image: 'linear-gradient(135deg,#1a243d,#6b5a2b)',
+        lead: '毎週水曜の午前中は、会員限定で500円割引。お得に朝活シネマを楽しめます。',
+        body: [
+          '対象は水曜日の10:00〜10:59開始回。オンライン予約時に自動で割引が適用されます。',
+          '当日購入の場合は、会員バーコードをご提示ください。',
+          '<ul><li>割引額：500円</li><li>対象回：水曜10時台</li><li>対象：会員本人のみ</li></ul>'
+        ],
+        info: [
+          { label: '対象曜日', value: '毎週水曜' },
+          { label: '対象時間', value: '10:00〜10:59開始回' },
+          { label: '対象者', value: 'HAL CINEMA 会員' }
+        ],
+        cta: { text: '会員登録する', href: 'login.html' }
+      },
+      'wallet-update': {
+        title: '電子チケット機能アップデート：Apple Wallet / Google Pay 対応開始',
+        date: '2026年4月10日',
+        category: 'お知らせ',
+        badgeClass: 'news-badge--info',
+        image: 'linear-gradient(135deg,#0c2740,#0e6b86)',
+        lead: '電子チケットがApple Wallet、Google Payに追加可能になりました。入場がさらにスムーズに。',
+        body: [
+          'マイページのチケット詳細画面からウォレットへ追加できます。入場ゲートでは画面のQRコードをご提示ください。',
+          'オフライン時でも表示できるため、通信環境が不安定な場合も安心です。',
+          '<ul><li>対応：Apple Wallet / Google Pay</li><li>利用方法：マイページのチケット詳細から追加</li><li>対象：オンライン予約チケット</li></ul>'
+        ],
+        info: [
+          { label: '対応サービス', value: 'Apple Wallet / Google Pay' },
+          { label: '対象', value: 'オンライン予約チケット' },
+          { label: '更新日', value: '2026年4月10日' }
+        ],
+        cta: { text: 'マイページへ進む', href: 'mypage.html' }
+      },
+      'dawn-premiere': {
+        title: '【字幕上映】特別先行上映会「夜明けの航海」プレミア 5月8日',
+        date: '2026年4月5日',
+        category: 'イベント',
+        badgeClass: 'news-badge--event',
+        image: 'linear-gradient(135deg,#0a2060,#1a4a8a)',
+        lead: '話題作「夜明けの航海」を、公開前に字幕版で楽しめる特別プレミアを実施します。',
+        body: [
+          '上映後にはフォトセッションと限定ポスターの配布を予定しています。数量限定のため、先着順で配布します。',
+          'チケットは会員先行販売から開始。一般販売は4月20日より受付予定です。',
+          '<ul><li>開催日：2026年5月8日（金）</li><li>会場：Starry Theater Screen 1</li><li>来場特典：限定ポスター</li></ul>'
+        ],
+        info: [
+          { label: '開催日', value: '2026年5月8日（金）' },
+          { label: '会場', value: 'Starry Theater Screen 1' },
+          { label: 'チケット', value: '会員先行販売あり' }
+        ],
+        cta: { text: '上映スケジュールを見る', href: 'schedule.html' }
+      },
+      'pair-ticket-off': {
+        title: 'ペアチケット割引：2枚同時購入で合計500円OFF（通年）',
+        date: '2026年3月1日',
+        category: 'キャンペーン',
+        badgeClass: 'news-badge--campaign',
+        image: 'linear-gradient(135deg,#1c2b45,#3b6aa0)',
+        lead: '2名での来場がいつでもお得に。ペアチケット割引が通年で利用できます。',
+        body: [
+          '同一上映回で2枚同時購入すると、合計金額から500円を割引します。オンライン予約・劇場購入のどちらも対象です。',
+          '他の割引との併用はできません。',
+          '<ul><li>割引額：合計500円</li><li>対象：同一上映回で2枚購入</li><li>併用：他割引との併用不可</li></ul>'
+        ],
+        info: [
+          { label: '対象', value: '同一上映回で2枚購入' },
+          { label: '適用', value: 'オンライン・劇場購入' },
+          { label: '期間', value: '通年' }
+        ],
+        cta: { text: '上映スケジュールを見る', href: 'schedule.html' }
+      },
+      'drink-menu-renew': {
+        title: 'ドリンクメニュー改定のお知らせ：シネマカフェ新メニュー登場',
+        date: '2026年2月25日',
+        category: 'お知らせ',
+        badgeClass: 'news-badge--info',
+        image: 'linear-gradient(135deg,#0b2238,#264b86)',
+        lead: '季節限定のクラフトソーダとプレミアムラテが新登場。価格改定も実施します。',
+        body: [
+          '新メニューの導入に伴い、一部ドリンクの価格を改定します。定番人気のキャラメルラテは据え置き価格です。',
+          '詳しいメニューは料金・メニューページをご確認ください。',
+          '<ul><li>改定日：2026年3月1日</li><li>新登場：クラフトソーダ、プレミアムラテ</li><li>据え置き：キャラメルラテ</li></ul>'
+        ],
+        info: [
+          { label: '改定日', value: '2026年3月1日' },
+          { label: '提供場所', value: 'シネマカフェ' },
+          { label: '詳細', value: '料金・メニューページ' }
+        ],
+        cta: { text: '料金・メニューを見る', href: 'menu.html' }
+      }
+    };
+
+    var params = new URLSearchParams(window.location.search);
+    var id = params.get('id') || 'summer-festival-2026';
+    var item = newsItems[id] || newsItems['summer-festival-2026'];
+
+    var badgeEl = document.getElementById('news-badge');
+    badgeEl.textContent = item.category;
+    badgeEl.className = 'news-badge ' + item.badgeClass;
+
+    document.getElementById('news-title').textContent = item.title;
+    document.getElementById('news-date').textContent = item.date;
+    document.getElementById('news-lead').textContent = item.lead;
+    document.getElementById('news-category').textContent = item.category;
+    document.getElementById('news-hero').style.background = item.image;
+    document.title = 'HAL CINEMA | ' + item.title;
+
+    var bodyEl = document.getElementById('news-body');
+    bodyEl.innerHTML = item.body.map(function (paragraph) {
+      if (paragraph.indexOf('<') === 0) {
+        return paragraph;
+      }
+      return '<p>' + paragraph + '</p>';
+    }).join('');
+
+    var infoEl = document.getElementById('news-info');
+    infoEl.innerHTML = item.info.map(function (row) {
+      return '<div class="news-detail-info-row"><span class="news-detail-info-label">' + row.label + '</span><span>' + row.value + '</span></div>';
+    }).join('');
+
+    var ctaEl = document.getElementById('news-cta');
+    ctaEl.textContent = item.cta.text;
+    ctaEl.setAttribute('href', item.cta.href);
+
+    var relatedEl = document.getElementById('news-related');
+    var related = Object.keys(newsItems).filter(function (key) { return key !== id; }).slice(0, 3);
+    relatedEl.innerHTML = related.map(function (key) {
+      var rel = newsItems[key];
+      return '<a class="news-card" href="news-detail.html?id=' + key + '">' +
+        '<div class="news-card__image" style="background:' + rel.image + '"></div>' +
+        '<div>' +
+          '<span class="news-badge ' + rel.badgeClass + '">' + rel.category + '</span>' +
+          '<div class="news-card__title">' + rel.title + '</div>' +
+          '<div class="news-card__date">' + rel.date + '</div>' +
+        '</div>' +
+      '</a>';
+    }).join('');
+  </script>
+</body>
+</html>

@@ -12,14 +12,6 @@
   animation-delay: 0.2s;
 }
 
-.delay-3 {
-  animation-delay: 0.3s;
-}
-
-.delay-4 {
-  animation-delay: 0.4s;
-}
-
 .float {
   animation: float 6s ease-in-out infinite;
 }
