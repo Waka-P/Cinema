@@ -123,6 +123,56 @@
         grid-template-columns: 1fr;
       }
     }
+
+    .request-banner {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(200, 164, 91, 0.22);
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.98), rgba(240, 245, 252, 0.94));
+      display: none;
+      gap: 10px;
+    }
+
+    .request-banner.is-visible {
+      display: grid;
+    }
+
+    .request-banner__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .request-banner__title {
+      font-size: 14px;
+      letter-spacing: 0.08em;
+    }
+
+    .request-banner__meta {
+      font-size: 12px;
+      color: var(--ink-500);
+    }
+
+    .request-banner__message {
+      font-size: 13px;
+      color: #2b3d5f;
+      line-height: 1.6;
+    }
+
+    .request-banner__actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .request-banner__actions .btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+    }
   </style>
   <script src="js/parallax-bg.js" defer></script>
   <script src="js/nav.js" defer></script>
@@ -196,6 +246,18 @@
             <div class="mp-stat__value" id="stat-bookings">0</div>
             <div class="mp-stat__label">予約件数</div>
           </div>
+        </div>
+      </div>
+
+      <div class="request-banner" id="request-banner" aria-live="polite">
+        <div class="request-banner__head">
+          <div class="request-banner__title">座席移動リクエストが届いています</div>
+          <div class="request-banner__meta" id="request-banner-meta">—</div>
+        </div>
+        <div class="request-banner__message" id="request-banner-message">—</div>
+        <div class="request-banner__actions">
+          <button class="btn btn--solid" type="button" id="request-approve-btn">承諾する</button>
+          <button class="btn" type="button" id="request-decline-btn">辞退する</button>
         </div>
       </div>
 
@@ -320,6 +382,59 @@
     var favoritesEmpty = document.getElementById('favorites-empty');
     var favorites = JSON.parse(localStorage.getItem('hal_favorites') || '[]');
 
+    var requestStoreKey = 'hal_seat_request_data';
+    var requestBanner = document.getElementById('request-banner');
+    var requestBannerMeta = document.getElementById('request-banner-meta');
+    var requestBannerMessage = document.getElementById('request-banner-message');
+    var requestApproveBtn = document.getElementById('request-approve-btn');
+    var requestDeclineBtn = document.getElementById('request-decline-btn');
+    var incomingRequestId = null;
+
+    function loadSeatRequests() {
+      var stored = localStorage.getItem(requestStoreKey);
+      if (!stored) return [];
+      try {
+        var parsed = JSON.parse(stored);
+        if (parsed && Array.isArray(parsed.requests)) return parsed.requests;
+      } catch (err) {
+        return [];
+      }
+      return [];
+    }
+
+    function saveSeatRequests(requests) {
+      localStorage.setItem(requestStoreKey, JSON.stringify({ requests: requests }));
+    }
+
+    function renderIncomingRequest() {
+      var requests = loadSeatRequests();
+      var incoming = requests.find(function (req) {
+        return req.type === 'incoming' && req.status === 'pending';
+      });
+      if (!incoming) {
+        requestBanner.classList.remove('is-visible');
+        incomingRequestId = null;
+        return;
+      }
+
+      incomingRequestId = incoming.id;
+      requestBannerMeta.textContent = incoming.movie + ' / ' + incoming.screening;
+      requestBannerMessage.textContent = '相手の座席: ' + incoming.targetSeat + ' / 希望: ' + incoming.desiredSeat + ' / ' + incoming.message;
+      requestBanner.classList.add('is-visible');
+    }
+
+    function handleIncomingAction(nextStatus) {
+      if (!incomingRequestId) return;
+      var requests = loadSeatRequests();
+      var updated = requests.map(function (req) {
+        if (req.id !== incomingRequestId) return req;
+        req.status = nextStatus;
+        return req;
+      });
+      saveSeatRequests(updated);
+      renderIncomingRequest();
+    }
+
     function saveFavorites() {
       localStorage.setItem('hal_favorites', JSON.stringify(favorites));
     }
@@ -381,6 +496,16 @@
         favorites.splice(index, 1);
         saveFavorites();
         renderFavorites();
+      });
+    }
+
+    if (requestBanner) {
+      renderIncomingRequest();
+      requestApproveBtn.addEventListener('click', function () {
+        handleIncomingAction('approved');
+      });
+      requestDeclineBtn.addEventListener('click', function () {
+        handleIncomingAction('declined');
       });
     }
 
