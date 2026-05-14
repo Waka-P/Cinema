@@ -13,7 +13,68 @@
   --mist: rgba(16, 45, 92, 0.08);
   --shadow: 0 24px 60px rgba(8, 22, 44, 0.2);
   --soft-shadow: 0 14px 32px rgba(10, 22, 40, 0.14);
-  --scroll-y: 0;
+  --parallax-base: -500px;
+  --parallax-base-accent: -450px;
+}
+
+@property --parallax-shift {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes parallax-shift-1 {
+  from {
+    --parallax-shift: 760px;
+  }
+  to {
+    --parallax-shift: 0px;
+  }
+}
+
+@keyframes parallax-shift-2 {
+  from {
+    --parallax-shift: 660px;
+  }
+  to {
+    --parallax-shift: 0px;
+  }
+}
+
+@keyframes parallax-shift-3 {
+  from {
+    --parallax-shift: 560px;
+  }
+  to {
+    --parallax-shift: 0px;
+  }
+}
+
+@keyframes parallax-shift-4 {
+  from {
+    --parallax-shift: 460px;
+  }
+  to {
+    --parallax-shift: 0px;
+  }
+}
+
+@keyframes parallax-shift-5 {
+  from {
+    --parallax-shift: 380px;
+  }
+  to {
+    --parallax-shift: 0px;
+  }
+}
+
+@keyframes parallax-shift-6 {
+  from {
+    --parallax-shift: 300px;
+  }
+  to {
+    --parallax-shift: 0px;
+  }
 }
 
 * {
@@ -26,36 +87,46 @@ html {
   background: #fdfdfd;
 }
 
-html::before,
+/* html::before,
 html::after {
   content: "";
   position: fixed;
   inset: -14vh -10vw;
   pointer-events: none;
   will-change: transform;
+  backface-visibility: hidden;
+  contain: paint;
 }
 
 html::before {
   z-index: -6;
+  --parallax-nudge: 0px;
   background:
     linear-gradient(156deg, rgba(5, 20, 50, 0.18) 0%, rgba(5, 20, 50, 0.08) 56%, rgba(5, 20, 50, 0.02) 100%),
     linear-gradient(196deg, rgba(8, 30, 70, 0) 0%, rgba(8, 30, 70, 0.12) 54%, rgba(8, 30, 70, 0.04) 100%),
     linear-gradient(100deg, rgba(10, 35, 80, 0.1) 0%, rgba(10, 35, 80, 0.04) 45%, rgba(10, 35, 80, 0) 100%);
   clip-path: polygon(0 8%, 100% 0, 100% 36%, 0 52%);
   opacity: 0.36;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.12px + 100vh), 0);
+  transform: translate3d(0, calc(120vh + var(--parallax-base) + var(--parallax-shift) + var(--parallax-nudge)), 0);
+  animation: parallax-shift-5 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
 }
 
 html::after {
   z-index: -5;
+  --parallax-nudge: 40px;
   background:
     linear-gradient(200deg, rgba(5, 20, 60, 0.01) 0%, rgba(5, 20, 60, 0.14) 48%, rgba(5, 20, 60, 0.05) 100%),
     linear-gradient(148deg, rgba(8, 30, 80, 0.12) 0%, rgba(8, 30, 80, 0.04) 46%, rgba(8, 30, 80, 0.01) 100%),
     linear-gradient(88deg, rgba(12, 40, 100, 0.09), rgba(12, 40, 100, 0.01));
   clip-path: polygon(0 18%, 100% 32%, 100% 68%, 0 76%);
   opacity: 0.30;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.10px + 110vh), 0);
-}
+  transform: translate3d(0, calc(110vh + var(--parallax-base) + var(--parallax-shift) + var(--parallax-nudge)), 0);
+  animation: parallax-shift-4 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+} */
 
 body {
   margin: 0;
@@ -77,70 +148,68 @@ body {
   inset: -16vh -12vw;
   pointer-events: none;
   will-change: transform;
-  filter:
-    drop-shadow(0 22px 36px #091c4433)
-    drop-shadow(0 12px 18px #1d4c961f)
-    drop-shadow(0 4px 10px #78b5f514);
+  backface-visibility: hidden;
+  contain: paint;
 }
 
 .bg-layer--1 {
   z-index: -10;
+  --parallax-nudge: 20px;
   background:
     conic-gradient(from 120deg at 18% 16%, #1e50a033, rgba(30, 80, 160, 0.02) 56%),
     radial-gradient(110% 74% at 74% 8%, #2d6ebe2e, rgba(45, 110, 190, 0.02) 72%),
     linear-gradient(160deg, #2864b429 0%, rgba(40, 100, 180, 0.06) 52%, rgba(40, 100, 180, 0.01) 100%);
   clip-path: polygon(0 6%, 100% 0, 100% 36%, 0 58%);
   opacity: 0.38;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.18px), 0) rotate(-9deg) skewX(-8deg);
-  filter:
-    drop-shadow(0 26px 40px #0a205238)
-    drop-shadow(0 16px 24px #3a76c824)
-    drop-shadow(0 6px 12px #94ceff1a);
+  transform: translate3d(0, calc(var(--parallax-base) + var(--parallax-shift) + var(--parallax-nudge)), 0) rotate(-9deg) skewX(-8deg);
+  animation: parallax-shift-1 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
 }
 
 .bg-layer--2 {
   z-index: -9;
+  --parallax-nudge: 60px;
   background:
     conic-gradient(from 48deg at 82% 36%, rgba(8, 28, 70, 0.16), rgba(8, 28, 70, 0.02) 58%),
     radial-gradient(70% 84% at 12% 70%, rgba(10, 35, 80, 0.14), rgba(10, 35, 80, 0.02) 75%),
     linear-gradient(202deg, rgba(12, 40, 90, 0.12), rgba(12, 40, 90, 0.04) 54%, rgba(12, 40, 90, 0.01));
   clip-path: polygon(0 18%, 100% 6%, 100% 54%, 0 34%);
   opacity: 0.32;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.14px), 0) rotate(7deg) skewX(10deg);
-  filter:
-    drop-shadow(0 24px 36px rgba(12, 34, 88, 0.2))
-    drop-shadow(0 14px 20px rgba(76, 138, 214, 0.12))
-    drop-shadow(0 6px 10px rgba(158, 214, 255, 0.08));
+  transform: translate3d(0, calc(var(--parallax-base) + var(--parallax-shift) + var(--parallax-nudge)), 0) rotate(7deg) skewX(10deg);
+  animation: parallax-shift-2 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
 }
 
 .bg-layer--3 {
   z-index: -8;
+  --parallax-nudge: 100px;
   background:
     conic-gradient(from 210deg at 50% 40%, rgba(18, 55, 120, 0.12), rgba(18, 55, 120, 0.01) 60%),
     radial-gradient(86% 66% at 88% 86%, rgba(25, 65, 140, 0.15), rgba(25, 65, 140, 0.02) 70%),
     linear-gradient(140deg, rgba(20, 60, 130, 0.11), rgba(20, 60, 130, 0.04) 48%, rgba(20, 60, 130, 0.01));
   clip-path: polygon(0 40%, 100% 26%, 100% 82%, 0 92%);
   opacity: 0.24;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.10px), 0) rotate(-12deg) skewX(6deg);
-  filter:
-    drop-shadow(0 22px 32px rgba(16, 42, 96, 0.18))
-    drop-shadow(0 12px 18px rgba(98, 160, 230, 0.11))
-    drop-shadow(0 5px 10px rgba(176, 221, 255, 0.08));
+  transform: translate3d(0, calc(var(--parallax-base) + var(--parallax-shift) + var(--parallax-nudge)), 0) rotate(-12deg) skewX(6deg);
+  animation: parallax-shift-3 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
 }
 
 .bg-layer--4 {
   z-index: -7;
+  --parallax-nudge: 140px;
   background:
     conic-gradient(from 80deg at 70% 80%, rgba(220, 242, 255, 0.14), rgba(220, 242, 255, 0.01) 62%),
     radial-gradient(96% 72% at 22% 28%, rgba(210, 238, 255, 0.13), rgba(210, 238, 255, 0.01) 72%),
     linear-gradient(172deg, rgba(235, 248, 255, 0.11), rgba(235, 248, 255, 0.03) 56%, rgba(235, 248, 255, 0.01));
   clip-path: polygon(0 70%, 100% 48%, 100% 100%, 0 100%);
   opacity: 0.20;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.06px), 0) rotate(11deg) skewX(-7deg);
-  filter:
-    drop-shadow(0 20px 28px rgba(18, 48, 104, 0.16))
-    drop-shadow(0 10px 16px rgba(120, 188, 242, 0.1))
-    drop-shadow(0 4px 8px rgba(198, 230, 255, 0.07));
+  transform: translate3d(0, calc(var(--parallax-base) + var(--parallax-shift) + var(--parallax-nudge)), 0) rotate(11deg) skewX(-7deg);
+  animation: parallax-shift-6 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
 }
 
 body::before,
@@ -150,29 +219,39 @@ body::after {
   inset: -12vh -8vw;
   pointer-events: none;
   will-change: transform;
+  backface-visibility: hidden;
+  contain: paint;
 }
 
 body::before {
   z-index: -4;
+  --parallax-nudge: 500px;
   background:
     linear-gradient(158deg, rgba(10, 35, 80, 0.12) 6%, rgba(10, 35, 80, 0.06) 62%, rgba(10, 35, 80, 0.01) 100%),
     linear-gradient(210deg, rgba(15, 45, 100, 0.1) 0%, rgba(15, 45, 100, 0.03) 100%),
     linear-gradient(112deg, rgba(18, 55, 120, 0.08), rgba(18, 55, 120, 0.01));
   clip-path: polygon(0 0, 100% 20%, 100% 68%, 0 54%);
   opacity: 0.24;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.18px), 0) rotate(-6deg);
+  transform: translate3d(0, calc(var(--parallax-base) + var(--parallax-shift) + var(--parallax-nudge)), 0) rotate(-6deg);
+  animation: parallax-shift-2 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
   box-shadow: 0 18px 40px rgba(13, 34, 76, 0.18);
 }
 
 body::after {
   z-index: -3;
+  --parallax-nudge: 550px;
   background:
     linear-gradient(164deg, rgba(15, 50, 110, 0.11) 0%, rgba(15, 50, 110, 0.05) 48%, rgba(15, 50, 110, 0.01) 100%),
     linear-gradient(0deg, rgba(20, 60, 130, 0.1), rgba(20, 60, 130, 0.03)),
     linear-gradient(134deg, rgba(25, 70, 150, 0.08), rgba(25, 70, 150, 0.01));
   clip-path: polygon(0 34%, 100% 56%, 100% 94%, 0 82%);
   opacity: 0.20;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.28px), 0) rotate(9deg);
+  transform: translate3d(0, calc(var(--parallax-base) + var(--parallax-shift) + var(--parallax-nudge)), 0) rotate(9deg);
+  animation: parallax-shift-3 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
   box-shadow: 0 16px 34px rgba(22, 55, 118, 0.14);
 }
 
@@ -183,29 +262,39 @@ body::after {
   inset: -10vh -7vw;
   pointer-events: none;
   will-change: transform;
+  backface-visibility: hidden;
+  contain: paint;
 }
 
 .page::before {
   z-index: -2;
+  --parallax-nudge: 220px;
   background:
     linear-gradient(146deg, rgba(25, 65, 140, 0.1) 0%, rgba(25, 65, 140, 0.04) 44%, rgba(25, 65, 140, 0.01) 100%),
     linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
     linear-gradient(184deg, rgba(35, 85, 160, 0.08), rgba(35, 85, 160, 0.01));
   clip-path: polygon(0 28%, 100% 12%, 100% 74%, 0 88%);
   opacity: 0.16;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.25px), 0) rotate(-10deg);
+  transform: translate3d(0, calc(var(--parallax-base) + var(--parallax-shift) + var(--parallax-nudge)), 0) rotate(-10deg);
+  animation: parallax-shift-4 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
   box-shadow: 0 14px 30px rgba(36, 78, 146, 0.12);
 }
 
 .page::after {
   z-index: -1;
+  --parallax-nudge: 260px;
   background:
     linear-gradient(155deg, rgba(12, 40, 90, 0.12) 0%, rgba(12, 40, 90, 0.05) 50%, rgba(12, 40, 90, 0.01) 100%),
     linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
     linear-gradient(62deg, rgba(15, 50, 110, 0.1), rgba(15, 50, 110, 0.02));
   clip-path: polygon(0 66%, 100% 78%, 100% 100%, 0 100%);
   opacity: 0.14;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.35px), 0) rotate(13deg);
+  transform: translate3d(0, calc(var(--parallax-base) + var(--parallax-shift) + var(--parallax-nudge)), 0) rotate(13deg);
+  animation: parallax-shift-6 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
   box-shadow:
     0 14px 28px rgba(30, 60, 110, 0.14),
     0 6px 12px rgba(70, 120, 170, 0.08);
@@ -234,8 +323,19 @@ img {
   body::before,
   body::after,
   .page::before,
-  .page::after {
+  .page::after,
+  .accent-lines--1,
+  .accent-lines--2,
+  .accent-lines--3,
+  .accent-lines--short-1,
+  .accent-lines--short-2,
+  .accent-lines--short-3,
+  .accent-lines--short-4,
+  .accent-lines--short-5,
+  .accent-lines--short-6,
+  .accent-lines--short-7 {
     transform: none;
+    animation: none;
   }
 }
 
@@ -252,6 +352,9 @@ img {
   position: fixed;
   pointer-events: none;
   will-change: transform;
+  backface-visibility: hidden;
+  contain: paint;
+  --line-color: var(--gold-300);
   mask-image:
     linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%),
     linear-gradient(0deg, transparent 0%, black 12%, black 88%, transparent 100%);
@@ -259,50 +362,205 @@ img {
   mask-size: 100% 100%;
 }
 
+.accent-lines::before,
+.accent-lines::after {
+  content: "";
+  position: absolute;
+  left: var(--line-span, -240vw);
+  right: var(--line-span, -240vw);
+  top: 50%;
+  height: 0;
+  border-top: 1px solid var(--line-color);
+  transform-origin: center;
+}
+
+.accent-lines::before {
+  opacity: var(--line-1-opacity, 0.85);
+  transform: translateX(var(--line-1-shift, 0px)) translateY(var(--line-1-offset, -40px)) rotate(var(--line-1-angle, 10deg));
+}
+
+.accent-lines::after {
+  opacity: var(--line-2-opacity, 0.7);
+  transform: translateX(var(--line-2-shift, 0px)) translateY(var(--line-2-offset, 40px)) rotate(var(--line-2-angle, -12deg));
+}
+
 .accent-lines--1 {
   inset: -25vh -15vw 45vh -15vw;
   z-index: 0;
-  opacity: 0.85;
-  background:
-    linear-gradient(35deg, transparent 49.85%, var(--gold-300) 49.85%, var(--gold-300) 49.95%, transparent 49.95%),
-    linear-gradient(103deg, transparent 51.7%, var(--gold-300) 51.7%, var(--gold-300) 51.8%, transparent 51.8%);
-  background-size:
-    600px 500px,
-    700px 600px;
-  background-position:
-    140px 60px,
-    -120px 200px;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.40px), 0);
+  --parallax-nudge: 80px;
+  --line-1-angle: 35deg;
+  --line-2-angle: 103deg;
+  --line-1-offset: -60px;
+  --line-2-offset: 80px;
+  --line-1-shift: 140px;
+  --line-2-shift: -420px;
+  transform: translate3d(0, calc(var(--parallax-base-accent) + var(--parallax-shift) + var(--parallax-nudge)), 0);
+  animation: parallax-shift-1 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
 }
 
 .accent-lines--2 {
   inset: 15vh -15vw 15vh -15vw;
   z-index: 0;
-  opacity: 0.70;
-  background:
-    linear-gradient(-18deg, transparent 60.2%, var(--gold-300) 60.2%, var(--gold-300) 60.3%, transparent 60.3%),
-    linear-gradient(52deg, transparent 48%, var(--gold-300) 48%, var(--gold-300) 48.1%, transparent 48.1%);
-  background-size:
-    650px 550px,
-    680px 580px;
-  background-position:
-    80px -100px,
-    -40px 150px;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.30px), 0);
+  --parallax-nudge: 120px;
+  --line-1-angle: -18deg;
+  --line-2-angle: 52deg;
+  --line-1-offset: -90px;
+  --line-2-offset: 60px;
+  --line-1-shift: -480px;
+  --line-2-shift: 380px;
+  transform: translate3d(0, calc(var(--parallax-base-accent) + var(--parallax-shift) + var(--parallax-nudge)), 0);
+  animation: parallax-shift-5 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
 }
 
 .accent-lines--3 {
   inset: 50vh -15vw -20vh -15vw;
   z-index: 0;
-  opacity: 0.75;
-  background:
-    linear-gradient(68deg, transparent 49.5%, var(--gold-300) 49.5%, var(--gold-300) 49.6%, transparent 49.6%),
-    linear-gradient(132deg, transparent 51%, var(--gold-300) 51%, var(--gold-300) 51.1%, transparent 51.1%);
-  background-size:
-    720px 600px,
-    620px 520px;
-  background-position:
-    200px 80px,
-    -80px -150px;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.20px), 0);
+  --parallax-nudge: 160px;
+  --line-1-angle: 68deg;
+  --line-2-angle: 132deg;
+  --line-1-offset: -70px;
+  --line-2-offset: 70px;
+  --line-1-shift: 260px;
+  --line-2-shift: -300px;
+  transform: translate3d(0, calc(var(--parallax-base-accent) + var(--parallax-shift) + var(--parallax-nudge)), 0);
+  animation: parallax-shift-4 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+}
+
+.accent-lines--short-1 {
+  inset: -8vh -15vw 62vh -15vw;
+  z-index: 0;
+  --parallax-nudge: 50px;
+  --line-span: -70vw;
+  --line-1-angle: 18deg;
+  --line-2-angle: -26deg;
+  --line-1-offset: -28px;
+  --line-2-offset: 26px;
+  --line-1-shift: -180px;
+  --line-2-shift: 210px;
+  --line-1-opacity: 0.58;
+  --line-2-opacity: 0.46;
+  transform: translate3d(0, calc(var(--parallax-base-accent) + var(--parallax-shift) + var(--parallax-nudge)), 0);
+  animation: parallax-shift-2 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+}
+
+.accent-lines--short-2 {
+  inset: 28vh -15vw 8vh -15vw;
+  z-index: 0;
+  --parallax-nudge: 110px;
+  --line-span: -85vw;
+  --line-1-angle: -12deg;
+  --line-2-angle: 34deg;
+  --line-1-offset: -22px;
+  --line-2-offset: 30px;
+  --line-1-shift: 240px;
+  --line-2-shift: -200px;
+  --line-1-opacity: 0.52;
+  --line-2-opacity: 0.42;
+  transform: translate3d(0, calc(var(--parallax-base-accent) + var(--parallax-shift) + var(--parallax-nudge)), 0);
+  animation: parallax-shift-5 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+}
+
+.accent-lines--short-3 {
+  inset: 68vh -15vw -8vh -15vw;
+  z-index: 0;
+  --parallax-nudge: 170px;
+  --line-span: -75vw;
+  --line-1-angle: 8deg;
+  --line-2-angle: -20deg;
+  --line-1-offset: -18px;
+  --line-2-offset: 22px;
+  --line-1-shift: -220px;
+  --line-2-shift: 260px;
+  --line-1-opacity: 0.5;
+  --line-2-opacity: 0.4;
+  transform: translate3d(0, calc(var(--parallax-base-accent) + var(--parallax-shift) + var(--parallax-nudge)), 0);
+  animation: parallax-shift-3 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+}
+
+.accent-lines--short-4 {
+  inset: 78vh -15vw -18vh -15vw;
+  z-index: 0;
+  --parallax-nudge: 210px;
+  --line-span: -90vw;
+  --line-1-angle: -6deg;
+  --line-2-angle: 26deg;
+  --line-1-offset: -26px;
+  --line-2-offset: 18px;
+  --line-1-shift: 280px;
+  --line-2-shift: -260px;
+  --line-1-opacity: 0.46;
+  --line-2-opacity: 0.38;
+  transform: translate3d(0, calc(var(--parallax-base-accent) + var(--parallax-shift) + var(--parallax-nudge)), 0);
+  animation: parallax-shift-6 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+}
+
+.accent-lines--short-5 {
+  inset: 6vh -15vw 72vh -15vw;
+  z-index: 0;
+  --parallax-nudge: 30px;
+  --line-span: -65vw;
+  --line-1-angle: -4deg;
+  --line-2-angle: 16deg;
+  --line-1-offset: -16px;
+  --line-2-offset: 20px;
+  --line-1-shift: 260px;
+  --line-2-shift: -280px;
+  --line-1-opacity: 0.5;
+  --line-2-opacity: 0.4;
+  transform: translate3d(0, calc(var(--parallax-base-accent) + var(--parallax-shift) + var(--parallax-nudge)), 0);
+  animation: parallax-shift-1 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+}
+
+.accent-lines--short-6 {
+  inset: 40vh -15vw 30vh -15vw;
+  z-index: 0;
+  --parallax-nudge: 140px;
+  --line-span: -78vw;
+  --line-1-angle: 24deg;
+  --line-2-angle: -14deg;
+  --line-1-offset: -24px;
+  --line-2-offset: 18px;
+  --line-1-shift: -300px;
+  --line-2-shift: 220px;
+  --line-1-opacity: 0.48;
+  --line-2-opacity: 0.38;
+  transform: translate3d(0, calc(var(--parallax-base-accent) + var(--parallax-shift) + var(--parallax-nudge)), 0);
+  animation: parallax-shift-4 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+}
+
+.accent-lines--short-7 {
+  inset: 58vh -15vw 6vh -15vw;
+  z-index: 0;
+  --parallax-nudge: 190px;
+  --line-span: -70vw;
+  --line-1-angle: -22deg;
+  --line-2-angle: 12deg;
+  --line-1-offset: -20px;
+  --line-2-offset: 26px;
+  --line-1-shift: 320px;
+  --line-2-shift: -240px;
+  --line-1-opacity: 0.46;
+  --line-2-opacity: 0.36;
+  transform: translate3d(0, calc(var(--parallax-base-accent) + var(--parallax-shift) + var(--parallax-nudge)), 0);
+  animation: parallax-shift-5 linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
 }
