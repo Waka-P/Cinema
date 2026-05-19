@@ -1,0 +1,241 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  schemas   = ["cinema"]
+}
+
+// ─────────────────────────────────────────
+// NextAuth 必須モデル
+// ─────────────────────────────────────────
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@schema("cinema")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("cinema")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@schema("cinema")
+}
+
+// ─────────────────────────────────────────
+// ユーザー
+// ─────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+
+  accounts      Account[]
+  sessions      Session[]
+  bookings      Booking[]
+  points        Point[]
+  favorites     Favorite[]
+  notifications NotificationSetting[]
+
+  @@schema("cinema")
+}
+
+// ─────────────────────────────────────────
+// 映画
+// ─────────────────────────────────────────
+
+model Movie {
+  id          String    @id @default(cuid())
+  title       String
+  category    String
+  description String    @db.Text
+  poster      String?
+  duration    Int       // 上映時間（分）
+  releaseDate DateTime?
+  createdAt   DateTime  @default(now())
+
+  screenings Screening[]
+  favorites  Favorite[]
+
+  @@schema("cinema")
+}
+
+// ─────────────────────────────────────────
+// シアター・座席
+// ─────────────────────────────────────────
+
+model Theater {
+  id       String @id @default(cuid())
+  name     String // "Starry" | "Abyss" | "Cyber"
+  capacity Int
+
+  screenings Screening[]
+  seats      Seat[]
+
+  @@schema("cinema")
+}
+
+model Screening {
+  id        String   @id @default(cuid())
+  movieId   String
+  theaterId String
+  startTime DateTime
+  endTime   DateTime
+  createdAt DateTime @default(now())
+
+  movie    Movie     @relation(fields: [movieId], references: [id])
+  theater  Theater   @relation(fields: [theaterId], references: [id])
+  bookings Booking[]
+  seats    Seat[]
+
+  @@schema("cinema")
+}
+
+model Seat {
+  id          String     @id @default(cuid())
+  theaterId   String
+  screeningId String
+  row         String     // A, B, C ...
+  number      Int        // 1, 2, 3 ...
+  isPremium   Boolean    @default(false)
+  status      SeatStatus @default(AVAILABLE)
+
+  theater   Theater   @relation(fields: [theaterId], references: [id])
+  screening Screening @relation(fields: [screeningId], references: [id])
+  booking   Booking?
+
+  @@unique([screeningId, row, number])
+  @@schema("cinema")
+}
+
+enum SeatStatus {
+  AVAILABLE
+  RESERVED
+  TAKEN
+
+  @@schema("cinema")
+}
+
+// ─────────────────────────────────────────
+// 予約・チケット
+// ─────────────────────────────────────────
+
+model Booking {
+  id          String        @id @default(cuid())
+  userId      String
+  screeningId String
+  seatId      String        @unique
+  ticketType  TicketType
+  price       Int
+  status      BookingStatus @default(CONFIRMED)
+  createdAt   DateTime      @default(now())
+
+  user      User      @relation(fields: [userId], references: [id])
+  screening Screening @relation(fields: [screeningId], references: [id])
+  seat      Seat      @relation(fields: [seatId], references: [id])
+  ticket    Ticket?
+
+  @@schema("cinema")
+}
+
+enum TicketType {
+  GENERAL       // 一般 1,800円
+  UNIVERSITY    // 大学生 1,600円
+  HIGHSCHOOL    // 中高生 1,400円
+  CHILD         // 小学生・幼児 1,000円
+
+  @@schema("cinema")
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+
+  @@schema("cinema")
+}
+
+model Ticket {
+  id        String   @id @default(cuid())
+  bookingId String   @unique
+  qrCode    String?
+  issuedAt  DateTime @default(now())
+
+  booking Booking @relation(fields: [bookingId], references: [id])
+
+  @@schema("cinema")
+}
+
+// ─────────────────────────────────────────
+// ポイント・お気に入り・通知
+// ─────────────────────────────────────────
+
+model Point {
+  id        String   @id @default(cuid())
+  userId    String
+  amount    Int
+  reason    String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@schema("cinema")
+}
+
+model Favorite {
+  id      String @id @default(cuid())
+  userId  String
+  movieId String
+
+  user  User  @relation(fields: [userId], references: [id])
+  movie Movie @relation(fields: [movieId], references: [id])
+
+  @@unique([userId, movieId])
+  @@schema("cinema")
+}
+
+model NotificationSetting {
+  id           String  @id @default(cuid())
+  userId       String
+  directorName String?
+  actorName    String?
+  isActive     Boolean @default(true)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@schema("cinema")
+}
