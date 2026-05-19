@@ -300,14 +300,6 @@
   display: none;
 }
 
-.text-link::after {
-  content: "→";
-  position: absolute;
-  right: 0;
-  top: 0;
-  color: var(--gold-500);
-}
-
 .card {
   border-radius: 15px;
   padding: 22px;
